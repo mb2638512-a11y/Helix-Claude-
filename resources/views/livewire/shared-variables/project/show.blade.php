@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Project Variable | Helix Claude
+        Project Variable | HelixClaude
     </x-slot>
     <div class="flex gap-2 items-center">
         <h1>Shared Variables for {{ data_get($project, 'name') }}</h1>
@@ -15,7 +15,7 @@
         <div>You can use these variables anywhere with</div>
         <div class="dark:text-warning text-coollabs">@{{ project.VARIABLENAME }} </div>
         <x-helper
-            helper="More info <a class='underline dark:text-white' href='https://Helix Claude.io/docs/knowledge-base/environment-variables#shared-variables' target='_blank'>here</a>."></x-helper>
+            helper="More info <a class='underline dark:text-white' href='https://HelixClaude.io/docs/knowledge-base/environment-variables#shared-variables' target='_blank'>here</a>."></x-helper>
     </div>
     @if ($view === 'normal')
         <div class="flex flex-col gap-2">

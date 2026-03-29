@@ -7,43 +7,43 @@ it('ensures container cleanup includes wait loop in command sequence', function 
 
     // Simulate the command generation pattern from StartProxy
     $commands = collect([
-        'mkdir -p /data/Helix Claude/proxy/dynamic',
-        'cd /data/Helix Claude/proxy',
+        'mkdir -p /data/HelixClaude/proxy/dynamic',
+        'cd /data/HelixClaude/proxy',
         "echo 'Creating required Docker Compose file.'",
         "echo 'Pulling docker image.'",
         'docker compose pull',
-        'if docker ps -a --format "{{.Names}}" | grep -q "^Helix Claude-proxy$"; then',
-        "    echo 'Stopping and removing existing Helix Claude-proxy.'",
-        '    docker stop Helix Claude-proxy 2>/dev/null || true',
-        '    docker rm -f Helix Claude-proxy 2>/dev/null || true',
+        'if docker ps -a --format "{{.Names}}" | grep -q "^HelixClaude-proxy$"; then',
+        "    echo 'Stopping and removing existing HelixClaude-proxy.'",
+        '    docker stop HelixClaude-proxy 2>/dev/null || true',
+        '    docker rm -f HelixClaude-proxy 2>/dev/null || true',
         '    # Wait for container to be fully removed',
         '    for i in {1..10}; do',
-        '        if ! docker ps -a --format "{{.Names}}" | grep -q "^Helix Claude-proxy$"; then',
+        '        if ! docker ps -a --format "{{.Names}}" | grep -q "^HelixClaude-proxy$"; then',
         '            break',
         '        fi',
-        '        echo "Waiting for Helix Claude-proxy to be removed... ($i/10)"',
+        '        echo "Waiting for HelixClaude-proxy to be removed... ($i/10)"',
         '        sleep 1',
         '    done',
-        "    echo 'Successfully stopped and removed existing Helix Claude-proxy.'",
+        "    echo 'Successfully stopped and removed existing HelixClaude-proxy.'",
         'fi',
-        "echo 'Starting Helix Claude-proxy.'",
+        "echo 'Starting HelixClaude-proxy.'",
         'docker compose up -d --wait --remove-orphans',
-        "echo 'Successfully started Helix Claude-proxy.'",
+        "echo 'Successfully started HelixClaude-proxy.'",
     ]);
 
     $commandsString = $commands->implode("\n");
 
     // Verify the cleanup sequence includes all required components
-    expect($commandsString)->toContain('docker stop Helix Claude-proxy 2>/dev/null || true')
-        ->and($commandsString)->toContain('docker rm -f Helix Claude-proxy 2>/dev/null || true')
+    expect($commandsString)->toContain('docker stop HelixClaude-proxy 2>/dev/null || true')
+        ->and($commandsString)->toContain('docker rm -f HelixClaude-proxy 2>/dev/null || true')
         ->and($commandsString)->toContain('for i in {1..10}; do')
-        ->and($commandsString)->toContain('if ! docker ps -a --format "{{.Names}}" | grep -q "^Helix Claude-proxy$"; then')
+        ->and($commandsString)->toContain('if ! docker ps -a --format "{{.Names}}" | grep -q "^HelixClaude-proxy$"; then')
         ->and($commandsString)->toContain('break')
         ->and($commandsString)->toContain('sleep 1')
         ->and($commandsString)->toContain('docker compose up -d --wait --remove-orphans');
 
     // Verify the order: cleanup must come before compose up
-    $stopPosition = strpos($commandsString, 'docker stop Helix Claude-proxy');
+    $stopPosition = strpos($commandsString, 'docker stop HelixClaude-proxy');
     $waitLoopPosition = strpos($commandsString, 'for i in {1..10}');
     $composeUpPosition = strpos($commandsString, 'docker compose up -d');
 
@@ -56,8 +56,8 @@ it('includes error suppression in container cleanup commands', function () {
     // when the container doesn't exist
 
     $cleanupCommands = [
-        '    docker stop Helix Claude-proxy 2>/dev/null || true',
-        '    docker rm -f Helix Claude-proxy 2>/dev/null || true',
+        '    docker stop HelixClaude-proxy 2>/dev/null || true',
+        '    docker rm -f HelixClaude-proxy 2>/dev/null || true',
     ];
 
     foreach ($cleanupCommands as $command) {
@@ -70,10 +70,10 @@ it('waits up to 10 seconds for container removal', function () {
 
     $waitLoop = [
         '    for i in {1..10}; do',
-        '        if ! docker ps -a --format "{{.Names}}" | grep -q "^Helix Claude-proxy$"; then',
+        '        if ! docker ps -a --format "{{.Names}}" | grep -q "^HelixClaude-proxy$"; then',
         '            break',
         '        fi',
-        '        echo "Waiting for Helix Claude-proxy to be removed... ($i/10)"',
+        '        echo "Waiting for HelixClaude-proxy to be removed... ($i/10)"',
         '        sleep 1',
         '    done',
     ];

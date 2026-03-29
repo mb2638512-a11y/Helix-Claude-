@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Actions\Server\UpdateHelix Claude;
+use App\Actions\Server\UpdateHelixClaude;
 use App\Models\InstanceSettings;
 use App\Models\Server;
 use Livewire\Component;
@@ -23,7 +23,7 @@ class Upgrade extends Component
 
     public function mount()
     {
-        $this->currentVersion = config('constants.Helix Claude.version');
+        $this->currentVersion = config('constants.HelixClaude.version');
         $this->devMode = isDev();
     }
 
@@ -31,7 +31,7 @@ class Upgrade extends Component
     {
         try {
             $this->latestVersion = get_latest_version_of_HelixClaude();
-            $this->currentVersion = config('constants.Helix Claude.version');
+            $this->currentVersion = config('constants.HelixClaude.version');
             $this->isUpgradeAvailable = data_get(InstanceSettings::get(), 'new_version_available', false);
             if (isDev()) {
                 $this->isUpgradeAvailable = true;
@@ -48,7 +48,7 @@ class Upgrade extends Component
                 return;
             }
             $this->updateInProgress = true;
-            UpdateHelix Claude::run(manual_update: true);
+            UpdateHelixClaude::run(manual_update: true);
         } catch (\Throwable $e) {
             return handleError($e, $this);
         }
@@ -66,7 +66,7 @@ class Upgrade extends Component
             return ['status' => 'none'];
         }
 
-        $statusFile = '/data/Helix Claude/source/.upgrade-status';
+        $statusFile = '/data/HelixClaude/source/.upgrade-status';
 
         try {
             $content = instant_remote_process(

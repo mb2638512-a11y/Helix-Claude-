@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Storages | Helix Claude
+        Storages | HelixClaude
     </x-slot>
     <div class="flex items-center gap-2">
         <h1>S3 Storages</h1>

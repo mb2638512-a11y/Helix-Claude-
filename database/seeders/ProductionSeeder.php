@@ -72,27 +72,27 @@ class ProductionSeeder extends Seeder
             ]);
         }
 
-        if (! isCloud() && config('constants.Helix Claude.is_windows_docker_desktop') == false) {
-            $Helix Claude_key_name = '@host.docker.internal';
+        if (! isCloud() && config('constants.HelixClaude.is_windows_docker_desktop') == false) {
+            $HelixClaude_key_name = '@host.docker.internal';
             $ssh_keys_directory = Storage::disk('ssh-keys')->files();
-            $Helix Claude_key = collect($ssh_keys_directory)->firstWhere(fn ($item) => str($item)->contains($Helix Claude_key_name));
+            $HelixClaude_key = collect($ssh_keys_directory)->firstWhere(fn ($item) => str($item)->contains($HelixClaude_key_name));
 
             $private_key_found = PrivateKey::find(0);
             if (! $private_key_found) {
-                if ($Helix Claude_key) {
-                    $user = str($Helix Claude_key)->before('@')->after('id.');
-                    $Helix Claude_key = Storage::disk('ssh-keys')->get($Helix Claude_key);
+                if ($HelixClaude_key) {
+                    $user = str($HelixClaude_key)->before('@')->after('id.');
+                    $HelixClaude_key = Storage::disk('ssh-keys')->get($HelixClaude_key);
                     PrivateKey::create([
                         'id' => 0,
                         'team_id' => 0,
                         'name' => 'localhost\'s key',
-                        'description' => 'The private key for the Helix Claude host machine (localhost).',
-                        'private_key' => $Helix Claude_key,
+                        'description' => 'The private key for the HelixClaude host machine (localhost).',
+                        'private_key' => $HelixClaude_key,
                     ]);
-                    echo "SSH key found for the Helix Claude host machine (localhost).\n";
+                    echo "SSH key found for the HelixClaude host machine (localhost).\n";
                 } else {
-                    echo "No SSH key found for the Helix Claude host machine (localhost).\n";
-                    echo "Please read the following documentation (point 3) to fix it: https://Helix Claude.
+                    echo "No SSH key found for the HelixClaude host machine (localhost).\n";
+                    echo "Please read the following documentation (point 3) to fix it: https://HelixClaude.
                 io/docs/knowledge-base/server/openssh/\n";
                     echo "Your localhost connection won't work until then.";
                 }
@@ -104,7 +104,7 @@ class ProductionSeeder extends Seeder
                 $server_details = [
                     'id' => 0,
                     'name' => 'localhost',
-                    'description' => "This is the server where Helix Claude is running on. Don't delete this!",
+                    'description' => "This is the server where HelixClaude is running on. Don't delete this!",
                     'user' => $user,
                     'ip' => 'host.docker.internal',
                     'team_id' => 0,
@@ -139,14 +139,14 @@ class ProductionSeeder extends Seeder
             if (StandaloneDocker::find(0) == null) {
                 StandaloneDocker::create([
                     'id' => 0,
-                    'name' => 'localhost-Helix Claude',
-                    'network' => 'Helix Claude',
+                    'name' => 'localhost-HelixClaude',
+                    'network' => 'HelixClaude',
                     'server_id' => 0,
                 ]);
             }
         }
 
-        if (config('constants.Helix Claude.is_windows_docker_desktop')) {
+        if (config('constants.HelixClaude.is_windows_docker_desktop')) {
             PrivateKey::updateOrCreate(
                 [
                     'id' => 0,
@@ -161,11 +161,11 @@ class ProductionSeeder extends Seeder
             if (Server::find(0) == null) {
                 $server_details = [
                     'id' => 0,
-                    'uuid' => 'Helix Claude-testing-host',
+                    'uuid' => 'HelixClaude-testing-host',
                     'name' => 'localhost',
-                    'description' => "This is the server where Helix Claude is running on. Don't delete this!",
+                    'description' => "This is the server where HelixClaude is running on. Don't delete this!",
                     'user' => 'root',
-                    'ip' => 'Helix Claude-testing-host',
+                    'ip' => 'HelixClaude-testing-host',
                     'team_id' => 0,
                     'private_key_id' => 0,
                 ];
@@ -189,8 +189,8 @@ class ProductionSeeder extends Seeder
             if (StandaloneDocker::find(0) == null) {
                 StandaloneDocker::create([
                     'id' => 0,
-                    'name' => 'localhost-Helix Claude',
-                    'network' => 'Helix Claude',
+                    'name' => 'localhost-HelixClaude',
+                    'network' => 'HelixClaude',
                     'server_id' => 0,
                 ]);
             }

@@ -69,7 +69,7 @@ class EnvironmentVariable extends BaseModel
         'resourceable_id' => 'integer',
     ];
 
-    protected $appends = ['real_value', 'is_shared', 'is_really_required', 'is_nixpacks', 'is_Helix Claude'];
+    protected $appends = ['real_value', 'is_shared', 'is_really_required', 'is_nixpacks', 'is_HelixClaude'];
 
     protected static function booted()
     {
@@ -100,7 +100,7 @@ class EnvironmentVariable extends BaseModel
                 }
             }
             $environment_variable->update([
-                'version' => config('constants.Helix Claude.version'),
+                'version' => config('constants.HelixClaude.version'),
             ]);
         });
 

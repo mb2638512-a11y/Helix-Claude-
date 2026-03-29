@@ -60,7 +60,7 @@ class Test extends Notification implements ShouldQueue
     public function toMail(): MailMessage
     {
         $mail = new MailMessage;
-        $mail->subject('Helix Claude: Test Email');
+        $mail->subject('HelixClaude: Test Email');
         $mail->view('emails.test');
 
         return $mail;
@@ -70,7 +70,7 @@ class Test extends Notification implements ShouldQueue
     {
         $message = new DiscordMessage(
             title: ':white_check_mark: Test Success',
-            description: 'This is a test Discord notification from Helix Claude. :cross_mark: :warning: :information_source:',
+            description: 'This is a test Discord notification from HelixClaude. :cross_mark: :warning: :information_source:',
             color: DiscordMessage::successColor(),
             isCritical: $this->ping,
         );
@@ -83,11 +83,11 @@ class Test extends Notification implements ShouldQueue
     public function toTelegram(): array
     {
         return [
-            'message' => 'Helix Claude: This is a test Telegram notification from Helix Claude.',
+            'message' => 'HelixClaude: This is a test Telegram notification from HelixClaude.',
             'buttons' => [
                 [
                     'text' => 'Go to your dashboard',
-                    'url' => isDev() ? 'https://staging-but-dev.Helix Claude.io' : base_url(),
+                    'url' => isDev() ? 'https://staging-but-dev.HelixClaude.io' : base_url(),
                 ],
             ],
         ];
@@ -97,7 +97,7 @@ class Test extends Notification implements ShouldQueue
     {
         return new PushoverMessage(
             title: 'Test Pushover Notification',
-            message: 'This is a test Pushover notification from Helix Claude.',
+            message: 'This is a test Pushover notification from HelixClaude.',
             buttons: [
                 [
                     'text' => 'Go to your dashboard',
@@ -111,7 +111,7 @@ class Test extends Notification implements ShouldQueue
     {
         return new SlackMessage(
             title: 'Test Slack Notification',
-            description: 'This is a test Slack notification from Helix Claude.'
+            description: 'This is a test Slack notification from HelixClaude.'
         );
     }
 
@@ -119,7 +119,7 @@ class Test extends Notification implements ShouldQueue
     {
         return [
             'success' => true,
-            'message' => 'This is a test webhook notification from Helix Claude.',
+            'message' => 'This is a test webhook notification from HelixClaude.',
             'event' => 'test',
             'url' => base_url(),
         ];

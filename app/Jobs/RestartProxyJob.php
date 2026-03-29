@@ -79,7 +79,7 @@ class RestartProxyJob implements ShouldBeEncrypted, ShouldQueue
     private function buildRestartCommands(): array
     {
         $proxyType = $this->server->proxyType();
-        $containerName = $this->server->isSwarm() ? 'Helix Claude-proxy_traefik' : 'Helix Claude-proxy';
+        $containerName = $this->server->isSwarm() ? 'HelixClaude-proxy_traefik' : 'HelixClaude-proxy';
         $proxy_path = $this->server->proxyPath();
         $stopTimeout = 30;
 
@@ -127,13 +127,13 @@ class RestartProxyJob implements ShouldBeEncrypted, ShouldQueue
                 "mkdir -p $proxy_path/dynamic",
                 "cd $proxy_path",
                 "echo 'Creating required Docker Compose file.'",
-                "echo 'Starting Helix Claude-proxy.'",
-                'docker stack deploy --detach=true -c docker-compose.yml Helix Claude-proxy',
-                "echo 'Successfully started Helix Claude-proxy.'",
+                "echo 'Starting HelixClaude-proxy.'",
+                'docker stack deploy --detach=true -c docker-compose.yml HelixClaude-proxy',
+                "echo 'Successfully started HelixClaude-proxy.'",
             ]);
         } else {
             if (isDev() && $proxyType === ProxyTypes::CADDY->value) {
-                $proxy_path = '/data/Helix Claude/proxy/caddy';
+                $proxy_path = '/data/HelixClaude/proxy/caddy';
             }
             $caddyfile = 'import /dynamic/*.caddy';
             $commands = $commands->merge([
@@ -148,9 +148,9 @@ class RestartProxyJob implements ShouldBeEncrypted, ShouldQueue
             // Ensure required networks exist BEFORE docker compose up
             $commands = $commands->merge(ensureProxyNetworksExist($this->server));
             $commands = $commands->merge([
-                "echo 'Starting Helix Claude-proxy.'",
+                "echo 'Starting HelixClaude-proxy.'",
                 'docker compose up -d --wait --remove-orphans',
-                "echo 'Successfully started Helix Claude-proxy.'",
+                "echo 'Successfully started HelixClaude-proxy.'",
             ]);
             $commands = $commands->merge(connectProxyToNetworks($this->server));
         }

@@ -25,8 +25,8 @@ test('database last_online_at is updated when status unchanged', function () {
                 'state' => 'running',
                 'health_status' => 'healthy',
                 'labels' => [
-                    'Helix Claude.managed' => 'true',
-                    'Helix Claude.type' => 'database',
+                    'HelixClaude.managed' => 'true',
+                    'HelixClaude.type' => 'database',
                     'com.docker.compose.service' => $database->uuid,
                 ],
             ],
@@ -61,8 +61,8 @@ test('database status is updated when container status changes', function () {
                 'state' => 'running',
                 'health_status' => 'healthy',
                 'labels' => [
-                    'Helix Claude.managed' => 'true',
-                    'Helix Claude.type' => 'database',
+                    'HelixClaude.managed' => 'true',
+                    'HelixClaude.type' => 'database',
                     'com.docker.compose.service' => $database->uuid,
                 ],
             ],

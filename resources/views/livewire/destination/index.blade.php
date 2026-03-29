@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Destinations | Helix Claude
+        Destinations | HelixClaude
     </x-slot>
     <div class="flex items-center gap-2">
         <h1>Destinations</h1>

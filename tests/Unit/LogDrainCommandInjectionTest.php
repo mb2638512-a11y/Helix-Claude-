@@ -101,7 +101,7 @@ it('rejects shell metacharacters in log drain fields', function (string $payload
     'key<file',
     "key'quoted",
     'key"doublequoted',
-    'key$(id >/tmp/Helix Claude_poc_logdrain)',
+    'key$(id >/tmp/HelixClaude_poc_logdrain)',
 ]);
 
 it('accepts valid log drain field values', function (string $value) {

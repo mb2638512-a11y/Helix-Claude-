@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        {{ data_get_str($storage, 'name')->limit(10) }} >Storages | Helix Claude
+        {{ data_get_str($storage, 'name')->limit(10) }} >Storages | HelixClaude
     </x-slot>
 
     <div class="flex items-center gap-2">
@@ -18,7 +18,7 @@
         @can('delete', $storage)
             <x-modal-confirmation title="Confirm Storage Deletion?" isErrorButton buttonTitle="Delete"
                 submitAction="delete({{ $storage->id }})" :actions="array_filter([
-                    'The selected storage location will be permanently deleted from Helix Claude.',
+                    'The selected storage location will be permanently deleted from HelixClaude.',
                     $backupCount > 0
                         ? $backupCount . ' backup schedule(s) will be updated to no longer save to S3 and will only store backups locally on the server.'
                         : null,

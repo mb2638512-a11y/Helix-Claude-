@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Sleep;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class UpdateHelix Claude
+class UpdateHelixClaude
 {
     use AsAction;
 
@@ -34,24 +34,24 @@ class UpdateHelix Claude
         // Fetch fresh version from CDN instead of using cache
         try {
             $response = Http::retry(3, 1000)->timeout(10)
-                ->get(config('constants.Helix Claude.versions_url'));
+                ->get(config('constants.HelixClaude.versions_url'));
 
             if ($response->successful()) {
                 $versions = $response->json();
-                $this->latestVersion = data_get($versions, 'Helix Claude.v4.version');
+                $this->latestVersion = data_get($versions, 'HelixClaude.v4.version');
             } else {
                 // Fallback to cache if CDN unavailable
                 $cacheVersion = get_latest_version_of_HelixClaude();
 
                 // Validate cache version against current running version
-                if ($cacheVersion && version_compare($cacheVersion, config('constants.Helix Claude.version'), '<')) {
+                if ($cacheVersion && version_compare($cacheVersion, config('constants.HelixClaude.version'), '<')) {
                     Log::error('Failed to fetch fresh version from CDN and cache is corrupted/outdated', [
                         'cached_version' => $cacheVersion,
-                        'current_version' => config('constants.Helix Claude.version'),
+                        'current_version' => config('constants.HelixClaude.version'),
                     ]);
                     throw new \Exception(
                         'Cannot determine latest version: CDN unavailable and cache version '.
-                        "({$cacheVersion}) is older than running version (".config('constants.Helix Claude.version').')'
+                        "({$cacheVersion}) is older than running version (".config('constants.HelixClaude.version').')'
                     );
                 }
 
@@ -64,15 +64,15 @@ class UpdateHelix Claude
             $cacheVersion = get_latest_version_of_HelixClaude();
 
             // Validate cache version against current running version
-            if ($cacheVersion && version_compare($cacheVersion, config('constants.Helix Claude.version'), '<')) {
+            if ($cacheVersion && version_compare($cacheVersion, config('constants.HelixClaude.version'), '<')) {
                 Log::error('Failed to fetch fresh version from CDN and cache is corrupted/outdated', [
                     'error' => $e->getMessage(),
                     'cached_version' => $cacheVersion,
-                    'current_version' => config('constants.Helix Claude.version'),
+                    'current_version' => config('constants.HelixClaude.version'),
                 ]);
                 throw new \Exception(
                     'Cannot determine latest version: CDN unavailable and cache version '.
-                    "({$cacheVersion}) is older than running version (".config('constants.Helix Claude.version').')'
+                    "({$cacheVersion}) is older than running version (".config('constants.HelixClaude.version').')'
                 );
             }
 
@@ -83,7 +83,7 @@ class UpdateHelix Claude
             ]);
         }
 
-        $this->currentVersion = config('constants.Helix Claude.version');
+        $this->currentVersion = config('constants.HelixClaude.version');
         if (! $manual_update) {
             if (! $settings->is_auto_update_enabled) {
                 return;
@@ -117,11 +117,11 @@ class UpdateHelix Claude
     private function update()
     {
         $latestHelperImageVersion = getHelperVersion();
-        $upgradeScriptUrl = config('constants.Helix Claude.upgrade_script_url');
+        $upgradeScriptUrl = config('constants.HelixClaude.upgrade_script_url');
 
         remote_process([
-            "curl -fsSL {$upgradeScriptUrl} -o /data/Helix Claude/source/upgrade.sh",
-            "bash /data/Helix Claude/source/upgrade.sh $this->latestVersion $latestHelperImageVersion",
+            "curl -fsSL {$upgradeScriptUrl} -o /data/HelixClaude/source/upgrade.sh",
+            "bash /data/HelixClaude/source/upgrade.sh $this->latestVersion $latestHelperImageVersion",
         ], $this->server);
     }
 }

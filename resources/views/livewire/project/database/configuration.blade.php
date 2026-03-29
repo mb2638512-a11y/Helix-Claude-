@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        {{ data_get_str($database, 'name')->limit(10) }} > Configuration | Helix Claude
+        {{ data_get_str($database, 'name')->limit(10) }} > Configuration | HelixClaude
     </x-slot>
     <h1>Configuration</h1>
     <livewire:project.shared.configuration-checker :resource="$database" />

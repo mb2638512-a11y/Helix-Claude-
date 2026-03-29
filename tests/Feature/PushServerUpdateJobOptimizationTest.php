@@ -79,10 +79,10 @@ it('rate-limits ConnectProxyToNetworksJob dispatch to every 10 minutes', functio
     // First push: should dispatch ConnectProxyToNetworksJob
     $containersWithProxy = [
         [
-            'name' => 'Helix Claude-proxy',
+            'name' => 'HelixClaude-proxy',
             'state' => 'running',
             'health_status' => 'healthy',
-            'labels' => ['Helix Claude.managed' => true],
+            'labels' => ['HelixClaude.managed' => true],
         ],
     ];
 
@@ -111,10 +111,10 @@ it('dispatches ConnectProxyToNetworksJob again after cache expires', function ()
 
     $containersWithProxy = [
         [
-            'name' => 'Helix Claude-proxy',
+            'name' => 'HelixClaude-proxy',
             'state' => 'running',
             'health_status' => 'healthy',
-            'labels' => ['Helix Claude.managed' => true],
+            'labels' => ['HelixClaude.managed' => true],
         ],
     ];
 

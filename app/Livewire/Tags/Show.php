@@ -10,7 +10,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('Tags | Helix Claude')]
+#[Title('Tags | HelixClaude')]
 class Show extends Component
 {
     #[Locked]

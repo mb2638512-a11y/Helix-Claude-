@@ -12,7 +12,7 @@ class StopLogDrain
     public function handle(Server $server)
     {
         try {
-            return instant_remote_process(['docker rm -f Helix Claude-log-drain'], $server, false);
+            return instant_remote_process(['docker rm -f HelixClaude-log-drain'], $server, false);
         } catch (\Throwable $e) {
             return handleError($e);
         }

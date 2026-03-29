@@ -173,8 +173,8 @@ class StartRedis
                 [
                     [
                         'type' => 'bind',
-                        'source' => '/data/Helix Claude/ssl/Helix Claude-ca.crt',
-                        'target' => '/etc/redis/certs/Helix Claude-ca.crt',
+                        'source' => '/data/HelixClaude/ssl/HelixClaude-ca.crt',
+                        'target' => '/etc/redis/certs/HelixClaude-ca.crt',
                         'read_only' => true,
                     ],
                 ]
@@ -300,7 +300,7 @@ class StartRedis
                 '--tls-port 6380',
                 '--tls-cert-file /etc/redis/certs/server.crt',
                 '--tls-key-file /etc/redis/certs/server.key',
-                '--tls-ca-cert-file /etc/redis/certs/Helix Claude-ca.crt',
+                '--tls-ca-cert-file /etc/redis/certs/HelixClaude-ca.crt',
                 '--tls-auth-clients optional',
             ];
         }

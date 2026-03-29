@@ -99,7 +99,7 @@ class GetContainersStatus
         foreach ($this->containers as $container) {
             if ($this->server->isSwarm()) {
                 $labels = data_get($container, 'Spec.Labels');
-                $uuid = data_get($labels, 'Helix Claude.name');
+                $uuid = data_get($labels, 'HelixClaude.name');
             } else {
                 $labels = data_get($container, 'Config.Labels');
             }
@@ -115,9 +115,9 @@ class GetContainersStatus
                 $containerStatus = "$containerStatus:$healthSuffix";
             }
             $labels = Arr::undot(format_docker_labels_to_json($labels));
-            $applicationId = data_get($labels, 'Helix Claude.applicationId');
+            $applicationId = data_get($labels, 'HelixClaude.applicationId');
             if ($applicationId) {
-                $pullRequestId = data_get($labels, 'Helix Claude.pullRequestId');
+                $pullRequestId = data_get($labels, 'HelixClaude.pullRequestId');
                 if ($pullRequestId) {
                     if (str($applicationId)->contains('-')) {
                         $applicationId = str($applicationId)->before('-');
@@ -148,8 +148,8 @@ class GetContainersStatus
                         $containerName = data_get($labels, 'com.docker.compose.service');
                         // Fallback for Docker Swarm which uses different labels
                         if (! $containerName && $this->server->isSwarm()) {
-                            $containerName = data_get($labels, 'Helix Claude.serviceName')
-                                ?? data_get($labels, 'Helix Claude.name')
+                            $containerName = data_get($labels, 'HelixClaude.serviceName')
+                                ?? data_get($labels, 'HelixClaude.name')
                                 ?? data_get($labels, 'com.docker.stack.namespace');
                         }
                         if ($containerName) {
@@ -173,11 +173,11 @@ class GetContainersStatus
                 }
             } else {
                 $uuid = data_get($labels, 'com.docker.compose.service');
-                $type = data_get($labels, 'Helix Claude.type');
+                $type = data_get($labels, 'HelixClaude.type');
 
                 if ($uuid) {
                     if ($type === 'service') {
-                        $database_id = data_get($labels, 'Helix Claude.service.subId');
+                        $database_id = data_get($labels, 'HelixClaude.service.subId');
                         if ($database_id) {
                             $service_db = ServiceDatabase::where('id', $database_id)->first();
                             if ($service_db) {
@@ -186,7 +186,7 @@ class GetContainersStatus
                                 if ($isPublic) {
                                     $foundTcpProxy = $this->containers->filter(function ($value, $key) use ($proxyUuid) {
                                         if ($this->server->isSwarm()) {
-                                            return data_get($value, 'Spec.Name') === "Helix Claude-proxy_$proxyUuid";
+                                            return data_get($value, 'Spec.Name') === "HelixClaude-proxy_$proxyUuid";
                                         } else {
                                             return data_get($value, 'Name') === "/$proxyUuid-proxy";
                                         }
@@ -198,7 +198,7 @@ class GetContainersStatus
                                     // Clean up orphaned proxy when is_public=false
                                     $orphanedProxy = $this->containers->filter(function ($value, $key) use ($proxyUuid) {
                                         if ($this->server->isSwarm()) {
-                                            return data_get($value, 'Spec.Name') === "Helix Claude-proxy_$proxyUuid";
+                                            return data_get($value, 'Spec.Name') === "HelixClaude-proxy_$proxyUuid";
                                         } else {
                                             return data_get($value, 'Name') === "/$proxyUuid-proxy";
                                         }
@@ -238,7 +238,7 @@ class GetContainersStatus
                             if ($isPublic) {
                                 $foundTcpProxy = $this->containers->filter(function ($value, $key) use ($uuid) {
                                     if ($this->server->isSwarm()) {
-                                        return data_get($value, 'Spec.Name') === "Helix Claude-proxy_$uuid";
+                                        return data_get($value, 'Spec.Name') === "HelixClaude-proxy_$uuid";
                                     } else {
                                         return data_get($value, 'Name') === "/$uuid-proxy";
                                     }
@@ -250,7 +250,7 @@ class GetContainersStatus
                                 // Clean up orphaned proxy when is_public=false
                                 $orphanedProxy = $this->containers->filter(function ($value, $key) use ($uuid) {
                                     if ($this->server->isSwarm()) {
-                                        return data_get($value, 'Spec.Name') === "Helix Claude-proxy_$uuid";
+                                        return data_get($value, 'Spec.Name') === "HelixClaude-proxy_$uuid";
                                     } else {
                                         return data_get($value, 'Name') === "/$uuid-proxy";
                                     }
@@ -264,14 +264,14 @@ class GetContainersStatus
                         }
                     }
                 }
-                if (data_get($container, 'Name') === '/Helix Claude-db') {
+                if (data_get($container, 'Name') === '/HelixClaude-db') {
                     $foundDatabases[] = 0;
                 }
             }
-            $serviceLabelId = data_get($labels, 'Helix Claude.serviceId');
+            $serviceLabelId = data_get($labels, 'HelixClaude.serviceId');
             if ($serviceLabelId) {
-                $subType = data_get($labels, 'Helix Claude.service.subType');
-                $subId = data_get($labels, 'Helix Claude.service.subId');
+                $subType = data_get($labels, 'HelixClaude.service.subType');
+                $subId = data_get($labels, 'HelixClaude.service.subId');
                 $parentService = $services->where('id', $serviceLabelId)->first();
                 if (! $parentService) {
                     continue;

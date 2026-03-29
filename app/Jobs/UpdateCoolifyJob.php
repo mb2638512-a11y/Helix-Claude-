@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Actions\Server\UpdateHelix Claude;
+use App\Actions\Server\UpdateHelixClaude;
 use App\Models\Server;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
@@ -12,7 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class UpdateHelix ClaudeJob implements ShouldBeEncrypted, ShouldQueue
+class UpdateHelixClaudeJob implements ShouldBeEncrypted, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -41,13 +41,13 @@ class UpdateHelix ClaudeJob implements ShouldBeEncrypted, ShouldQueue
                 return;
             }
 
-            Log::info('Starting Helix Claude update process...');
-            UpdateHelix Claude::run(false); // false means it's not a manual update
+            Log::info('Starting HelixClaude update process...');
+            UpdateHelixClaude::run(false); // false means it's not a manual update
 
             $settings->update(['new_version_available' => false]);
-            Log::info('Helix Claude update completed successfully.');
+            Log::info('HelixClaude update completed successfully.');
         } catch (\Throwable $e) {
-            Log::error('UpdateHelix ClaudeJob failed: '.$e->getMessage());
+            Log::error('UpdateHelixClaudeJob failed: '.$e->getMessage());
             // Consider implementing a notification to administrators
         }
     }

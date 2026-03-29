@@ -140,7 +140,7 @@ class Team extends Model implements SendsDiscord, SendsEmail, SendsPushover, Sen
     {
         return Attribute::make(
             get: function () {
-                if (config('constants.Helix Claude.self_hosted') || $this->id === 0) {
+                if (config('constants.HelixClaude.self_hosted') || $this->id === 0) {
                     return 999999999999;
                 }
 

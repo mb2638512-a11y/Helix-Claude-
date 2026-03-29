@@ -136,7 +136,7 @@ class DockerImage extends Component
         $application = Application::create([
             'name' => 'docker-image-'.new Cuid2,
             'repository_project_id' => 0,
-            'git_repository' => 'coollabsio/Helix Claude',
+            'git_repository' => 'coollabsio/HelixClaude',
             'git_branch' => 'main',
             'build_pack' => 'dockerimage',
             'ports_exposes' => 80,

@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        {{ data_get_str($resource, 'name')->limit(10) }} > Scheduled Tasks | Helix Claude
+        {{ data_get_str($resource, 'name')->limit(10) }} > Scheduled Tasks | HelixClaude
     </x-slot>
     @if ($type === 'application')
         <h1>Scheduled Task</h1>

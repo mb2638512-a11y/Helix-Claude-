@@ -11,7 +11,7 @@ class StopSentinel
 
     public function handle(Server $server)
     {
-        instant_remote_process(['docker rm -f Helix Claude-sentinel'], $server, false);
+        instant_remote_process(['docker rm -f HelixClaude-sentinel'], $server, false);
         $server->sentinelHeartbeat(isReset: true);
     }
 }

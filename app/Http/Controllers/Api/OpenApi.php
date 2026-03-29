@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use OpenApi\Attributes as OA;
 
-#[OA\Info(title: 'Helix Claude', version: '0.1')]
-#[OA\Server(url: 'https://app.Helix Claude.io/api/v1', description: 'Helix Claude Cloud API. Change the host to your own instance if you are self-hosting.')]
+#[OA\Info(title: 'HelixClaude', version: '0.1')]
+#[OA\Server(url: 'https://app.HelixClaude.io/api/v1', description: 'HelixClaude Cloud API. Change the host to your own instance if you are self-hosting.')]
 #[OA\SecurityScheme(
     type: 'http',
     scheme: 'bearer',
@@ -82,7 +82,7 @@ use OpenApi\Attributes as OA;
 class OpenApi
 {
     // This class is used to generate OpenAPI documentation
-    // for the Helix Claude API. It is not a controller and does
+    // for the HelixClaude API. It is not a controller and does
     // not contain any routes. It is used to define the
     // OpenAPI metadata and security scheme for the API.
 }

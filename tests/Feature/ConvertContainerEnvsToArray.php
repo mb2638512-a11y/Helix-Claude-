@@ -27,7 +27,7 @@ test('convertContainerEnvsToArray', function () {
           "HostnamePath": "/var/lib/docker/containers/c9248632fb1f1ba4b0d885f78ebadf6af6233799a645d2f5c749088dbf55d79f/hostname",
           "HostsPath": "/var/lib/docker/containers/c9248632fb1f1ba4b0d885f78ebadf6af6233799a645d2f5c749088dbf55d79f/hosts",
           "LogPath": "/var/lib/docker/containers/c9248632fb1f1ba4b0d885f78ebadf6af6233799a645d2f5c749088dbf55d79f/c9248632fb1f1ba4b0d885f78ebadf6af6233799a645d2f5c749088dbf55d79f-json.log",
-          "Name": "/Helix Claude-db",
+          "Name": "/HelixClaude-db",
           "RestartCount": 0,
           "Driver": "overlay2",
           "Platform": "linux",
@@ -45,7 +45,7 @@ test('convertContainerEnvsToArray', function () {
                       "max-size": "20m"
                   }
               },
-              "NetworkMode": "Helix Claude",
+              "NetworkMode": "HelixClaude",
               "PortBindings": {
                   "5432/tcp": [
                       {
@@ -119,7 +119,7 @@ test('convertContainerEnvsToArray', function () {
               "Mounts": [
                   {
                       "Type": "volume",
-                      "Source": "Helix Claude_dev_postgres_data",
+                      "Source": "HelixClaude_dev_postgres_data",
                       "Target": "/var/lib/postgresql/data",
                       "VolumeOptions": {}
                   }
@@ -157,8 +157,8 @@ test('convertContainerEnvsToArray', function () {
           "Mounts": [
               {
                   "Type": "volume",
-                  "Name": "Helix Claude_dev_postgres_data",
-                  "Source": "/var/lib/docker/volumes/Helix Claude_dev_postgres_data/_data",
+                  "Name": "HelixClaude_dev_postgres_data",
+                  "Source": "/var/lib/docker/volumes/HelixClaude_dev_postgres_data/_data",
                   "Destination": "/var/lib/postgresql/data",
                   "Driver": "local",
                   "Mode": "z",
@@ -190,14 +190,14 @@ test('convertContainerEnvsToArray', function () {
                   "SELF_HOSTED=false",
                   "APP_DEBUG=true",
                   "DB_HOST=host.docker.internal",
-                  "POSTGRES_DB=Helix Claude",
+                  "POSTGRES_DB=HelixClaude",
                   "APP_KEY=base64:8VEfVNVkXQ9mH2L33WBWNMF4eQ0BWD5CTzB9mIxcl+k=",
                   "DEBUGBAR_ENABLED=false",
                   "APP_ID=development",
-                  "DB_DATABASE=Helix Claude",
+                  "DB_DATABASE=HelixClaude",
                   "DUSK_DRIVER_URL=http://selenium:4444",
-                  "DB_USERNAME=Helix Claude",
-                  "APP_NAME=Helix Claude Development",
+                  "DB_USERNAME=HelixClaude",
+                  "APP_NAME=HelixClaude Development",
                   "APP_PORT=8000",
                   "DB_PORT=5432",
                   "APP_URL=http://localhost",
@@ -229,9 +229,9 @@ test('convertContainerEnvsToArray', function () {
                   "com.docker.compose.depends_on": "",
                   "com.docker.compose.image": "sha256:4100a24644378a24cdbe3def6fc2346999c53d87b12180c221ebb17f05259948",
                   "com.docker.compose.oneoff": "False",
-                  "com.docker.compose.project": "Helix Claude",
-                  "com.docker.compose.project.config_files": "/Users/heyandras/devel/Helix Claude/docker-compose.yml,/Users/heyandras/devel/Helix Claude/docker-compose.dev.yml",
-                  "com.docker.compose.project.working_dir": "/Users/heyandras/devel/Helix Claude",
+                  "com.docker.compose.project": "HelixClaude",
+                  "com.docker.compose.project.config_files": "/Users/heyandras/devel/HelixClaude/docker-compose.yml,/Users/heyandras/devel/HelixClaude/docker-compose.dev.yml",
+                  "com.docker.compose.project.working_dir": "/Users/heyandras/devel/HelixClaude",
                   "com.docker.compose.service": "postgres",
                   "com.docker.compose.version": "2.32.4"
               },
@@ -267,11 +267,11 @@ test('convertContainerEnvsToArray', function () {
               "IPv6Gateway": "",
               "MacAddress": "",
               "Networks": {
-                  "Helix Claude": {
+                  "HelixClaude": {
                       "IPAMConfig": null,
                       "Links": null,
                       "Aliases": [
-                          "Helix Claude-db",
+                          "HelixClaude-db",
                           "postgres"
                       ],
                       "MacAddress": "02:42:c0:a8:61:02",
@@ -285,7 +285,7 @@ test('convertContainerEnvsToArray', function () {
                       "GlobalIPv6Address": "",
                       "GlobalIPv6PrefixLen": 0,
                       "DNSNames": [
-                          "Helix Claude-db",
+                          "HelixClaude-db",
                           "postgres",
                           "c9248632fb1f"
                       ]

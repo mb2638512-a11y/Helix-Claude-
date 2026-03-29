@@ -14,7 +14,7 @@
             </div>
             <div>
                 For example application deployments, checkout <a class="underline dark:text-white"
-                    href="https://github.com/helix-claude/examples/" target="_blank">Helix Claude
+                    href="https://github.com/helix-claude/examples/" target="_blank">HelixClaude
                     Examples</a>.
             </div>
         </div>

@@ -46,7 +46,7 @@ class StatusChanged extends CustomEmailNotification
     {
         $mail = new MailMessage;
         $fqdn = $this->fqdn;
-        $mail->subject("Helix Claude: {$this->resource_name} has been stopped");
+        $mail->subject("HelixClaude: {$this->resource_name} has been stopped");
         $mail->view('emails.application-status-changes', [
             'name' => $this->resource_name,
             'fqdn' => $fqdn,
@@ -60,7 +60,7 @@ class StatusChanged extends CustomEmailNotification
     {
         return new DiscordMessage(
             title: ':cross_mark: Application stopped',
-            description: '[Open Application in Helix Claude]('.$this->resource_url.')',
+            description: '[Open Application in HelixClaude]('.$this->resource_url.')',
             color: DiscordMessage::errorColor(),
             isCritical: true,
         );
@@ -68,13 +68,13 @@ class StatusChanged extends CustomEmailNotification
 
     public function toTelegram(): array
     {
-        $message = 'Helix Claude: '.$this->resource_name.' has been stopped.';
+        $message = 'HelixClaude: '.$this->resource_name.' has been stopped.';
 
         return [
             'message' => $message,
             'buttons' => [
                 [
-                    'text' => 'Open Application in Helix Claude',
+                    'text' => 'Open Application in HelixClaude',
                     'url' => $this->resource_url,
                 ],
             ],
@@ -91,7 +91,7 @@ class StatusChanged extends CustomEmailNotification
             message: $message,
             buttons: [
                 [
-                    'text' => 'Open Application in Helix Claude',
+                    'text' => 'Open Application in HelixClaude',
                     'url' => $this->resource_url,
                 ],
             ],

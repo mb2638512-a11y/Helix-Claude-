@@ -132,7 +132,7 @@ it('accepts complex cloud-config with multiple sections', function () {
     $script = <<<'YAML'
 #cloud-config
 users:
-  - name: Helix Claude
+  - name: HelixClaude
     groups: sudo, docker
     shell: /bin/bash
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
@@ -151,7 +151,7 @@ package_upgrade: true
 runcmd:
   - systemctl enable docker
   - systemctl start docker
-  - usermod -aG docker Helix Claude
+  - usermod -aG docker HelixClaude
   - echo "Server setup complete"
 
 write_files:

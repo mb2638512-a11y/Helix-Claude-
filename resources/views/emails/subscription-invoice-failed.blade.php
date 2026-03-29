@@ -1,5 +1,5 @@
 <x-emails.layout>
-Your last invoice has failed to be paid for Helix Claude Cloud.
+Your last invoice has failed to be paid for HelixClaude Cloud.
 
 Please update payment details [here]({{ $stripeCustomerPortal }}).
 </x-emails.layout>

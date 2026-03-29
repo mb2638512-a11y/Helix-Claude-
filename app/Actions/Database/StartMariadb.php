@@ -167,8 +167,8 @@ class StartMariadb
                 [
                     [
                         'type' => 'bind',
-                        'source' => '/data/Helix Claude/ssl/Helix Claude-ca.crt',
-                        'target' => '/etc/mysql/certs/Helix Claude-ca.crt',
+                        'source' => '/data/HelixClaude/ssl/HelixClaude-ca.crt',
+                        'target' => '/etc/mysql/certs/HelixClaude-ca.crt',
                         'read_only' => true,
                     ],
                 ]
@@ -197,7 +197,7 @@ class StartMariadb
                 'mariadbd',
                 '--ssl-cert=/etc/mysql/certs/server.crt',
                 '--ssl-key=/etc/mysql/certs/server.key',
-                '--ssl-ca=/etc/mysql/certs/Helix Claude-ca.crt',
+                '--ssl-ca=/etc/mysql/certs/HelixClaude-ca.crt',
                 '--require-secure-transport=1',
             ];
         }

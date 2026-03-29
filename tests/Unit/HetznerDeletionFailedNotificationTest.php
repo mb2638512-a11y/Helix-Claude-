@@ -46,7 +46,7 @@ it('generates correct mail content', function () {
 
     $mail = $notification->toMail();
 
-    expect($mail->subject)->toBe('Helix Claude: [ACTION REQUIRED] Failed to delete Hetzner server #67890')
+    expect($mail->subject)->toBe('HelixClaude: [ACTION REQUIRED] Failed to delete Hetzner server #67890')
         ->and($mail->view)->toBe('emails.hetzner-deletion-failed')
         ->and($mail->viewData['hetznerServerId'])->toBe(67890)
         ->and($mail->viewData['errorMessage'])->toBe('Connection timeout');

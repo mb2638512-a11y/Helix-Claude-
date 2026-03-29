@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Advanced Settings | Helix Claude
+        Advanced Settings | HelixClaude
         </x-slot>
         <x-settings.navbar />
         <div x-data="{ activeTab: window.location.hash ? window.location.hash.substring(1) : 'general' }"
@@ -13,7 +13,7 @@
                         Save
                     </x-forms.button>
                 </div>
-                <div class="pb-4">Advanced settings for your Helix Claude instance.</div>
+                <div class="pb-4">Advanced settings for your HelixClaude instance.</div>
 
                 <div class="flex flex-col gap-1">
                     <div class="md:w-96">
@@ -23,7 +23,7 @@
                     </div>
                     <div class="md:w-96">
                         <x-forms.checkbox instantSave id="do_not_track"
-                            helper="Opt out of anonymous usage tracking. When enabled, this instance will not report to Helix Claude.io's installation count and will not send error reports to help improve Helix Claude."
+                            helper="Opt out of anonymous usage tracking. When enabled, this instance will not report to HelixClaude.io's installation count and will not send error reports to help improve HelixClaude."
                             label="Do Not Track" />
                     </div>
                     <h4 class="pt-4">DNS Settings</h4>
@@ -39,7 +39,7 @@
                     <h4 class="pt-4">API Settings</h4>
                     <div class="md:w-96">
                         <x-forms.checkbox instantSave id="is_api_enabled" label="API Access"
-                            helper="If enabled, authenticated requests to Helix Claude's REST API will be allowed. Configure API tokens in Security > API Tokens." />
+                            helper="If enabled, authenticated requests to HelixClaude's REST API will be allowed. Configure API tokens in Security > API Tokens." />
                     </div>
                     <x-forms.input id="allowed_ips" label="Allowed IPs for API Access"
                         helper="Allowed IP addresses or subnets for API access.<br>Supports single IPs (192.168.1.100) and CIDR notation (192.168.1.0/24).<br>Use comma to separate multiple entries.<br>Use 0.0.0.0 or leave empty to allow from anywhere."
@@ -58,7 +58,7 @@
                     <h4 class="pt-4">Confirmation Settings</h4>
                     <div class="md:w-96">
                         <x-forms.checkbox instantSave id="is_sponsorship_popup_enabled" label="Show Sponsorship Popup"
-                            helper="Show monthly sponsorship reminders to support Helix Claude development. Disable to hide these messages permanently." />
+                            helper="Show monthly sponsorship reminders to support HelixClaude development. Disable to hide these messages permanently." />
                     </div>
                 </div>
                 <div class="flex flex-col gap-1">

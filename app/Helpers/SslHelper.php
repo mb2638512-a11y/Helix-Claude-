@@ -8,7 +8,7 @@ use Carbon\CarbonImmutable;
 
 class SslHelper
 {
-    private const DEFAULT_ORGANIZATION_NAME = 'Helix Claude';
+    private const DEFAULT_ORGANIZATION_NAME = 'HelixClaude';
 
     private const DEFAULT_COUNTRY_NAME = 'XX';
 

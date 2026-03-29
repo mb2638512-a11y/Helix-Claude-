@@ -24,7 +24,7 @@ class ContainerRestarted extends CustomEmailNotification
     public function toMail(): MailMessage
     {
         $mail = new MailMessage;
-        $mail->subject("Helix Claude: A resource ({$this->name}) has been restarted automatically on {$this->server->name}");
+        $mail->subject("HelixClaude: A resource ({$this->name}) has been restarted automatically on {$this->server->name}");
         $mail->view('emails.container-restarted', [
             'containerName' => $this->name,
             'serverName' => $this->server->name,
@@ -51,7 +51,7 @@ class ContainerRestarted extends CustomEmailNotification
 
     public function toTelegram(): array
     {
-        $message = "Helix Claude: A resource ({$this->name}) has been restarted automatically on {$this->server->name}";
+        $message = "HelixClaude: A resource ({$this->name}) has been restarted automatically on {$this->server->name}";
         $payload = [
             'message' => $message,
         ];
@@ -59,7 +59,7 @@ class ContainerRestarted extends CustomEmailNotification
             $payload['buttons'] = [
                 [
                     [
-                        'text' => 'Check Proxy in Helix Claude',
+                        'text' => 'Check Proxy in HelixClaude',
                         'url' => $this->url,
                     ],
                 ],
@@ -74,7 +74,7 @@ class ContainerRestarted extends CustomEmailNotification
         $buttons = [];
         if ($this->url) {
             $buttons[] = [
-                'text' => 'Check Proxy in Helix Claude',
+                'text' => 'Check Proxy in HelixClaude',
                 'url' => $this->url,
             ];
         }

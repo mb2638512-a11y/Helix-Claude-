@@ -59,22 +59,22 @@ test('blocks hidden files starting with dot', function () {
     expect($failed)->toBeTrue();
 });
 
-test('blocks reserved filename Helix Claude.yaml', function () {
+test('blocks reserved filename HelixClaude.yaml', function () {
     $rule = new ValidProxyConfigFilename;
     $failed = false;
 
-    $rule->validate('fileName', 'Helix Claude.yaml', function () use (&$failed) {
+    $rule->validate('fileName', 'HelixClaude.yaml', function () use (&$failed) {
         $failed = true;
     });
 
     expect($failed)->toBeTrue();
 });
 
-test('blocks reserved filename Helix Claude.yml', function () {
+test('blocks reserved filename HelixClaude.yml', function () {
     $rule = new ValidProxyConfigFilename;
     $failed = false;
 
-    $rule->validate('fileName', 'Helix Claude.yml', function () use (&$failed) {
+    $rule->validate('fileName', 'HelixClaude.yml', function () use (&$failed) {
         $failed = true;
     });
 
@@ -165,9 +165,9 @@ test('blocks nested path traversal', function () {
 
 test('allows similar but not reserved filenames', function () {
     $validFilenames = [
-        'Helix Claude-custom.yaml',
-        'my-Helix Claude.yaml',
-        'Helix Claude2.yaml',
+        'HelixClaude-custom.yaml',
+        'my-HelixClaude.yaml',
+        'HelixClaude2.yaml',
         'Caddyfile.backup',
         'my-Caddyfile',
     ];

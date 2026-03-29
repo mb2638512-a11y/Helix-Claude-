@@ -27,7 +27,7 @@ beforeEach(function () {
 it('includes development terminal host aliases for authenticated users', function () {
     Server::factory()->create([
         'name' => 'Localhost',
-        'ip' => 'Helix Claude-testing-host',
+        'ip' => 'HelixClaude-testing-host',
         'team_id' => $this->team->id,
         'private_key_id' => $this->privateKey->id,
     ]);
@@ -35,10 +35,10 @@ it('includes development terminal host aliases for authenticated users', functio
     $response = $this->postJson('/terminal/auth/ips');
 
     $response->assertSuccessful();
-    $response->assertJsonPath('ipAddresses.0', 'Helix Claude-testing-host');
+    $response->assertJsonPath('ipAddresses.0', 'HelixClaude-testing-host');
 
     expect($response->json('ipAddresses'))
-        ->toContain('Helix Claude-testing-host')
+        ->toContain('HelixClaude-testing-host')
         ->toContain('localhost')
         ->toContain('127.0.0.1')
         ->toContain('host.docker.internal');

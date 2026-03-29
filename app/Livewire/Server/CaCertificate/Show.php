@@ -94,7 +94,7 @@ class Show extends Component
         try {
             $this->authorize('manageCaCertificate', $this->server);
             SslHelper::generateSslCertificate(
-                commonName: 'Helix Claude CA Certificate',
+                commonName: 'HelixClaude CA Certificate',
                 serverId: $this->server->id,
                 isCaCertificate: true,
                 validityDays: 10 * 365
@@ -118,7 +118,7 @@ class Show extends Component
 
     private function writeCertificateToServer()
     {
-        $caCertPath = config('constants.Helix Claude.base_config_path').'/ssl/';
+        $caCertPath = config('constants.HelixClaude.base_config_path').'/ssl/';
 
         $base64Cert = base64_encode($this->certificateContent);
 
@@ -126,9 +126,9 @@ class Show extends Component
             "mkdir -p $caCertPath",
             "chown -R 9999:root $caCertPath",
             "chmod -R 700 $caCertPath",
-            "rm -rf $caCertPath/Helix Claude-ca.crt",
-            "echo '{$base64Cert}' | base64 -d | tee $caCertPath/Helix Claude-ca.crt > /dev/null",
-            "chmod 644 $caCertPath/Helix Claude-ca.crt",
+            "rm -rf $caCertPath/HelixClaude-ca.crt",
+            "echo '{$base64Cert}' | base64 -d | tee $caCertPath/HelixClaude-ca.crt > /dev/null",
+            "chmod 644 $caCertPath/HelixClaude-ca.crt",
         ]);
 
         remote_process($commands, $this->server);

@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Teams | Helix Claude
+        Teams | HelixClaude
     </x-slot>
     <x-team.navbar />
 
@@ -38,7 +38,7 @@
                 @if (currentTeam()->isEmpty())
                     <div class="pb-4">This will delete your team. Beware! There is no coming back!</div>
                     <x-modal-confirmation title="Confirm Team Deletion?" buttonTitle="Delete" isErrorButton
-                        submitAction="delete({{ currentTeam()->id }})" :actions="['The current team will be permanently deleted from Helix Claude and the database.']"
+                        submitAction="delete({{ currentTeam()->id }})" :actions="['The current team will be permanently deleted from HelixClaude and the database.']"
                         confirmationText="{{ currentTeam()->name }}"
                         confirmationLabel="Please confirm the execution of the actions by entering the Team Name below"
                         shortConfirmationLabel="Team Name" :confirmWithPassword="false" step2ButtonText="Permanently Delete" />

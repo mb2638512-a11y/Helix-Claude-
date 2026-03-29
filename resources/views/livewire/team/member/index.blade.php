@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Team Members | Helix Claude
+        Team Members | HelixClaude
     </x-slot>
     <x-team.navbar />
     <h2>Members</h2>

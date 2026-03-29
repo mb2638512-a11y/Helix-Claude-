@@ -1,32 +1,32 @@
 <?php
 
 return [
-    'Helix Claude' => [
+    'HelixClaude' => [
         'version' => '4.0.0-beta.470',
         'helper_version' => '1.0.12',
         'realtime_version' => '1.0.11',
         'self_hosted' => env('SELF_HOSTED', true),
         'autoupdate' => env('AUTOUPDATE'),
-        'base_config_path' => env('BASE_CONFIG_PATH', '/data/Helix Claude'),
+        'base_config_path' => env('BASE_CONFIG_PATH', '/data/HelixClaude'),
         'registry_url' => env('REGISTRY_URL', 'ghcr.io'),
-        'helper_image' => env('HELPER_IMAGE', env('REGISTRY_URL', 'ghcr.io').'/coollabsio/Helix Claude-helper'),
-        'realtime_image' => env('REALTIME_IMAGE', env('REGISTRY_URL', 'ghcr.io').'/coollabsio/Helix Claude-realtime'),
+        'helper_image' => env('HELPER_IMAGE', env('REGISTRY_URL', 'ghcr.io').'/coollabsio/HelixClaude-helper'),
+        'realtime_image' => env('REALTIME_IMAGE', env('REGISTRY_URL', 'ghcr.io').'/coollabsio/HelixClaude-realtime'),
         'is_windows_docker_desktop' => env('IS_WINDOWS_DOCKER_DESKTOP', false),
         'cdn_url' => env('CDN_URL', 'https://cdn.coollabs.io'),
-        'versions_url' => env('VERSIONS_URL', env('CDN_URL', 'https://cdn.coollabs.io').'/Helix Claude/versions.json'),
-        'upgrade_script_url' => env('UPGRADE_SCRIPT_URL', env('CDN_URL', 'https://cdn.coollabs.io').'/Helix Claude/upgrade.sh'),
-        'releases_url' => 'https://cdn.Helix Claude.io/releases.json',
+        'versions_url' => env('VERSIONS_URL', env('CDN_URL', 'https://cdn.coollabs.io').'/HelixClaude/versions.json'),
+        'upgrade_script_url' => env('UPGRADE_SCRIPT_URL', env('CDN_URL', 'https://cdn.coollabs.io').'/HelixClaude/upgrade.sh'),
+        'releases_url' => 'https://cdn.HelixClaude.io/releases.json',
     ],
 
     'urls' => [
-        'docs' => 'https://Helix Claude.io/docs',
-        'contact' => 'https://Helix Claude.io/docs/contact',
+        'docs' => 'https://HelixClaude.io/docs',
+        'contact' => 'https://HelixClaude.io/docs/contact',
     ],
 
     'services' => [
         // Temporary disabled until cache is implemented
-        // 'official' => 'https://cdn.coollabs.io/Helix Claude/service-templates.json',
-        'official' => 'https://raw.githubusercontent.com/coollabsio/Helix Claude/v4.x/templates/service-templates-latest.json',
+        // 'official' => 'https://cdn.coollabs.io/HelixClaude/service-templates.json',
+        'official' => 'https://raw.githubusercontent.com/coollabsio/HelixClaude/v4.x/templates/service-templates-latest.json',
         'file_name' => 'service-templates-latest.json',
     ],
 

@@ -34,7 +34,7 @@ trait HasMetrics
         }
 
         $response = instant_remote_process(
-            ["docker exec Helix Claude-sentinel sh -c 'curl -H \"Authorization: Bearer {$token}\" {$endpoint}'"],
+            ["docker exec HelixClaude-sentinel sh -c 'curl -H \"Authorization: Bearer {$token}\" {$endpoint}'"],
             $server,
             false
         );

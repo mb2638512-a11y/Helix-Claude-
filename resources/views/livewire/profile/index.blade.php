@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Profile | Helix Claude
+        Profile | HelixClaude
     </x-slot>
     <h1>Profile</h1>
     <div class="subtitle -mt-2">Your user profile settings.</div>

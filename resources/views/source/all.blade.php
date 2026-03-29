@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Sources | Helix Claude
+        Sources | HelixClaude
     </x-slot>
     <div class="flex items-center gap-2">
         <h1>Sources</h1>

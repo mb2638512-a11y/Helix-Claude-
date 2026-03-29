@@ -30,7 +30,7 @@ class ServerPatchCheck extends CustomEmailNotification
 
         // Handle error case
         if (isset($this->patchData['error'])) {
-            $mail->subject("Helix Claude: [ERROR] Failed to check patches on {$this->server->name}");
+            $mail->subject("HelixClaude: [ERROR] Failed to check patches on {$this->server->name}");
             $mail->view('emails.server-patches-error', [
                 'name' => $this->server->name,
                 'error' => $this->patchData['error'],
@@ -43,7 +43,7 @@ class ServerPatchCheck extends CustomEmailNotification
         }
 
         $totalUpdates = $this->patchData['total_updates'] ?? 0;
-        $mail->subject("Helix Claude: [ACTION REQUIRED] {$totalUpdates} server patches available on {$this->server->name}");
+        $mail->subject("HelixClaude: [ACTION REQUIRED] {$totalUpdates} server patches available on {$this->server->name}");
         $mail->view('emails.server-patches', [
             'name' => $this->server->name,
             'total_updates' => $totalUpdates,
@@ -72,7 +72,7 @@ class ServerPatchCheck extends CustomEmailNotification
             $description .= "[Manage Server]($this->serverUrl)";
 
             return new DiscordMessage(
-                title: ':x: Helix Claude: [ERROR] Failed to check patches on '.$this->server->name,
+                title: ':x: HelixClaude: [ERROR] Failed to check patches on '.$this->server->name,
                 description: $description,
                 color: DiscordMessage::errorColor(),
             );
@@ -115,7 +115,7 @@ class ServerPatchCheck extends CustomEmailNotification
         }
 
         return new DiscordMessage(
-            title: ':warning: Helix Claude: [ACTION REQUIRED] Server patches available on '.$this->server->name,
+            title: ':warning: HelixClaude: [ACTION REQUIRED] Server patches available on '.$this->server->name,
             description: $description,
             color: DiscordMessage::errorColor(),
         );
@@ -130,7 +130,7 @@ class ServerPatchCheck extends CustomEmailNotification
             $packageManager = $this->patchData['package_manager'] ?? 'unknown';
             $error = $this->patchData['error'];
 
-            $message = "❌ Helix Claude: [ERROR] Failed to check patches on {$this->server->name}!\n\n";
+            $message = "❌ HelixClaude: [ERROR] Failed to check patches on {$this->server->name}!\n\n";
             $message .= "📊 Error Details:\n";
             $message .= '• OS: '.ucfirst($osId)."\n";
             $message .= "• Package Manager: {$packageManager}\n";
@@ -152,7 +152,7 @@ class ServerPatchCheck extends CustomEmailNotification
         $osId = $this->patchData['osId'] ?? 'unknown';
         $packageManager = $this->patchData['package_manager'] ?? 'unknown';
 
-        $message = "🔧 Helix Claude: [ACTION REQUIRED] {$totalUpdates} server patches available on {$this->server->name}!\n\n";
+        $message = "🔧 HelixClaude: [ACTION REQUIRED] {$totalUpdates} server patches available on {$this->server->name}!\n\n";
         $message .= "📊 Summary:\n";
         $message .= '• OS: '.ucfirst($osId)."\n";
         $message .= "• Package Manager: {$packageManager}\n";
@@ -288,7 +288,7 @@ class ServerPatchCheck extends CustomEmailNotification
             $description .= "\n:link: <{$this->serverUrl}|Manage Server>";
 
             return new SlackMessage(
-                title: 'Helix Claude: [ERROR] Server patch check failed',
+                title: 'HelixClaude: [ERROR] Server patch check failed',
                 description: $description,
                 color: SlackMessage::errorColor()
             );
@@ -337,7 +337,7 @@ class ServerPatchCheck extends CustomEmailNotification
         $description .= "\n:link: <{$this->serverUrl}|Manage Server Patches>";
 
         return new SlackMessage(
-            title: 'Helix Claude: [ACTION REQUIRED] Server patches available',
+            title: 'HelixClaude: [ACTION REQUIRED] Server patches available',
             description: $description,
             color: SlackMessage::errorColor()
         );

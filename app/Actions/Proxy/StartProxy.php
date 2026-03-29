@@ -43,14 +43,14 @@ class StartProxy
                 "mkdir -p $proxy_path/dynamic",
                 "cd $proxy_path",
                 "echo 'Creating required Docker Compose file.'",
-                "echo 'Starting Helix Claude-proxy.'",
-                'docker stack deploy --detach=true -c docker-compose.yml Helix Claude-proxy',
-                "echo 'Successfully started Helix Claude-proxy.'",
+                "echo 'Starting HelixClaude-proxy.'",
+                'docker stack deploy --detach=true -c docker-compose.yml HelixClaude-proxy',
+                "echo 'Successfully started HelixClaude-proxy.'",
             ]);
         } else {
             if (isDev()) {
                 if ($proxyType === ProxyTypes::CADDY->value) {
-                    $proxy_path = '/data/Helix Claude/proxy/caddy';
+                    $proxy_path = '/data/HelixClaude/proxy/caddy';
                 }
             }
             $caddyfile = 'import /dynamic/*.caddy';
@@ -61,27 +61,27 @@ class StartProxy
                 "echo 'Creating required Docker Compose file.'",
                 "echo 'Pulling docker image.'",
                 'docker compose pull',
-                'if docker ps -a --format "{{.Names}}" | grep -q "^Helix Claude-proxy$"; then',
-                "    echo 'Stopping and removing existing Helix Claude-proxy.'",
-                '    docker stop Helix Claude-proxy 2>/dev/null || true',
-                '    docker rm -f Helix Claude-proxy 2>/dev/null || true',
+                'if docker ps -a --format "{{.Names}}" | grep -q "^HelixClaude-proxy$"; then',
+                "    echo 'Stopping and removing existing HelixClaude-proxy.'",
+                '    docker stop HelixClaude-proxy 2>/dev/null || true',
+                '    docker rm -f HelixClaude-proxy 2>/dev/null || true',
                 '    # Wait for container to be fully removed',
                 '    for i in {1..10}; do',
-                '        if ! docker ps -a --format "{{.Names}}" | grep -q "^Helix Claude-proxy$"; then',
+                '        if ! docker ps -a --format "{{.Names}}" | grep -q "^HelixClaude-proxy$"; then',
                 '            break',
                 '        fi',
-                '        echo "Waiting for Helix Claude-proxy to be removed... ($i/10)"',
+                '        echo "Waiting for HelixClaude-proxy to be removed... ($i/10)"',
                 '        sleep 1',
                 '    done',
-                "    echo 'Successfully stopped and removed existing Helix Claude-proxy.'",
+                "    echo 'Successfully stopped and removed existing HelixClaude-proxy.'",
                 'fi',
             ]);
             // Ensure required networks exist BEFORE docker compose up (networks are declared as external)
             $commands = $commands->merge(ensureProxyNetworksExist($server));
             $commands = $commands->merge([
-                "echo 'Starting Helix Claude-proxy.'",
+                "echo 'Starting HelixClaude-proxy.'",
                 'docker compose up -d --wait --remove-orphans',
-                "echo 'Successfully started Helix Claude-proxy.'",
+                "echo 'Successfully started HelixClaude-proxy.'",
             ]);
             $commands = $commands->merge(connectProxyToNetworks($server));
         }

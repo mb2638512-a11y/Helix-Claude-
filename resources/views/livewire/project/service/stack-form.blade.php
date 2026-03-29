@@ -23,7 +23,7 @@
     <div class="w-96">
         <x-forms.checkbox canGate="update" :canResource="$service" instantSave id="connectToDockerNetwork"
             label="Connect To Predefined Network"
-            helper="By default, you do not reach the Helix Claude defined networks.<br>Starting a docker compose based resource will have an internal network. <br>If you connect to a Helix Claude defined network, you maybe need to use different internal DNS names to connect to a resource.<br><br>For more information, check <a class='underline dark:text-white' target='_blank' href='https://Helix Claude.io/docs/knowledge-base/docker/compose#connect-to-predefined-networks'>this</a>." />
+            helper="By default, you do not reach the HelixClaude defined networks.<br>Starting a docker compose based resource will have an internal network. <br>If you connect to a HelixClaude defined network, you maybe need to use different internal DNS names to connect to a resource.<br><br>For more information, check <a class='underline dark:text-white' target='_blank' href='https://HelixClaude.io/docs/knowledge-base/docker/compose#connect-to-predefined-networks'>this</a>." />
     </div>
     @if ($fields->count() > 0)
         <div>

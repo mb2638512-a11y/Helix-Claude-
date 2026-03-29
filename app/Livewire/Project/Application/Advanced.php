@@ -152,7 +152,7 @@ class Advanced extends Component
         if ($this->application->settings->is_container_label_readonly_enabled === false) {
             return;
         }
-        $customLabels = str(implode('|Helix Claude|', generateLabelsApplication($this->application)))->replace('|Helix Claude|', "\n");
+        $customLabels = str(implode('|HelixClaude|', generateLabelsApplication($this->application)))->replace('|HelixClaude|', "\n");
         $this->application->custom_labels = base64_encode($customLabels);
         $this->application->save();
     }

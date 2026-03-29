@@ -15,7 +15,7 @@ function getTeamIdFromToken()
 }
 function invalidTokenResponse()
 {
-    return response()->json(['message' => 'Invalid token.', 'docs' => 'https://Helix Claude.io/docs/api-reference/authorization'], 400);
+    return response()->json(['message' => 'Invalid token.', 'docs' => 'https://HelixClaude.io/docs/api-reference/authorization'], 400);
 }
 
 function serializeApiResponse($data)

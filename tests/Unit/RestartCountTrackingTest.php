@@ -28,7 +28,7 @@ it('extracts restart count from container data', function () {
         ],
         'Config' => [
             'Labels' => [
-                'Helix Claude.applicationId' => '1',
+                'HelixClaude.applicationId' => '1',
                 'com.docker.compose.service' => 'web',
             ],
         ],

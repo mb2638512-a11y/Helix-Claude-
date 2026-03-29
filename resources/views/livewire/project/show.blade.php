@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        {{ data_get_str($project, 'name')->limit(10) }} > Environments | Helix Claude
+        {{ data_get_str($project, 'name')->limit(10) }} > Environments | HelixClaude
     </x-slot>
     <div class="flex items-center gap-2">
         <h1>Environments</h1>

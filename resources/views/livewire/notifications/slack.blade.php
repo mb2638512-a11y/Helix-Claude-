@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Notifications | Helix Claude
+        Notifications | HelixClaude
     </x-slot>
     <x-notification.navbar />
     <form wire:submit='submit' class="flex flex-col gap-4 pb-4">

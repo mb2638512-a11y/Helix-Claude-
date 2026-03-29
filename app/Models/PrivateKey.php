@@ -160,7 +160,7 @@ class PrivateKey extends BaseModel
             $instance = new self;
             $instance->rateLimit(10);
             $name = generate_random_name();
-            $description = 'Created by Helix Claude';
+            $description = 'Created by HelixClaude';
             $keyPair = generateSSHKey($type === 'ed25519' ? 'ed25519' : 'rsa');
 
             return [
@@ -277,7 +277,7 @@ class PrivateKey extends BaseModel
         $testSuccess = $disk->put($testFilename, 'test');
 
         if (! $testSuccess) {
-            throw new \Exception('SSH keys storage directory is not writable. Run on the host: sudo chown -R 9999 /data/Helix Claude/ssh && sudo chmod -R 700 /data/Helix Claude/ssh && docker restart Helix Claude');
+            throw new \Exception('SSH keys storage directory is not writable. Run on the host: sudo chown -R 9999 /data/HelixClaude/ssh && sudo chmod -R 700 /data/HelixClaude/ssh && docker restart HelixClaude');
         }
 
         // Clean up test file

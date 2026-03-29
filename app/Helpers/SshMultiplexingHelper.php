@@ -204,7 +204,7 @@ class SshMultiplexingHelper
 
     private static function isMultiplexingEnabled(): bool
     {
-        return config('constants.ssh.mux_enabled') && ! config('constants.Helix Claude.is_windows_docker_desktop');
+        return config('constants.ssh.mux_enabled') && ! config('constants.HelixClaude.is_windows_docker_desktop');
     }
 
     private static function validateSshKey(PrivateKey $privateKey): void

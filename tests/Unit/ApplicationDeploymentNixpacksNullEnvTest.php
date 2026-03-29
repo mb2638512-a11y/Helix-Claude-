@@ -15,7 +15,7 @@ use App\Models\EnvironmentVariable;
  *
  * The fix ensures that:
  * 1. User-defined environment variables with null or empty values are filtered out
- * 2. Helix Claude_* environment variables with null or empty values are filtered out
+ * 2. HelixClaude_* environment variables with null or empty values are filtered out
  * 3. Only environment variables with valid non-empty values are passed to Nixpacks
  */
 it('filters out null environment variables from nixpacks build command', function () {
@@ -72,9 +72,9 @@ it('filters out null environment variables from nixpacks build command', functio
     // Mock generate_HelixClaude_env_variables to return some values including null
     $job->shouldReceive('generate_HelixClaude_env_variables')
         ->andReturn(collect([
-            'Helix Claude_FQDN' => 'example.com',
-            'Helix Claude_URL' => null,  // null value that should be filtered
-            'Helix Claude_BRANCH' => '',  // empty value that should be filtered
+            'HelixClaude_FQDN' => 'example.com',
+            'HelixClaude_URL' => null,  // null value that should be filtered
+            'HelixClaude_BRANCH' => '',  // empty value that should be filtered
             'SOURCE_COMMIT' => 'abc123',
         ]));
 
@@ -91,14 +91,14 @@ it('filters out null environment variables from nixpacks build command', functio
     // Verify that only valid environment variables are included (values are now single-quote escaped)
     expect($envArgs)->toContain("--env 'VALID_VAR=valid_value'");
     expect($envArgs)->toContain("--env 'ANOTHER_VALID_VAR=another_value'");
-    expect($envArgs)->toContain("--env 'Helix Claude_FQDN=example.com'");
+    expect($envArgs)->toContain("--env 'HelixClaude_FQDN=example.com'");
     expect($envArgs)->toContain("--env 'SOURCE_COMMIT=abc123'");
 
     // Verify that null and empty environment variables are filtered out
     expect($envArgs)->not->toContain('NULL_VAR');
     expect($envArgs)->not->toContain('EMPTY_VAR');
-    expect($envArgs)->not->toContain('Helix Claude_URL');
-    expect($envArgs)->not->toContain('Helix Claude_BRANCH');
+    expect($envArgs)->not->toContain('HelixClaude_URL');
+    expect($envArgs)->not->toContain('HelixClaude_BRANCH');
 
     // Verify no environment variables end with just '=' (which indicates null/empty value)
     expect($envArgs)->not->toMatch('/--env [A-Z_]+=$/');
@@ -151,7 +151,7 @@ it('filters out null environment variables from nixpacks preview deployments', f
     // Mock generate_HelixClaude_env_variables
     $job->shouldReceive('generate_HelixClaude_env_variables')
         ->andReturn(collect([
-            'Helix Claude_FQDN' => 'preview.example.com',
+            'HelixClaude_FQDN' => 'preview.example.com',
         ]));
 
     // Call the private method
@@ -166,7 +166,7 @@ it('filters out null environment variables from nixpacks preview deployments', f
 
     // Verify that only valid environment variables are included (values are now single-quote escaped)
     expect($envArgs)->toContain("--env 'PREVIEW_VAR=preview_value'");
-    expect($envArgs)->toContain("--env 'Helix Claude_FQDN=preview.example.com'");
+    expect($envArgs)->toContain("--env 'HelixClaude_FQDN=preview.example.com'");
 
     // Verify that null environment variables are filtered out
     expect($envArgs)->not->toContain('NULL_PREVIEW_VAR');
@@ -218,8 +218,8 @@ it('handles all environment variables being null or empty', function () {
     // Mock generate_HelixClaude_env_variables to return all null/empty values
     $job->shouldReceive('generate_HelixClaude_env_variables')
         ->andReturn(collect([
-            'Helix Claude_URL' => null,
-            'Helix Claude_BRANCH' => '',
+            'HelixClaude_URL' => null,
+            'HelixClaude_BRANCH' => '',
         ]));
 
     // Call the private method
@@ -236,39 +236,39 @@ it('handles all environment variables being null or empty', function () {
     expect($envArgs)->toBe('');
 });
 
-it('filters out null Helix Claude env variables from env_args used in nixpacks plan JSON', function () {
+it('filters out null HelixClaude env variables from env_args used in nixpacks plan JSON', function () {
     // This test verifies the fix for GitHub issue #6830:
-    // When application->fqdn is null, Helix Claude_FQDN/Helix Claude_URL get set to null
+    // When application->fqdn is null, HelixClaude_FQDN/HelixClaude_URL get set to null
     // in generate_HelixClaude_env_variables(). The generate_env_variables() method
     // merges these into env_args which become the nixpacks plan JSON "variables".
     // Nixpacks requires all variable values to be strings, so null causes:
     // "Error: Failed to parse Nixpacks config file - invalid type: null, expected a string"
 
-    // Simulate the Helix Claude env collection with null values (as produced when fqdn is null)
-    $Helix Claude_envs = collect([
-        'Helix Claude_URL' => null,
-        'Helix Claude_FQDN' => null,
-        'Helix Claude_BRANCH' => 'main',
-        'Helix Claude_RESOURCE_UUID' => 'abc123',
-        'Helix Claude_CONTAINER_NAME' => '',
+    // Simulate the HelixClaude env collection with null values (as produced when fqdn is null)
+    $HelixClaude_envs = collect([
+        'HelixClaude_URL' => null,
+        'HelixClaude_FQDN' => null,
+        'HelixClaude_BRANCH' => 'main',
+        'HelixClaude_RESOURCE_UUID' => 'abc123',
+        'HelixClaude_CONTAINER_NAME' => '',
     ]);
 
     // Apply the same filtering logic used in generate_env_variables()
     $env_args = collect([]);
-    $Helix Claude_envs->each(function ($value, $key) use ($env_args) {
+    $HelixClaude_envs->each(function ($value, $key) use ($env_args) {
         if (! is_null($value) && $value !== '') {
             $env_args->put($key, $value);
         }
     });
 
     // Null values must NOT be present — they cause nixpacks JSON parse errors
-    expect($env_args->has('Helix Claude_URL'))->toBeFalse();
-    expect($env_args->has('Helix Claude_FQDN'))->toBeFalse();
-    expect($env_args->has('Helix Claude_CONTAINER_NAME'))->toBeFalse();
+    expect($env_args->has('HelixClaude_URL'))->toBeFalse();
+    expect($env_args->has('HelixClaude_FQDN'))->toBeFalse();
+    expect($env_args->has('HelixClaude_CONTAINER_NAME'))->toBeFalse();
 
     // Non-null values must be preserved
-    expect($env_args->get('Helix Claude_BRANCH'))->toBe('main');
-    expect($env_args->get('Helix Claude_RESOURCE_UUID'))->toBe('abc123');
+    expect($env_args->get('HelixClaude_BRANCH'))->toBe('main');
+    expect($env_args->get('HelixClaude_RESOURCE_UUID'))->toBe('abc123');
 
     // The resulting array must be safe for json_encode into nixpacks config
     $json = json_encode(['variables' => $env_args->toArray()], JSON_PRETTY_PRINT);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Helix ClaudeTask;
+namespace App\Actions\HelixClaudeTask;
 
 use App\Enums\ActivityTypes;
 use App\Enums\ProcessStatus;

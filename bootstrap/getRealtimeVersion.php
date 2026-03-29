@@ -7,4 +7,4 @@ function env()
 }
 
 $version = include 'config/constants.php';
-echo $version['Helix Claude']['realtime_version'] ?: 'unknown';
+echo $version['HelixClaude']['realtime_version'] ?: 'unknown';

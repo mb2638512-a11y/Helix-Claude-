@@ -47,7 +47,7 @@ class CheckTraefikVersionForServerJob implements ShouldBeEncrypted, ShouldQueue
 
         // Check if image tag is 'latest' by inspecting the image (makes SSH call)
         $imageTag = instant_remote_process([
-            "docker inspect Helix Claude-proxy --format '{{.Config.Image}}' 2>/dev/null",
+            "docker inspect HelixClaude-proxy --format '{{.Config.Image}}' 2>/dev/null",
         ], $this->server, false);
 
         // Handle empty/null response from SSH command

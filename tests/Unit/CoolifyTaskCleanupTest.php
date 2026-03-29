@@ -1,9 +1,9 @@
 <?php
 
-use App\Jobs\Helix ClaudeTask;
+use App\Jobs\HelixClaudeTask;
 
-it('Helix ClaudeTask has failed method that handles cleanup', function () {
-    $reflection = new ReflectionClass(Helix ClaudeTask::class);
+it('HelixClaudeTask has failed method that handles cleanup', function () {
+    $reflection = new ReflectionClass(HelixClaudeTask::class);
 
     // Verify failed method exists
     expect($reflection->hasMethod('failed'))->toBeTrue();
@@ -27,8 +27,8 @@ it('Helix ClaudeTask has failed method that handles cleanup', function () {
         ->and($methodSource)->toContain('Log::info');
 });
 
-it('Helix ClaudeTask failed method updates activity status to ERROR', function () {
-    $reflection = new ReflectionClass(Helix ClaudeTask::class);
+it('HelixClaudeTask failed method updates activity status to ERROR', function () {
+    $reflection = new ReflectionClass(HelixClaudeTask::class);
     $failedMethod = $reflection->getMethod('failed');
 
     // Read the method source
@@ -46,8 +46,8 @@ it('Helix ClaudeTask failed method updates activity status to ERROR', function (
         ->and($methodSource)->toContain("'failed_at' =>");
 });
 
-it('Helix ClaudeTask failed method has proper error handling for event dispatch', function () {
-    $reflection = new ReflectionClass(Helix ClaudeTask::class);
+it('HelixClaudeTask failed method has proper error handling for event dispatch', function () {
+    $reflection = new ReflectionClass(HelixClaudeTask::class);
     $failedMethod = $reflection->getMethod('failed');
 
     // Read the method source
@@ -65,8 +65,8 @@ it('Helix ClaudeTask failed method has proper error handling for event dispatch'
         ->and($methodSource)->toContain("Log::error('Error dispatching cleanup event");
 });
 
-it('Helix ClaudeTask constructor stores call_event_on_finish and call_event_data', function () {
-    $reflection = new ReflectionClass(Helix ClaudeTask::class);
+it('HelixClaudeTask constructor stores call_event_on_finish and call_event_data', function () {
+    $reflection = new ReflectionClass(HelixClaudeTask::class);
     $constructor = $reflection->getConstructor();
 
     // Get constructor parameters

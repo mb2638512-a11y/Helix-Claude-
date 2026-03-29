@@ -106,7 +106,7 @@ YAML;
 test('exact example from security report in array format', function () {
     $dockerComposeYaml = <<<'YAML'
 services:
-  Helix Claude:
+  HelixClaude:
     image: alpine
     volumes:
       - type: bind
@@ -115,7 +115,7 @@ services:
 YAML;
 
     $parsed = Yaml::parse($dockerComposeYaml);
-    $source = $parsed['services']['Helix Claude']['volumes'][0]['source'];
+    $source = $parsed['services']['HelixClaude']['volumes'][0]['source'];
 
     // This should be caught by validation
     expect(fn () => validateShellSafePath($source, 'volume source'))

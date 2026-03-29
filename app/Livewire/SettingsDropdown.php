@@ -25,7 +25,7 @@ class SettingsDropdown extends Component
 
     public function getCurrentVersionProperty()
     {
-        return 'v'.config('constants.Helix Claude.version');
+        return 'v'.config('constants.HelixClaude.version');
     }
 
     public function openWhatsNewModal()

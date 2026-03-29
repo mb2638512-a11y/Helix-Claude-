@@ -15,8 +15,8 @@ trait HasConfiguration
             mkdir($configDir, 0755, true);
         }
 
-        $generator->saveJson($configDir.'/Helix Claude.json');
-        $generator->saveYaml($configDir.'/Helix Claude.yaml');
+        $generator->saveJson($configDir.'/HelixClaude.json');
+        $generator->saveYaml($configDir.'/HelixClaude.yaml');
 
         // Generate a README file with basic information
         file_put_contents(

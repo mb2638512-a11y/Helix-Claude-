@@ -222,7 +222,7 @@ function clone_application(Application $source, $destination, array $overrides =
 
     // Update custom labels if needed
     if ($newApplication->destination->server->proxyType() !== 'NONE' && $applicationSettings->is_container_label_readonly_enabled === true) {
-        $customLabels = str(implode('|Helix Claude|', generateLabelsApplication($newApplication)))->replace('|Helix Claude|', "\n");
+        $customLabels = str(implode('|HelixClaude|', generateLabelsApplication($newApplication)))->replace('|HelixClaude|', "\n");
         $newApplication->custom_labels = base64_encode($customLabels);
         $newApplication->save();
     }

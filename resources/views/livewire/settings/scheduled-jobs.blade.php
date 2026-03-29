@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Scheduled Job Issues | Helix Claude
+        Scheduled Job Issues | HelixClaude
     </x-slot>
     <x-settings.navbar />
     <div x-data="{ activeTab: window.location.hash ? window.location.hash.substring(1) : 'executions' }"

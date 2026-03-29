@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Queue;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    config()->set('constants.Helix Claude.self_hosted', false);
+    config()->set('constants.HelixClaude.self_hosted', false);
     config()->set('subscription.provider', 'stripe');
     config()->set('subscription.stripe_api_key', 'sk_test_fake');
     config()->set('subscription.stripe_excluded_plans', '');

@@ -28,7 +28,7 @@ use Visus\Cuid2\Cuid2;
         'server_id' => ['type' => 'integer', 'description' => 'The unique identifier of the server where the service is running.'],
         'description' => ['type' => 'string', 'description' => 'The description of the service.'],
         'docker_compose_raw' => ['type' => 'string', 'description' => 'The raw docker-compose.yml file of the service.'],
-        'docker_compose' => ['type' => 'string', 'description' => 'The docker-compose.yml file that is parsed and modified by Helix Claude.'],
+        'docker_compose' => ['type' => 'string', 'description' => 'The docker-compose.yml file that is parsed and modified by HelixClaude.'],
         'destination_type' => ['type' => 'string', 'description' => 'Destination type.'],
         'destination_id' => ['type' => 'integer', 'description' => 'The unique identifier of the destination where the service is running.'],
         'connect_to_docker_network' => ['type' => 'boolean', 'description' => 'The flag to connect the service to the predefined Docker network.'],
@@ -184,7 +184,7 @@ class Service extends BaseModel
     public function deleteConnectedNetworks()
     {
         $server = data_get($this, 'destination.server');
-        instant_remote_process(["docker network disconnect {$this->uuid} Helix Claude-proxy"], $server, false);
+        instant_remote_process(["docker network disconnect {$this->uuid} HelixClaude-proxy"], $server, false);
         instant_remote_process(["docker network rm {$this->uuid}"], $server, false);
     }
 
@@ -1562,8 +1562,8 @@ class Service extends BaseModel
             }
         }
 
-        $envs_from_Helix Claude = $this->environment_variables()->get();
-        $sorted = $envs_from_Helix Claude->sortBy(function ($env) {
+        $envs_from_HelixClaude = $this->environment_variables()->get();
+        $sorted = $envs_from_HelixClaude->sortBy(function ($env) {
             if (str($env->key)->startsWith('SERVICE_')) {
                 return 1;
             }

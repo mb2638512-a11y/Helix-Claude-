@@ -1,6 +1,6 @@
 <div x-init="$wire.loadPublicKey()">
     <x-slot:title>
-        Private Key | Helix Claude
+        Private Key | HelixClaude
     </x-slot>
     <x-security.navbar />
     <div x-data="{ showPrivateKey: false }">

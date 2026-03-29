@@ -23,7 +23,7 @@ class Test extends CustomEmailNotification
     public function toMail(): MailMessage
     {
         $mail = new MailMessage;
-        $mail->subject('Helix Claude: Test Email');
+        $mail->subject('HelixClaude: Test Email');
         $mail->view('emails.test');
 
         return $mail;

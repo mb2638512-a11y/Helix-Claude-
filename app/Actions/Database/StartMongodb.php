@@ -29,7 +29,7 @@ class StartMongodb
         $container_name = $this->database->uuid;
         $this->configuration_dir = database_configuration_dir().'/'.$container_name;
         if (isDev()) {
-            $this->configuration_dir = '/var/lib/docker/volumes/Helix Claude_dev_Helix Claude_data/_data/databases/'.$container_name;
+            $this->configuration_dir = '/var/lib/docker/volumes/HelixClaude_dev_HelixClaude_data/_data/databases/'.$container_name;
         }
 
         $this->commands = [
@@ -202,7 +202,7 @@ class StartMongodb
                 [
                     [
                         'type' => 'bind',
-                        'source' => '/data/Helix Claude/ssl/Helix Claude-ca.crt',
+                        'source' => '/data/HelixClaude/ssl/HelixClaude-ca.crt',
                         'target' => '/etc/mongo/certs/ca.pem',
                         'read_only' => true,
                     ],

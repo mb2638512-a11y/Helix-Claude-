@@ -21,7 +21,7 @@
             @if ($resourceType === 'application')
                 <x-slot:title>
                     {{ data_get_str($service, 'name')->limit(10) }} >
-                    {{ data_get_str($serviceApplication, 'name')->limit(10) }} | Helix Claude
+                    {{ data_get_str($serviceApplication, 'name')->limit(10) }} | HelixClaude
                 </x-slot>
                 <form wire:submit='submitApplication'>
                     <div class="flex items-center gap-2 pb-4">
@@ -51,7 +51,7 @@
                             <x-callout type="warning" title="Required Port: {{ $requiredPort }}" class="mb-2">
                                 This service requires port <strong>{{ $requiredPort }}</strong> to function correctly. All domains must include this port number (or any other port if you know what you're doing).
                                 <br><br>
-                                <strong>Example:</strong> http://app.Helix Claude.io:{{ $requiredPort }}
+                                <strong>Example:</strong> http://app.HelixClaude.io:{{ $requiredPort }}
                             </x-callout>
                         @endif
 
@@ -64,13 +64,13 @@
                         <div class="flex gap-2">
                             @if (!$serviceApplication->serviceType()?->contains(str($serviceApplication->image)->before(':')))
                                 @if ($serviceApplication->required_fqdn)
-                                    <x-forms.input canGate="update" :canResource="$serviceApplication" required placeholder="https://app.Helix Claude.io"
+                                    <x-forms.input canGate="update" :canResource="$serviceApplication" required placeholder="https://app.HelixClaude.io"
                                         label="Domains" id="fqdn"
-                                        helper="You can specify one domain with path or more with comma. You can specify a port to bind the domain to.<br><br><span class='text-helper'>Example</span><br>- http://app.Helix Claude.io,https://cloud.Helix Claude.io/dashboard<br>- http://app.Helix Claude.io/api/v3<br>- http://app.Helix Claude.io:3000 -> app.Helix Claude.io will point to port 3000 inside the container. "></x-forms.input>
+                                        helper="You can specify one domain with path or more with comma. You can specify a port to bind the domain to.<br><br><span class='text-helper'>Example</span><br>- http://app.HelixClaude.io,https://cloud.HelixClaude.io/dashboard<br>- http://app.HelixClaude.io/api/v3<br>- http://app.HelixClaude.io:3000 -> app.HelixClaude.io will point to port 3000 inside the container. "></x-forms.input>
                                 @else
-                                    <x-forms.input canGate="update" :canResource="$serviceApplication" placeholder="https://app.Helix Claude.io"
+                                    <x-forms.input canGate="update" :canResource="$serviceApplication" placeholder="https://app.HelixClaude.io"
                                         label="Domains" id="fqdn"
-                                        helper="You can specify one domain with path or more with comma. You can specify a port to bind the domain to.<br><br><span class='text-helper'>Example</span><br>- http://app.Helix Claude.io,https://cloud.Helix Claude.io/dashboard<br>- http://app.Helix Claude.io/api/v3<br>- http://app.Helix Claude.io:3000 -> app.Helix Claude.io will point to port 3000 inside the container. "></x-forms.input>
+                                        helper="You can specify one domain with path or more with comma. You can specify a port to bind the domain to.<br><br><span class='text-helper'>Example</span><br>- http://app.HelixClaude.io,https://cloud.HelixClaude.io/dashboard<br>- http://app.HelixClaude.io/api/v3<br>- http://app.HelixClaude.io:3000 -> app.HelixClaude.io will point to port 3000 inside the container. "></x-forms.input>
                                 @endif
                             @endif
                             <x-forms.input canGate="update" :canResource="$serviceApplication"
@@ -174,7 +174,7 @@
             @elseif ($resourceType === 'database')
                 <x-slot:title>
                     {{ data_get_str($service, 'name')->limit(10) }} >
-                    {{ data_get_str($serviceDatabase, 'name')->limit(10) }} | Helix Claude
+                    {{ data_get_str($serviceDatabase, 'name')->limit(10) }} | HelixClaude
                 </x-slot>
                 @if ($currentRoute === 'project.service.database.import')
                     <livewire:project.database.import :resource="$serviceDatabase" :key="'import-' . $serviceDatabase->uuid" />

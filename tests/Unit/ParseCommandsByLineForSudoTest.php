@@ -176,28 +176,28 @@ test('skips sudo for fi statements', function () {
     expect($result[0])->toBe('fi');
 });
 
-test('adds ownership changes for Helix Claude data paths', function () {
+test('adds ownership changes for HelixClaude data paths', function () {
     $commands = collect([
-        'mkdir -p /data/Helix Claude/logs',
+        'mkdir -p /data/HelixClaude/logs',
     ]);
 
     $result = parseCommandsByLineForSudo($commands, $this->server);
 
     // Note: The && operator adds another sudo, creating double sudo for chown/chmod
     // This is existing behavior that may need refactoring but isn't part of this bug fix
-    expect($result[0])->toBe('sudo mkdir -p /data/Helix Claude/logs && sudo sudo chown -R ubuntu:ubuntu /data/Helix Claude/logs && sudo sudo chmod -R o-rwx /data/Helix Claude/logs');
+    expect($result[0])->toBe('sudo mkdir -p /data/HelixClaude/logs && sudo sudo chown -R ubuntu:ubuntu /data/HelixClaude/logs && sudo sudo chmod -R o-rwx /data/HelixClaude/logs');
 });
 
-test('adds ownership changes for Helix Claude tmp paths', function () {
+test('adds ownership changes for HelixClaude tmp paths', function () {
     $commands = collect([
-        'mkdir -p /tmp/Helix Claude/cache',
+        'mkdir -p /tmp/HelixClaude/cache',
     ]);
 
     $result = parseCommandsByLineForSudo($commands, $this->server);
 
     // Note: The && operator adds another sudo, creating double sudo for chown/chmod
     // This is existing behavior that may need refactoring but isn't part of this bug fix
-    expect($result[0])->toBe('sudo mkdir -p /tmp/Helix Claude/cache && sudo sudo chown -R ubuntu:ubuntu /tmp/Helix Claude/cache && sudo sudo chmod -R o-rwx /tmp/Helix Claude/cache');
+    expect($result[0])->toBe('sudo mkdir -p /tmp/HelixClaude/cache && sudo sudo chown -R ubuntu:ubuntu /tmp/HelixClaude/cache && sudo sudo chmod -R o-rwx /tmp/HelixClaude/cache');
 });
 
 test('does not add ownership changes for system paths', function () {
@@ -403,19 +403,19 @@ test('skips sudo for bash control structure keywords - elif', function () {
 test('handles real-world proxy startup with for loop from StartProxy action', function () {
     // This is the exact command structure that was causing the bug in issue #7346
     $commands = collect([
-        'if docker ps -a --format "{{.Names}}" | grep -q "^Helix Claude-proxy$"; then',
-        "    echo 'Stopping and removing existing Helix Claude-proxy.'",
-        '    docker stop Helix Claude-proxy 2>/dev/null || true',
-        '    docker rm -f Helix Claude-proxy 2>/dev/null || true',
+        'if docker ps -a --format "{{.Names}}" | grep -q "^HelixClaude-proxy$"; then',
+        "    echo 'Stopping and removing existing HelixClaude-proxy.'",
+        '    docker stop HelixClaude-proxy 2>/dev/null || true',
+        '    docker rm -f HelixClaude-proxy 2>/dev/null || true',
         '    # Wait for container to be fully removed',
         '    for i in {1..10}; do',
-        '        if ! docker ps -a --format "{{.Names}}" | grep -q "^Helix Claude-proxy$"; then',
+        '        if ! docker ps -a --format "{{.Names}}" | grep -q "^HelixClaude-proxy$"; then',
         '            break',
         '        fi',
-        '        echo "Waiting for Helix Claude-proxy to be removed... ($i/10)"',
+        '        echo "Waiting for HelixClaude-proxy to be removed... ($i/10)"',
         '        sleep 1',
         '    done',
-        "    echo 'Successfully stopped and removed existing Helix Claude-proxy.'",
+        "    echo 'Successfully stopped and removed existing HelixClaude-proxy.'",
         'fi',
     ]);
 

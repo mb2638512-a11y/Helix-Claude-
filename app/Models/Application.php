@@ -104,7 +104,7 @@ use Visus\Cuid2\Cuid2;
         'created_at' => ['type' => 'string', 'format' => 'date-time', 'description' => 'The date and time when the application was created.'],
         'updated_at' => ['type' => 'string', 'format' => 'date-time', 'description' => 'The date and time when the application was last updated.'],
         'deleted_at' => ['type' => 'string', 'format' => 'date-time', 'nullable' => true, 'description' => 'The date and time when the application was deleted.'],
-        'compose_parsing_version' => ['type' => 'string', 'description' => 'How Helix Claude parse the compose file.'],
+        'compose_parsing_version' => ['type' => 'string', 'description' => 'How HelixClaude parse the compose file.'],
         'custom_nginx_configuration' => ['type' => 'string', 'nullable' => true, 'description' => 'Custom Nginx configuration base64 encoded.'],
         'is_http_basic_auth_enabled' => ['type' => 'boolean', 'description' => 'HTTP Basic Authentication enabled.'],
         'http_basic_auth_username' => ['type' => 'string', 'nullable' => true, 'description' => 'Username for HTTP Basic Authentication'],
@@ -399,7 +399,7 @@ class Application extends BaseModel
     {
         $uuid = $this->uuid;
         $server = data_get($this, 'destination.server');
-        instant_remote_process(["docker network disconnect {$uuid} Helix Claude-proxy"], $server, false);
+        instant_remote_process(["docker network disconnect {$uuid} HelixClaude-proxy"], $server, false);
         instant_remote_process(["docker network rm {$uuid}"], $server, false);
     }
 
@@ -1346,7 +1346,7 @@ class Application extends BaseModel
             $git_clone_command = "git clone{$depthFlag}{$submoduleFlags} --no-checkout -b {$escapedBranch}";
         }
         if ($pull_request_id !== 0) {
-            $pr_branch_name = "pr-{$pull_request_id}-Helix Claude";
+            $pr_branch_name = "pr-{$pull_request_id}-HelixClaude";
         }
         if ($this->deploymentType() === 'source') {
             $source_html_url = data_get($this, 'source.html_url');
@@ -1637,14 +1637,14 @@ class Application extends BaseModel
                 }
             }
             $labels = collect(data_get($service, 'labels', []));
-            if (! $labels->contains('Helix Claude.managed')) {
-                $labels->push('Helix Claude.managed=true');
+            if (! $labels->contains('HelixClaude.managed')) {
+                $labels->push('HelixClaude.managed=true');
             }
-            if (! $labels->contains('Helix Claude.applicationId')) {
-                $labels->push('Helix Claude.applicationId='.$this->id);
+            if (! $labels->contains('HelixClaude.applicationId')) {
+                $labels->push('HelixClaude.applicationId='.$this->id);
             }
-            if (! $labels->contains('Helix Claude.type')) {
-                $labels->push('Helix Claude.type=application');
+            if (! $labels->contains('HelixClaude.type')) {
+                $labels->push('HelixClaude.type=application');
             }
             data_set($service, 'labels', $labels->toArray());
 
@@ -1809,7 +1809,7 @@ class Application extends BaseModel
         }
         $customLabels = base64_decode($this->custom_labels);
         if (mb_detect_encoding($customLabels, 'UTF-8', true) === false) {
-            $customLabels = str(implode('|Helix Claude|', generateLabelsApplication($this, $preview)))->replace('|Helix Claude|', "\n");
+            $customLabels = str(implode('|HelixClaude|', generateLabelsApplication($this, $preview)))->replace('|HelixClaude|', "\n");
         }
         $this->custom_labels = base64_encode($customLabels);
         $this->save();

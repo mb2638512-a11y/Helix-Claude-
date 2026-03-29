@@ -15,7 +15,7 @@ class VolumeCloneJob implements ShouldBeEncrypted, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected string $cloneDir = '/data/Helix Claude/clone';
+    protected string $cloneDir = '/data/HelixClaude/clone';
 
     public function __construct(
         protected string $sourceVolume,

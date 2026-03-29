@@ -168,13 +168,13 @@
                                                 :src='service.logo'
                                                 x-on:error.window="$event.target.src = service.logo_github_url"
                                                 onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');"
-                                                x-on:error="$event.target.src = '/Helix Claude-logo.svg'"
+                                                x-on:error="$event.target.src = '/HelixClaude-logo.svg'"
                                                 :data-fallback='service.logo_github_url' />
                                         </template>
                                     </x-slot:logo>
                                 </x-resource-view>
                                 <template x-if="shouldShowDocIcon(service)">
-                                    <a :href="getDocLink(service) || Helix ClaudeDocsUrl(service.name)" target="_blank"
+                                    <a :href="getDocLink(service) || HelixClaudeDocsUrl(service.name)" target="_blank"
                                         @click.stop @mouseenter="resolveDocLink(service)"
                                         class="absolute top-2 right-2 p-1.5 rounded hover:bg-neutral-200 dark:hover:bg-coolgray-300 transition-colors"
                                         :class="{ 'opacity-50': docCheckInProgress[service.name] }"
@@ -244,9 +244,9 @@
                             // Remove flavor suffixes: -with-*, -without-*
                             return normalized.replace(/-(with|without)-.+$/, '');
                         },
-                        Helix ClaudeDocsUrl(serviceName) {
+                        HelixClaudeDocsUrl(serviceName) {
                             const baseName = this.extractBaseServiceName(serviceName);
-                            return 'https://Helix Claude.io/docs/services/' + baseName;
+                            return 'https://HelixClaude.io/docs/services/' + baseName;
                         },
                         officialDocsUrl(service) {
                             return service.documentation || null;
@@ -278,14 +278,14 @@
 
                             this.docCheckInProgress[serviceName] = true;
 
-                            // 1. Try Helix Claude docs first
-                            const Helix ClaudeUrl = this.Helix ClaudeDocsUrl(serviceName);
-                            const Helix ClaudeExists = await this.checkUrlExists(Helix ClaudeUrl);
+                            // 1. Try HelixClaude docs first
+                            const HelixClaudeUrl = this.HelixClaudeDocsUrl(serviceName);
+                            const HelixClaudeExists = await this.checkUrlExists(HelixClaudeUrl);
 
-                            if (Helix ClaudeExists) {
-                                this.docLinkCache[serviceName] = Helix ClaudeUrl;
+                            if (HelixClaudeExists) {
+                                this.docLinkCache[serviceName] = HelixClaudeUrl;
                                 this.docCheckInProgress[serviceName] = false;
-                                return Helix ClaudeUrl;
+                                return HelixClaudeUrl;
                             }
 
                             // 2. Fall back to official docs
@@ -416,7 +416,7 @@
         <h2>Select a destination</h2>
         <div class="pb-4">Destinations are used to segregate resources by network. If you are unsure, select the
             default
-            Standalone Docker (Helix Claude).</div>
+            Standalone Docker (HelixClaude).</div>
         <div class="flex flex-col justify-center gap-4 text-left xl:flex-row xl:flex-wrap">
             @if ($server->isSwarm())
                 @foreach ($swarmDockers as $swarmDocker)

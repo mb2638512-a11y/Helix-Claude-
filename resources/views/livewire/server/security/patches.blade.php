@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        {{ data_get_str($server, 'name')->limit(10) }} > Security | Helix Claude
+        {{ data_get_str($server, 'name')->limit(10) }} > Security | HelixClaude
     </x-slot>
     <livewire:server.navbar :server="$server" />
     <x-slide-over closeWithX fullScreen @startupdate.window="slideOverOpen = true">

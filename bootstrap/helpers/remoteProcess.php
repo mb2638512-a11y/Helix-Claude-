@@ -1,7 +1,7 @@
 <?php
 
-use App\Actions\Helix ClaudeTask\PrepareHelix ClaudeTask;
-use App\Data\Helix ClaudeTaskArgs;
+use App\Actions\HelixClaudeTask\PrepareHelixClaudeTask;
+use App\Data\HelixClaudeTaskArgs;
 use App\Enums\ActivityTypes;
 use App\Helpers\SshMultiplexingHelper;
 use App\Models\Application;
@@ -44,8 +44,8 @@ function remote_process(
 
     SshMultiplexingHelper::ensureMultiplexedConnection($server);
 
-    return resolve(PrepareHelix ClaudeTask::class, [
-        'remoteProcessArgs' => new Helix ClaudeTaskArgs(
+    return resolve(PrepareHelixClaudeTask::class, [
+        'remoteProcessArgs' => new HelixClaudeTaskArgs(
             server_uuid: $server->uuid,
             command: $command_string,
             type: $type,
@@ -276,7 +276,7 @@ function remove_iip($text)
     $text = preg_replace('/\x1b\[[0-9;]*m/', '', $text);
 
     // Generic URLs with passwords (covers database URLs, ftp, amqp, ssh, git basic auth, etc.)
-    // (protocol://user:password@host → protocol://user:<REDACTED>@host)
+    // (protocol://user:password@host â†’ protocol://user:<REDACTED>@host)
     $text = preg_replace('/((?:https?|postgres|mysql|mongodb|rediss?|mariadb|ftp|sftp|ssh|amqp|amqps|ldap|ldaps|s3):\/\/[^:]+:)[^@]+(@)/i', '$1'.REDACTED.'$2', $text);
 
     // Email addresses

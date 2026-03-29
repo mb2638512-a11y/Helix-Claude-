@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\LaravelData\Data;
 
 /**
- * The parameters to execute a Helix ClaudeTask, organized in a DTO.
+ * The parameters to execute a HelixClaudeTask, organized in a DTO.
  */
-class Helix ClaudeTaskArgs extends Data
+class HelixClaudeTaskArgs extends Data
 {
     public function __construct(
         public string $server_uuid,

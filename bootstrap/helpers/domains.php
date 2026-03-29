@@ -124,10 +124,10 @@ function checkDomainUsage(ServiceApplication|Application|null $resource = null, 
             if ($domains->contains($naked_domain)) {
                 $conflicts[] = [
                     'domain' => $naked_domain,
-                    'resource_name' => 'Helix Claude Instance',
+                    'resource_name' => 'HelixClaude Instance',
                     'resource_link' => '#',
                     'resource_type' => 'instance',
-                    'message' => "Domain $naked_domain is already in use by this Helix Claude instance",
+                    'message' => "Domain $naked_domain is already in use by this HelixClaude instance",
                 ];
             }
         }
@@ -249,10 +249,10 @@ function checkIfDomainIsAlreadyUsedViaAPI(Collection|array $domains, ?string $te
         if ($domains->contains($naked_domain)) {
             $conflicts[] = [
                 'domain' => $naked_domain,
-                'resource_name' => 'Helix Claude Instance',
+                'resource_name' => 'HelixClaude Instance',
                 'resource_uuid' => null,
                 'resource_type' => 'instance',
-                'message' => "Domain $naked_domain is already in use by this Helix Claude instance",
+                'message' => "Domain $naked_domain is already in use by this HelixClaude instance",
             ];
         }
     }

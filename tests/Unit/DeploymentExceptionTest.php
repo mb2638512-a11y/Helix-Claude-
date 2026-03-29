@@ -57,8 +57,8 @@ test('DeploymentException is not reported when thrown', function () {
 test('RuntimeException is still reported when thrown', function () {
     $handler = new Handler(app());
 
-    // RuntimeException should still be reported (this is for Helix Claude bugs)
-    $exception = new RuntimeException('Unexpected error in Helix Claude code');
+    // RuntimeException should still be reported (this is for HelixClaude bugs)
+    $exception = new RuntimeException('Unexpected error in HelixClaude code');
 
     // Check that the exception should be reported
     $reflection = new ReflectionClass($handler);

@@ -53,7 +53,7 @@ class StartDatabaseProxy
         $configuration_dir = database_proxy_dir($database->uuid);
         $host_configuration_dir = $configuration_dir;
         if (isDev()) {
-            $host_configuration_dir = '/var/lib/docker/volumes/Helix Claude_dev_Helix Claude_data/_data/databases/'.$database->uuid.'/proxy';
+            $host_configuration_dir = '/var/lib/docker/volumes/HelixClaude_dev_HelixClaude_data/_data/databases/'.$database->uuid.'/proxy';
         }
         $timeoutConfig = $this->buildProxyTimeoutConfig($database->public_port_timeout);
         $nginxconf = <<<EOF

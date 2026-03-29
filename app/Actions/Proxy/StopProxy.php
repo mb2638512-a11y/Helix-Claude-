@@ -15,7 +15,7 @@ class StopProxy
     public function handle(Server $server, bool $forceStop = true, int $timeout = 30, bool $restarting = false)
     {
         try {
-            $containerName = $server->isSwarm() ? 'Helix Claude-proxy_traefik' : 'Helix Claude-proxy';
+            $containerName = $server->isSwarm() ? 'HelixClaude-proxy_traefik' : 'HelixClaude-proxy';
             $server->proxy->status = 'stopping';
             $server->save();
 

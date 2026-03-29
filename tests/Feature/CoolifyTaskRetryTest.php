@@ -1,13 +1,13 @@
 <?php
 
-use App\Jobs\Helix ClaudeTask;
+use App\Jobs\HelixClaudeTask;
 use App\Models\Server;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 
 uses(RefreshDatabase::class);
 
-it('can dispatch Helix ClaudeTask successfully', function () {
+it('can dispatch HelixClaudeTask successfully', function () {
     // Skip if no servers available
     $server = Server::where('ip', '!=', '1.2.3.4')->first();
 
@@ -28,7 +28,7 @@ it('can dispatch Helix ClaudeTask successfully', function () {
         ->log('[]');
 
     // Dispatch the job
-    Helix ClaudeTask::dispatch(
+    HelixClaudeTask::dispatch(
         activity: $activity,
         ignore_errors: false,
         call_event_on_finish: null,
@@ -36,10 +36,10 @@ it('can dispatch Helix ClaudeTask successfully', function () {
     );
 
     // Assert job was dispatched
-    Queue::assertPushed(Helix ClaudeTask::class);
+    Queue::assertPushed(HelixClaudeTask::class);
 });
 
-it('has correct retry configuration on Helix ClaudeTask', function () {
+it('has correct retry configuration on HelixClaudeTask', function () {
     $server = Server::where('ip', '!=', '1.2.3.4')->first();
 
     if (! $server) {
@@ -55,7 +55,7 @@ it('has correct retry configuration on Helix ClaudeTask', function () {
         ->event('inline')
         ->log('[]');
 
-    $job = new Helix ClaudeTask(
+    $job = new HelixClaudeTask(
         activity: $activity,
         ignore_errors: false,
         call_event_on_finish: null,

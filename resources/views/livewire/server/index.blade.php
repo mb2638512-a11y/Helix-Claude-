@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Servers | Helix Claude
+        Servers | HelixClaude
     </x-slot>
     <div class="flex items-center gap-2">
         <h1>Servers</h1>
@@ -33,7 +33,7 @@
                             &
                         @endif
                         @if (!$server->settings->is_usable)
-                            <span>Not usable by Helix Claude</span>
+                            <span>Not usable by HelixClaude</span>
                         @endif
                         @if ($server->settings->force_disabled)
                             <span>Disabled by the system</span>

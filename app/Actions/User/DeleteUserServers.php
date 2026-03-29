@@ -52,9 +52,9 @@ class DeleteUserServers
 
         foreach ($servers as $server) {
             try {
-                // Skip the default server (ID 0) which is the Helix Claude host
+                // Skip the default server (ID 0) which is the HelixClaude host
                 if ($server->id === 0) {
-                    \Log::info('Skipping deletion of Helix Claude host server (ID: 0)');
+                    \Log::info('Skipping deletion of HelixClaude host server (ID: 0)');
 
                     continue;
                 }

@@ -1,5 +1,5 @@
 <div>
-    <x-slot:title>{{ data_get_str($application, 'name')->limit(10) }} > Deployments | Helix Claude</x-slot>
+    <x-slot:title>{{ data_get_str($application, 'name')->limit(10) }} > Deployments | HelixClaude</x-slot>
     <h1>Deployments</h1>
     <livewire:project.shared.configuration-checker :resource="$application" />
     <livewire:project.application.heading :application="$application" />

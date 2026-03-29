@@ -1,6 +1,6 @@
 <?php
 
-use App\Actions\Server\UpdateHelix Claude;
+use App\Actions\Server\UpdateHelixClaude;
 use App\Models\InstanceSettings;
 use App\Models\Server;
 use Illuminate\Support\Facades\Cache;
@@ -21,8 +21,8 @@ afterEach(function () {
     Mockery::close();
 });
 
-it('has UpdateHelix Claude action class', function () {
-    expect(class_exists(UpdateHelix Claude::class))->toBeTrue();
+it('has UpdateHelixClaude action class', function () {
+    expect(class_exists(UpdateHelixClaude::class))->toBeTrue();
 });
 
 it('validates cache against running version before fallback', function () {
@@ -41,11 +41,11 @@ it('validates cache against running version before fallback', function () {
 
     // Mock cache returning older version
     Cache::shouldReceive('remember')
-        ->andReturn(['Helix Claude' => ['v4' => ['version' => '4.0.5']]]);
+        ->andReturn(['HelixClaude' => ['v4' => ['version' => '4.0.5']]]);
 
-    config(['constants.Helix Claude.version' => '4.0.10']);
+    config(['constants.HelixClaude.version' => '4.0.10']);
 
-    $action = new UpdateHelix Claude;
+    $action = new UpdateHelixClaude;
 
     // Should throw exception - cache is older than running
     try {
@@ -74,12 +74,12 @@ it('uses validated cache when CDN fails and cache is newer', function () {
 
     // Cache has newer version than current
     Cache::shouldReceive('remember')
-        ->andReturn(['Helix Claude' => ['v4' => ['version' => '4.0.10']]]);
+        ->andReturn(['HelixClaude' => ['v4' => ['version' => '4.0.10']]]);
 
-    config(['constants.Helix Claude.version' => '4.0.5']);
+    config(['constants.HelixClaude.version' => '4.0.5']);
 
     // Mock the update method to prevent actual update
-    $action = Mockery::mock(UpdateHelix Claude::class)->makePartial();
+    $action = Mockery::mock(UpdateHelixClaude::class)->makePartial();
     $action->shouldReceive('update')->once();
     $action->server = $this->mockServer;
 
@@ -107,14 +107,14 @@ it('prevents downgrade even with manual update', function () {
     // CDN returns older version
     Http::fake([
         '*' => Http::response([
-            'Helix Claude' => ['v4' => ['version' => '4.0.0']],
+            'HelixClaude' => ['v4' => ['version' => '4.0.0']],
         ], 200),
     ]);
 
     // Current version is newer
-    config(['constants.Helix Claude.version' => '4.0.10']);
+    config(['constants.HelixClaude.version' => '4.0.10']);
 
-    $action = new UpdateHelix Claude;
+    $action = new UpdateHelixClaude;
 
     \Illuminate\Support\Facades\Log::shouldReceive('error')
         ->once()

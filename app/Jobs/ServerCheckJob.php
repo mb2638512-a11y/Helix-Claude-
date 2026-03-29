@@ -73,9 +73,9 @@ class ServerCheckJob implements ShouldBeEncrypted, ShouldQueue
                     $this->server->proxyType();
                     $foundProxyContainer = $this->containers->filter(function ($value, $key) {
                         if ($this->server->isSwarm()) {
-                            return data_get($value, 'Spec.Name') === 'Helix Claude-proxy_traefik';
+                            return data_get($value, 'Spec.Name') === 'HelixClaude-proxy_traefik';
                         } else {
-                            return data_get($value, 'Name') === '/Helix Claude-proxy';
+                            return data_get($value, 'Name') === '/HelixClaude-proxy';
                         }
                     })->first();
                     if (! $foundProxyContainer) {
@@ -83,7 +83,7 @@ class ServerCheckJob implements ShouldBeEncrypted, ShouldQueue
                             $shouldStart = CheckProxy::run($this->server);
                             if ($shouldStart) {
                                 StartProxy::run($this->server, async: false);
-                                $this->server->team?->notify(new ContainerRestarted('Helix Claude-proxy', $this->server));
+                                $this->server->team?->notify(new ContainerRestarted('HelixClaude-proxy', $this->server));
                             }
                         } catch (\Throwable $e) {
                         }
@@ -102,7 +102,7 @@ class ServerCheckJob implements ShouldBeEncrypted, ShouldQueue
     private function checkLogDrainContainer()
     {
         $foundLogDrainContainer = $this->containers->filter(function ($value, $key) {
-            return data_get($value, 'Name') === '/Helix Claude-log-drain';
+            return data_get($value, 'Name') === '/HelixClaude-log-drain';
         })->first();
         if ($foundLogDrainContainer) {
             $status = data_get($foundLogDrainContainer, 'State.Status');

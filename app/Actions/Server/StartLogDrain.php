@@ -52,11 +52,11 @@ class StartLogDrain
 [FILTER]
     Name                modify
     Match               *
-    Set                 Helix Claude.server_name {$server->name}
-    Rename              Helix Claude_APP_NAME Helix Claude.app_name
-    Rename              Helix Claude_PROJECT_NAME Helix Claude.project_name
-    Rename              Helix Claude_SERVER_IP Helix Claude.server_ip
-    Rename              Helix Claude_ENVIRONMENT_NAME Helix Claude.environment_name
+    Set                 HelixClaude.server_name {$server->name}
+    Rename              HelixClaude_APP_NAME HelixClaude.app_name
+    Rename              HelixClaude_PROJECT_NAME HelixClaude.project_name
+    Rename              HelixClaude_SERVER_IP HelixClaude.server_ip
+    Rename              HelixClaude_ENVIRONMENT_NAME HelixClaude.environment_name
 [OUTPUT]
     Name nrlogs
     Match *
@@ -107,11 +107,11 @@ class StartLogDrain
 [FILTER]
     Name                modify
     Match               *
-    Set                 Helix Claude.server_name {$server->name}
-    Rename              Helix Claude_APP_NAME Helix Claude.app_name
-    Rename              Helix Claude_PROJECT_NAME Helix Claude.project_name
-    Rename              Helix Claude_SERVER_IP Helix Claude.server_ip
-    Rename              Helix Claude_ENVIRONMENT_NAME Helix Claude.environment_name
+    Set                 HelixClaude.server_name {$server->name}
+    Rename              HelixClaude_APP_NAME HelixClaude.app_name
+    Rename              HelixClaude_PROJECT_NAME HelixClaude.project_name
+    Rename              HelixClaude_SERVER_IP HelixClaude.server_ip
+    Rename              HelixClaude_ENVIRONMENT_NAME HelixClaude.environment_name
 [OUTPUT]
     Name            http
     Match           *
@@ -145,9 +145,9 @@ class StartLogDrain
             }
             $compose = base64_encode('
 services:
-  Helix Claude-log-drain:
+  HelixClaude-log-drain:
     image: cr.fluentbit.io/fluent/fluent-bit:2.0
-    container_name: Helix Claude-log-drain
+    container_name: HelixClaude-log-drain
     command: -c /fluent-bit.conf
     env_file:
       - .env
@@ -157,7 +157,7 @@ services:
     ports:
       - 127.0.0.1:24224:24224
     labels:
-      - Helix Claude.managed=true
+      - HelixClaude.managed=true
     restart: unless-stopped
 ');
             $readme = base64_encode('# New Relic Log Drain
@@ -170,7 +170,7 @@ Files:
 ');
             $license_key = $server->settings->logdrain_newrelic_license_key;
             $base_uri = $server->settings->logdrain_newrelic_base_uri;
-            $base_path = config('constants.Helix Claude.base_config_path');
+            $base_path = config('constants.HelixClaude.base_config_path');
 
             $config_path = $base_path.'/log-drains';
             $fluent_bit_config = $config_path.'/fluent-bit.conf';

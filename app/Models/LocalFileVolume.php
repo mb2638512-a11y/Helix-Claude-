@@ -258,7 +258,7 @@ class LocalFileVolume extends BaseModel
 
             // Check each volume to find a match
             // Note: We match on mount_path (container path) only, since fs_path gets transformed
-            // from relative (./file) to absolute (/data/Helix Claude/services/uuid/file) during parsing
+            // from relative (./file) to absolute (/data/HelixClaude/services/uuid/file) during parsing
             foreach ($volumes as $volume) {
                 // Volume can be string like "host:container:ro" or "host:container"
                 if (is_string($volume)) {

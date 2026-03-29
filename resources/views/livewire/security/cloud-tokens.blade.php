@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Cloud Tokens | Helix Claude
+        Cloud Tokens | HelixClaude
     </x-slot>
     <x-security.navbar />
     <livewire:security.cloud-provider-tokens />

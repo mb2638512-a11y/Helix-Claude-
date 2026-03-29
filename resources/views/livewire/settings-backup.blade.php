@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Settings | Helix Claude
+        Settings | HelixClaude
     </x-slot>
     <x-settings.navbar />
     <div class="flex flex-col">
@@ -12,7 +12,7 @@
                 </x-forms.button>
             @endif
         </div>
-        <div class="pb-4">Backup configuration for Helix Claude instance.</div>
+        <div class="pb-4">Backup configuration for HelixClaude instance.</div>
         <div>
             @if ($server->isFunctional())
                 @if (isset($database) && isset($backup))
@@ -32,8 +32,8 @@
                         <livewire:project.database.backup-executions :backup="$backup" />
                     </div>
                 @else
-                    To configure automatic backup for your Helix Claude instance, you first need to add a database resource
-                    into Helix Claude.
+                    To configure automatic backup for your HelixClaude instance, you first need to add a database resource
+                    into HelixClaude.
                     <x-forms.button class="mt-2" wire:click="addHelixClaudeDatabase">Configure Backup</x-forms.button>
                 @endif
             @else

@@ -29,8 +29,8 @@ class StartSentinel
         }
         $endpoint = data_get($server, 'settings.sentinel_custom_url');
         $debug = data_get($server, 'settings.is_sentinel_debug_enabled');
-        $mountDir = '/data/Helix Claude/sentinel';
-        $image = config('constants.Helix Claude.registry_url').'/coollabsio/sentinel:'.$version;
+        $mountDir = '/data/HelixClaude/sentinel';
+        $image = config('constants.HelixClaude.registry_url').'/coollabsio/sentinel:'.$version;
         if (! $endpoint) {
             throw new \RuntimeException('You should set FQDN in Instance Settings.');
         }
@@ -44,21 +44,21 @@ class StartSentinel
             'COLLECTOR_RETENTION_PERIOD_DAYS' => $metricsHistory,
         ];
         $labels = [
-            'Helix Claude.managed' => 'true',
+            'HelixClaude.managed' => 'true',
         ];
         if (isDev()) {
             // data_set($environments, 'DEBUG', 'true');
             if ($customImage && ! empty($customImage)) {
                 $image = $customImage;
             }
-            $mountDir = '/var/lib/docker/volumes/Helix Claude_dev_Helix Claude_data/_data/sentinel';
+            $mountDir = '/var/lib/docker/volumes/HelixClaude_dev_HelixClaude_data/_data/sentinel';
         }
         $dockerEnvironments = implode(' ', array_map(fn ($key, $value) => '-e '.escapeshellarg("$key=$value"), array_keys($environments), $environments));
         $dockerLabels = implode(' ', array_map(fn ($key, $value) => "$key=$value", array_keys($labels), $labels));
-        $dockerCommand = "docker run -d $dockerEnvironments --name Helix Claude-sentinel -v /var/run/docker.sock:/var/run/docker.sock -v $mountDir:/app/db --pid host --health-cmd \"curl --fail http://127.0.0.1:8888/api/health || exit 1\" --health-interval 10s --health-retries 3 --add-host=host.docker.internal:host-gateway --label $dockerLabels $image";
+        $dockerCommand = "docker run -d $dockerEnvironments --name HelixClaude-sentinel -v /var/run/docker.sock:/var/run/docker.sock -v $mountDir:/app/db --pid host --health-cmd \"curl --fail http://127.0.0.1:8888/api/health || exit 1\" --health-interval 10s --health-retries 3 --add-host=host.docker.internal:host-gateway --label $dockerLabels $image";
 
         instant_remote_process([
-            'docker rm -f Helix Claude-sentinel || true',
+            'docker rm -f HelixClaude-sentinel || true',
             "mkdir -p $mountDir",
             $dockerCommand,
             "chown -R 9999:root $mountDir",

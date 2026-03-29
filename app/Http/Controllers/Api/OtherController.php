@@ -11,7 +11,7 @@ class OtherController extends Controller
 {
     #[OA\Get(
         summary: 'Version',
-        description: 'Get Helix Claude version.',
+        description: 'Get HelixClaude version.',
         path: '/version',
         operationId: 'version',
         security: [
@@ -38,7 +38,7 @@ class OtherController extends Controller
     )]
     public function version(Request $request)
     {
-        return response(config('constants.Helix Claude.version'));
+        return response(config('constants.HelixClaude.version'));
     }
 
     #[OA\Get(

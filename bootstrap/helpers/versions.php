@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\File;
  */
 function get_versions_data(): ?array
 {
-    return Cache::remember('Helix Claude:versions:all', 3600, function () {
+    return Cache::remember('HelixClaude:versions:all', 3600, function () {
         $versionsPath = base_path('versions.json');
 
         if (! File::exists($versionsPath)) {
@@ -49,5 +49,5 @@ function get_traefik_versions(): ?array
  */
 function invalidate_versions_cache(): void
 {
-    Cache::forget('Helix Claude:versions:all');
+    Cache::forget('HelixClaude:versions:all');
 }

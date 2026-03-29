@@ -1,13 +1,13 @@
 @php use App\Enums\ProxyTypes; @endphp
 <x-slot:title>
-    Onboarding | Helix Claude
+    Onboarding | HelixClaude
     </x-slot>
     <section class="w-full">
         <div class="flex flex-col items-center w-full space-y-8">
             @if ($currentState === 'welcome')
                 <div class="w-full max-w-2xl text-center space-y-8">
                     <div class="space-y-4">
-                        <h1 class="text-4xl font-bold lg:text-6xl">Welcome to Helix Claude</h1>
+                        <h1 class="text-4xl font-bold lg:text-6xl">Welcome to HelixClaude</h1>
                         <p class="text-lg lg:text-xl dark:text-neutral-400">
                             Connect your first server and start deploying in minutes
                         </p>
@@ -81,12 +81,12 @@
                 <x-boarding-progress :currentStep="0" />
                 <x-boarding-step title="Platform Overview">
                     <x-slot:question>
-                        Helix Claude automates deployment and infrastructure management on your own servers. Deploy applications
+                        HelixClaude automates deployment and infrastructure management on your own servers. Deploy applications
                         from Git, manage databases, and monitor everything—without vendor lock-in.
                     </x-slot:question>
                     <x-slot:explanation>
                         <p>
-                            <x-highlighted text="Automation:" /> Helix Claude handles server configuration, Docker management,
+                            <x-highlighted text="Automation:" /> HelixClaude handles server configuration, Docker management,
                             and
                             deployments automatically.
                         </p>
@@ -132,7 +132,7 @@
                                     <div>
                                         <h3 class="text-xl font-bold mb-2">This Machine</h3>
                                         <p class="text-sm dark:text-neutral-400">
-                                            Deploy on the server running Helix Claude. Best for testing and single-server setups.
+                                            Deploy on the server running HelixClaude. Best for testing and single-server setups.
                                         </p>
                                     </div>
                                 </div>
@@ -212,7 +212,7 @@
                                         <p class="text-xs mt-1">
                                             Non-root user is experimental:
                                             <a class="font-bold underline" target="_blank"
-                                                href="https://Helix Claude.io/docs/knowledge-base/server/non-root-user">docs</a>
+                                                href="https://HelixClaude.io/docs/knowledge-base/server/non-root-user">docs</a>
                                         </p>
                                     </div>
                                 </div>
@@ -223,14 +223,14 @@
                                         <li>The correct public key is in your <code
                                                 class="bg-red-200 dark:bg-red-900 px-1 rounded-sm">~/.ssh/authorized_keys</code>
                                             file for the specified user</li>
-                                        <li>Or skip the boarding process and manually add a new private key to Helix Claude and
+                                        <li>Or skip the boarding process and manually add a new private key to HelixClaude and
                                             the server</li>
                                     </ul>
                                 </div>
 
                                 <p class="mb-4">
                                     For more help, check this <a target="_blank" class="underline font-semibold"
-                                        href="https://Helix Claude.io/docs/knowledge-base/server/openssh">documentation</a>.
+                                        href="https://HelixClaude.io/docs/knowledge-base/server/openssh">documentation</a>.
                                 </p>
 
                                 <x-forms.input readonly id="serverPublicKey" class="mb-4"
@@ -248,7 +248,7 @@
                             called resources). All CPU-intensive operations run on the target server.
                         </p>
                         <p>
-                            <x-highlighted text="Localhost:" /> The machine running Helix Claude. Not recommended for production
+                            <x-highlighted text="Localhost:" /> The machine running HelixClaude. Not recommended for production
                             workloads due to resource contention.
                         </p>
                         <p>
@@ -336,7 +336,7 @@
                             file.
                         </p>
                         <p>
-                            <x-highlighted text="Key Generation:" /> Helix Claude generates ED25519 keys by default for optimal
+                            <x-highlighted text="Key Generation:" /> HelixClaude generates ED25519 keys by default for optimal
                             security and performance.
                         </p>
                     </x-slot:explanation>
@@ -386,7 +386,7 @@
                     </x-slot:actions>
                     <x-slot:explanation>
                         <p>
-                            <x-highlighted text="Key Storage:" /> Private keys are encrypted at rest in Helix Claude's database.
+                            <x-highlighted text="Key Storage:" /> Private keys are encrypted at rest in HelixClaude's database.
                         </p>
                         <p>
                             <x-highlighted text="Public Key Distribution:" /> Deploy the public key to
@@ -444,7 +444,7 @@
                                         <p class="mt-1 text-xs dark:text-white text-black">
                                             Non-root user support is experimental.
                                             <a class="font-bold underline hover:text-coollabs" target="_blank"
-                                                href="https://Helix Claude.io/docs/knowledge-base/server/non-root-user">Learn
+                                                href="https://HelixClaude.io/docs/knowledge-base/server/non-root-user">Learn
                                                 more</a>
                                         </p>
                                     </div>
@@ -473,7 +473,7 @@
                 <x-boarding-progress :currentStep="2" />
                 <x-boarding-step title="Server Validation">
                     <x-slot:question>
-                        Helix Claude will automatically install Docker {{ $minDockerVersion }}+ if not present.
+                        HelixClaude will automatically install Docker {{ $minDockerVersion }}+ if not present.
                     </x-slot:question>
                     <x-slot:actions>
                         <div class="w-full space-y-6">
@@ -567,7 +567,7 @@
                     </x-slot:actions>
                     <x-slot:explanation>
                         <p>
-                            <x-highlighted text="Automated Setup:" /> Helix Claude installs Docker Engine, Docker Compose, and
+                            <x-highlighted text="Automated Setup:" /> HelixClaude installs Docker Engine, Docker Compose, and
                             configures system requirements automatically.
                         </p>
                         <p>

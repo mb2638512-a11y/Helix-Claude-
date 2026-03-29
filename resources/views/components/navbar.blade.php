@@ -79,7 +79,7 @@
     }">
     <div class="flex lg:pt-6 pt-4 pb-4 pl-2">
         <div class="flex flex-col w-full">
-            <a href="/" {{ wireNavigate() }} class="text-2xl font-bold tracking-wide dark:text-white hover:opacity-80 transition-opacity">Helix Claude</a>
+            <a href="/" {{ wireNavigate() }} class="text-2xl font-bold tracking-wide dark:text-white hover:opacity-80 transition-opacity">HelixClaude</a>
             <x-version />
         </div>
         <div>
@@ -358,7 +358,7 @@
                         </a>
                     </li> --}}
                     <li>
-                        <a title="Sponsor us" class="menu-item" href="https://Helix Claude.io/sponsorships"
+                        <a title="Sponsor us" class="menu-item" href="https://HelixClaude.io/sponsorships"
                             target="_blank">
                             <svg class="text-pink-500 menu-item-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <g fill="none" stroke="currentColor" stroke-linecap="round"

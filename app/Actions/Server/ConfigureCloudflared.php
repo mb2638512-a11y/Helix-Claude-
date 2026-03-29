@@ -16,8 +16,8 @@ class ConfigureCloudflared
         try {
             $config = [
                 'services' => [
-                    'Helix Claude-cloudflared' => [
-                        'container_name' => 'Helix Claude-cloudflared',
+                    'HelixClaude-cloudflared' => [
+                        'container_name' => 'HelixClaude-cloudflared',
                         'image' => 'cloudflare/cloudflared:latest',
                         'restart' => RESTART_MODE,
                         'network_mode' => 'host',
@@ -44,9 +44,9 @@ class ConfigureCloudflared
                 'echo Pulling latest Cloudflare Tunnel image.',
                 'docker compose pull',
                 'echo Stopping existing Cloudflare Tunnel container.',
-                'docker rm -f Helix Claude-cloudflared || true',
+                'docker rm -f HelixClaude-cloudflared || true',
                 'echo Starting new Cloudflare Tunnel container.',
-                'docker compose up --wait --wait-timeout 15 --remove-orphans || docker logs Helix Claude-cloudflared',
+                'docker compose up --wait --wait-timeout 15 --remove-orphans || docker logs HelixClaude-cloudflared',
             ]);
 
             return remote_process($commands, $server, callEventOnFinish: 'CloudflareTunnelChanged', callEventData: [

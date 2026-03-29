@@ -59,7 +59,7 @@ use Visus\Cuid2\Cuid2;
 
 function base_configuration_dir(): string
 {
-    return '/data/Helix Claude';
+    return '/data/HelixClaude';
 }
 function application_configuration_dir(): string
 {
@@ -272,10 +272,10 @@ function get_route_parameters(): array
 function get_latest_sentinel_version(): string
 {
     try {
-        $response = Http::get(config('constants.Helix Claude.versions_url'));
+        $response = Http::get(config('constants.HelixClaude.versions_url'));
         $versions = $response->json();
 
-        return data_get($versions, 'Helix Claude.sentinel.version');
+        return data_get($versions, 'HelixClaude.sentinel.version');
     } catch (\Throwable) {
         return '0.0.0';
     }
@@ -285,7 +285,7 @@ function get_latest_version_of_HelixClaude(): string
     try {
         $versions = get_versions_data();
 
-        return data_get($versions, 'Helix Claude.v4.version', '0.0.0');
+        return data_get($versions, 'HelixClaude.v4.version', '0.0.0');
     } catch (\Throwable $e) {
 
         return '0.0.0';
@@ -312,14 +312,14 @@ function generateSSHKey(string $type = 'rsa')
 
         return [
             'private' => $key->toString('PKCS1'),
-            'public' => $key->getPublicKey()->toString('OpenSSH', ['comment' => 'Helix Claude-generated-ssh-key']),
+            'public' => $key->getPublicKey()->toString('OpenSSH', ['comment' => 'HelixClaude-generated-ssh-key']),
         ];
     } elseif ($type === 'ed25519') {
         $key = EC::createKey('Ed25519');
 
         return [
             'private' => $key->toString('OpenSSH'),
-            'public' => $key->getPublicKey()->toString('OpenSSH', ['comment' => 'Helix Claude-generated-ssh-key']),
+            'public' => $key->getPublicKey()->toString('OpenSSH', ['comment' => 'HelixClaude-generated-ssh-key']),
         ];
     }
     throw new Exception('Invalid key type');
@@ -450,7 +450,7 @@ function isDev(): bool
 
 function isCloud(): bool
 {
-    return ! config('constants.Helix Claude.self_hosted');
+    return ! config('constants.HelixClaude.self_hosted');
 }
 
 function translate_cron_expression($expression_to_validate): string
@@ -841,7 +841,7 @@ function generateFqdn(Server $server, string $random, bool $forceHttps = false, 
         $scheme = 'https';
     }
 
-    if ($parserVersion >= 5 && version_compare(config('constants.Helix Claude.version'), '4.0.0-beta.420.7', '>=')) {
+    if ($parserVersion >= 5 && version_compare(config('constants.HelixClaude.version'), '4.0.0-beta.420.7', '>=')) {
         return "{$random}.$host$path";
     }
 
@@ -1565,7 +1565,7 @@ function deduplicateAllowlist(array $entries): array
         }
 
         if ($entry === '0.0.0.0') {
-            // Special case: bare 0.0.0.0 means "allow all" — treat as /0
+            // Special case: bare 0.0.0.0 means "allow all" â€” treat as /0
             $parsed[] = ['original' => $entry, 'ip' => '0.0.0.0', 'mask' => 0];
         } elseif (str_contains($entry, '/')) {
             [$ip, $mask] = explode('/', $entry);
@@ -1947,7 +1947,7 @@ function parseDockerComposeFile(Service|Application $resource, bool $isNew = fal
                 $savedService->save();
 
                 if (! $hasValidNetworkMode) {
-                    // Add Helix Claude specific networks
+                    // Add HelixClaude specific networks
                     $definedNetworkExists = $topLevelNetworks->contains(function ($value, $_) use ($definedNetwork) {
                         return $value == $definedNetwork;
                     });
@@ -2445,8 +2445,8 @@ function parseDockerComposeFile(Service|Application $resource, bool $isNew = fal
                 return $service;
             });
 
-            $envs_from_Helix Claude = $resource->environment_variables()->get();
-            $services = collect($services)->map(function ($service, $serviceName) use ($resource, $envs_from_Helix Claude) {
+            $envs_from_HelixClaude = $resource->environment_variables()->get();
+            $services = collect($services)->map(function ($service, $serviceName) use ($resource, $envs_from_HelixClaude) {
                 $serviceVariables = collect(data_get($service, 'environment', []));
                 $parsedServiceVariables = collect([]);
                 foreach ($serviceVariables as $key => $value) {
@@ -2464,26 +2464,26 @@ function parseDockerComposeFile(Service|Application $resource, bool $isNew = fal
                         $parsedServiceVariables->put($key, $value);
                     }
                 }
-                $parsedServiceVariables->put('Helix Claude_RESOURCE_UUID', "{$resource->uuid}");
-                $parsedServiceVariables->put('Helix Claude_CONTAINER_NAME', "$serviceName-{$resource->uuid}");
+                $parsedServiceVariables->put('HelixClaude_RESOURCE_UUID', "{$resource->uuid}");
+                $parsedServiceVariables->put('HelixClaude_CONTAINER_NAME', "$serviceName-{$resource->uuid}");
 
                 // TODO: move this in a shared function
-                if (! $parsedServiceVariables->has('Helix Claude_APP_NAME')) {
-                    $parsedServiceVariables->put('Helix Claude_APP_NAME', "\"{$resource->name}\"");
+                if (! $parsedServiceVariables->has('HelixClaude_APP_NAME')) {
+                    $parsedServiceVariables->put('HelixClaude_APP_NAME', "\"{$resource->name}\"");
                 }
-                if (! $parsedServiceVariables->has('Helix Claude_SERVER_IP')) {
-                    $parsedServiceVariables->put('Helix Claude_SERVER_IP', "\"{$resource->destination->server->ip}\"");
+                if (! $parsedServiceVariables->has('HelixClaude_SERVER_IP')) {
+                    $parsedServiceVariables->put('HelixClaude_SERVER_IP', "\"{$resource->destination->server->ip}\"");
                 }
-                if (! $parsedServiceVariables->has('Helix Claude_ENVIRONMENT_NAME')) {
-                    $parsedServiceVariables->put('Helix Claude_ENVIRONMENT_NAME', "\"{$resource->environment->name}\"");
+                if (! $parsedServiceVariables->has('HelixClaude_ENVIRONMENT_NAME')) {
+                    $parsedServiceVariables->put('HelixClaude_ENVIRONMENT_NAME', "\"{$resource->environment->name}\"");
                 }
-                if (! $parsedServiceVariables->has('Helix Claude_PROJECT_NAME')) {
-                    $parsedServiceVariables->put('Helix Claude_PROJECT_NAME', "\"{$resource->project()->name}\"");
+                if (! $parsedServiceVariables->has('HelixClaude_PROJECT_NAME')) {
+                    $parsedServiceVariables->put('HelixClaude_PROJECT_NAME', "\"{$resource->project()->name}\"");
                 }
 
-                $parsedServiceVariables = $parsedServiceVariables->map(function ($value, $key) use ($envs_from_Helix Claude) {
+                $parsedServiceVariables = $parsedServiceVariables->map(function ($value, $key) use ($envs_from_HelixClaude) {
                     if (! str($value)->startsWith('$')) {
-                        $found_env = $envs_from_Helix Claude->where('key', $key)->first();
+                        $found_env = $envs_from_HelixClaude->where('key', $key)->first();
                         if ($found_env) {
                             return $found_env->value;
                         }
@@ -3267,7 +3267,7 @@ function generate_fluentd_configuration(): array
             'fluentd-async' => 'true',
             'fluentd-sub-second-precision' => 'true',
             // env vars are used in the LogDrain configurations
-            'env' => 'Helix Claude_APP_NAME,Helix Claude_PROJECT_NAME,Helix Claude_SERVER_IP,Helix Claude_ENVIRONMENT_NAME',
+            'env' => 'HelixClaude_APP_NAME,HelixClaude_PROJECT_NAME,HelixClaude_SERVER_IP,HelixClaude_ENVIRONMENT_NAME',
         ],
     ];
 }
@@ -3291,10 +3291,10 @@ function isAssociativeArray($array)
 
 /**
  * This method adds the default environment variables to the resource.
- * - Helix Claude_APP_NAME
- * - Helix Claude_PROJECT_NAME
- * - Helix Claude_SERVER_IP
- * - Helix Claude_ENVIRONMENT_NAME
+ * - HelixClaude_APP_NAME
+ * - HelixClaude_PROJECT_NAME
+ * - HelixClaude_SERVER_IP
+ * - HelixClaude_ENVIRONMENT_NAME
  *
  *  Theses variables are added in place to the $where_to_add array.
  */
@@ -3312,32 +3312,32 @@ function add_HelixClaude_default_environment_variables(StandaloneRedis|Standalon
     } else {
         $isAssociativeArray = false;
     }
-    if ($where_to_check != null && $where_to_check->where('key', 'Helix Claude_APP_NAME')->isEmpty()) {
+    if ($where_to_check != null && $where_to_check->where('key', 'HelixClaude_APP_NAME')->isEmpty()) {
         if ($isAssociativeArray) {
-            $where_to_add->put('Helix Claude_APP_NAME', "\"{$resource->name}\"");
+            $where_to_add->put('HelixClaude_APP_NAME', "\"{$resource->name}\"");
         } else {
-            $where_to_add->push("Helix Claude_APP_NAME=\"{$resource->name}\"");
+            $where_to_add->push("HelixClaude_APP_NAME=\"{$resource->name}\"");
         }
     }
-    if ($where_to_check != null && $where_to_check->where('key', 'Helix Claude_SERVER_IP')->isEmpty()) {
+    if ($where_to_check != null && $where_to_check->where('key', 'HelixClaude_SERVER_IP')->isEmpty()) {
         if ($isAssociativeArray) {
-            $where_to_add->put('Helix Claude_SERVER_IP', "\"{$ip}\"");
+            $where_to_add->put('HelixClaude_SERVER_IP', "\"{$ip}\"");
         } else {
-            $where_to_add->push("Helix Claude_SERVER_IP=\"{$ip}\"");
+            $where_to_add->push("HelixClaude_SERVER_IP=\"{$ip}\"");
         }
     }
-    if ($where_to_check != null && $where_to_check->where('key', 'Helix Claude_ENVIRONMENT_NAME')->isEmpty()) {
+    if ($where_to_check != null && $where_to_check->where('key', 'HelixClaude_ENVIRONMENT_NAME')->isEmpty()) {
         if ($isAssociativeArray) {
-            $where_to_add->put('Helix Claude_ENVIRONMENT_NAME', "\"{$resource->environment->name}\"");
+            $where_to_add->put('HelixClaude_ENVIRONMENT_NAME', "\"{$resource->environment->name}\"");
         } else {
-            $where_to_add->push("Helix Claude_ENVIRONMENT_NAME=\"{$resource->environment->name}\"");
+            $where_to_add->push("HelixClaude_ENVIRONMENT_NAME=\"{$resource->environment->name}\"");
         }
     }
-    if ($where_to_check != null && $where_to_check->where('key', 'Helix Claude_PROJECT_NAME')->isEmpty()) {
+    if ($where_to_check != null && $where_to_check->where('key', 'HelixClaude_PROJECT_NAME')->isEmpty()) {
         if ($isAssociativeArray) {
-            $where_to_add->put('Helix Claude_PROJECT_NAME', "\"{$resource->project()->name}\"");
+            $where_to_add->put('HelixClaude_PROJECT_NAME', "\"{$resource->project()->name}\"");
         } else {
-            $where_to_add->push("Helix Claude_PROJECT_NAME=\"{$resource->project()->name}\"");
+            $where_to_add->push("HelixClaude_PROJECT_NAME=\"{$resource->project()->name}\"");
         }
     }
 }
@@ -3426,7 +3426,7 @@ function getHelperVersion(): string
         return $settings->dev_helper_version;
     }
 
-    return config('constants.Helix Claude.helper_version');
+    return config('constants.HelixClaude.helper_version');
 }
 
 function loadConfigFromGit(string $repository, string $branch, string $base_directory, int $server_id, int $team_id)
@@ -3438,7 +3438,7 @@ function loadConfigFromGit(string $repository, string $branch, string $base_dire
     $uuid = new Cuid2;
     $cloneCommand = "git clone --no-checkout -b $branch $repository .";
     $workdir = rtrim($base_directory, '/');
-    $fileList = collect([".$workdir/Helix Claude.json"]);
+    $fileList = collect([".$workdir/HelixClaude.json"]);
     $commands = collect([
         "rm -rf /tmp/{$uuid}",
         "mkdir -p /tmp/{$uuid}",
@@ -3447,7 +3447,7 @@ function loadConfigFromGit(string $repository, string $branch, string $base_dire
         'git sparse-checkout init --cone',
         "git sparse-checkout set {$fileList->implode(' ')}",
         'git read-tree -mu HEAD',
-        "cat .$workdir/Helix Claude.json",
+        "cat .$workdir/HelixClaude.json",
         'rm -rf /tmp/{$uuid}',
     ]);
     try {
@@ -3643,7 +3643,7 @@ function parseDockerfileInterval(string $something)
             $seconds = (int) ($value / 1000000000);
             break;
         case 'us':
-        case 'µs':
+        case 'Âµs':
             $seconds = (int) ($value / 1000000);
             break;
         case 'ms':
@@ -3793,11 +3793,11 @@ function isSafeTmpPath(?string $path): bool
  * Handles Docker container status formats with optional health check status and exclusion modifiers.
  *
  * Examples:
- * - running:healthy → Running (healthy)
- * - running:unhealthy:excluded → Running (unhealthy, excluded)
- * - exited:excluded → Exited (excluded)
- * - Proxy:running → Proxy:running (preserved as-is for headline formatting)
- * - running → Running
+ * - running:healthy â†’ Running (healthy)
+ * - running:unhealthy:excluded â†’ Running (unhealthy, excluded)
+ * - exited:excluded â†’ Exited (excluded)
+ * - Proxy:running â†’ Proxy:running (preserved as-is for headline formatting)
+ * - running â†’ Running
  *
  * @param  string  $status  The status string to format
  * @return string The formatted status string
@@ -3815,17 +3815,17 @@ function formatContainerStatus(string $status): string
 
     if ($isExcluded) {
         if (count($parts) === 3) {
-            // Has health status: running:unhealthy:excluded → Running (unhealthy, excluded)
+            // Has health status: running:unhealthy:excluded â†’ Running (unhealthy, excluded)
             return str($parts[0])->headline().' ('.$parts[1].', excluded)';
         } else {
-            // No health status: exited:excluded → Exited (excluded)
+            // No health status: exited:excluded â†’ Exited (excluded)
             return str($parts[0])->headline().' (excluded)';
         }
     } elseif (count($parts) >= 2) {
-        // Regular colon format: running:healthy → Running (healthy)
+        // Regular colon format: running:healthy â†’ Running (healthy)
         return str($parts[0])->headline().' ('.$parts[1].')';
     } else {
-        // Simple status: running → Running
+        // Simple status: running â†’ Running
         return str($status)->headline()->value();
     }
 }

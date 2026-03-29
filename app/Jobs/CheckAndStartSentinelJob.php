@@ -24,7 +24,7 @@ class CheckAndStartSentinelJob implements ShouldBeEncrypted, ShouldQueue
         $latestVersion = get_latest_sentinel_version();
 
         // Check if sentinel is running
-        $sentinelFound = instant_remote_process_with_timeout(['docker inspect Helix Claude-sentinel'], $this->server, false, 10);
+        $sentinelFound = instant_remote_process_with_timeout(['docker inspect HelixClaude-sentinel'], $this->server, false, 10);
         $sentinelFoundJson = json_decode($sentinelFound, true);
         $sentinelStatus = data_get($sentinelFoundJson, '0.State.Status', 'exited');
         if ($sentinelStatus !== 'running') {
@@ -33,7 +33,7 @@ class CheckAndStartSentinelJob implements ShouldBeEncrypted, ShouldQueue
             return;
         }
         // If sentinel is running, check if it needs an update
-        $runningVersion = instant_remote_process_with_timeout(['docker exec Helix Claude-sentinel sh -c "curl http://127.0.0.1:8888/api/version"'], $this->server, false);
+        $runningVersion = instant_remote_process_with_timeout(['docker exec HelixClaude-sentinel sh -c "curl http://127.0.0.1:8888/api/version"'], $this->server, false);
         if (empty($runningVersion)) {
             $runningVersion = '0.0.0';
         }

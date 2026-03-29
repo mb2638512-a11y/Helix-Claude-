@@ -16,7 +16,7 @@ class CaSslCertSeeder extends Seeder
 
                 if (! $existingCaCert) {
                     $caCert = SslHelper::generateSslCertificate(
-                        commonName: 'Helix Claude CA Certificate',
+                        commonName: 'HelixClaude CA Certificate',
                         serverId: $server->id,
                         isCaCertificate: true,
                         validityDays: 10 * 365
@@ -24,7 +24,7 @@ class CaSslCertSeeder extends Seeder
                 } else {
                     $caCert = $existingCaCert;
                 }
-                $caCertPath = config('constants.Helix Claude.base_config_path').'/ssl/';
+                $caCertPath = config('constants.HelixClaude.base_config_path').'/ssl/';
 
                 $base64Cert = base64_encode($caCert->ssl_certificate);
 
@@ -32,9 +32,9 @@ class CaSslCertSeeder extends Seeder
                     "mkdir -p $caCertPath",
                     "chown -R 9999:root $caCertPath",
                     "chmod -R 700 $caCertPath",
-                    "rm -rf $caCertPath/Helix Claude-ca.crt",
-                    "echo '{$base64Cert}' | base64 -d | tee $caCertPath/Helix Claude-ca.crt > /dev/null",
-                    "chmod 644 $caCertPath/Helix Claude-ca.crt",
+                    "rm -rf $caCertPath/HelixClaude-ca.crt",
+                    "echo '{$base64Cert}' | base64 -d | tee $caCertPath/HelixClaude-ca.crt > /dev/null",
+                    "chmod 644 $caCertPath/HelixClaude-ca.crt",
                 ]);
 
                 remote_process($commands, $server);

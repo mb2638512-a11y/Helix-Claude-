@@ -33,7 +33,7 @@ class SyncBunny extends Command
         $this->info('Fetching releases from GitHub...');
         try {
             $response = Http::timeout(30)
-                ->get('https://api.github.com/repos/coollabsio/Helix Claude/releases', [
+                ->get('https://api.github.com/repos/coollabsio/HelixClaude/releases', [
                     'per_page' => 30,  // Fetch more releases for better changelog
                 ]);
 
@@ -45,13 +45,13 @@ class SyncBunny extends Command
 
             $releases = $response->json();
             $timestamp = time();
-            $tmpDir = sys_get_temp_dir().'/Helix Claude-cdn-'.$timestamp;
+            $tmpDir = sys_get_temp_dir().'/HelixClaude-cdn-'.$timestamp;
             $branchName = 'update-releases-'.$timestamp;
 
             // Clone the repository
-            $this->info('Cloning Helix Claude-cdn repository...');
+            $this->info('Cloning HelixClaude-cdn repository...');
             $output = [];
-            exec('gh repo clone coollabsio/Helix Claude-cdn '.escapeshellarg($tmpDir).' 2>&1', $output, $returnCode);
+            exec('gh repo clone coollabsio/HelixClaude-cdn '.escapeshellarg($tmpDir).' 2>&1', $output, $returnCode);
             if ($returnCode !== 0) {
                 $this->error('Failed to clone repository: '.implode("\n", $output));
 
@@ -149,7 +149,7 @@ class SyncBunny extends Command
             $this->info('Creating pull request...');
             $prTitle = 'Update releases.json - '.date('Y-m-d H:i:s');
             $prBody = 'Automated update of releases.json with latest '.count($releases).' releases from GitHub API';
-            $prCommand = 'gh pr create --repo coollabsio/Helix Claude-cdn --title '.escapeshellarg($prTitle).' --body '.escapeshellarg($prBody).' --base main --head '.escapeshellarg($branchName).' 2>&1';
+            $prCommand = 'gh pr create --repo coollabsio/HelixClaude-cdn --title '.escapeshellarg($prTitle).' --body '.escapeshellarg($prBody).' --base main --head '.escapeshellarg($branchName).' 2>&1';
             $output = [];
             exec($prCommand, $output, $returnCode);
 
@@ -186,7 +186,7 @@ class SyncBunny extends Command
             // 1. Fetch releases from GitHub API
             $this->info('Fetching releases from GitHub API...');
             $response = Http::timeout(30)
-                ->get('https://api.github.com/repos/coollabsio/Helix Claude/releases', [
+                ->get('https://api.github.com/repos/coollabsio/HelixClaude/releases', [
                     'per_page' => 30,
                 ]);
 
@@ -207,17 +207,17 @@ class SyncBunny extends Command
 
             $file = file_get_contents($versionsLocation);
             $versionsJson = json_decode($file, true);
-            $actualVersion = data_get($versionsJson, 'Helix Claude.v4.version');
+            $actualVersion = data_get($versionsJson, 'HelixClaude.v4.version');
 
             $timestamp = time();
-            $tmpDir = sys_get_temp_dir().'/Helix Claude-cdn-combined-'.$timestamp;
+            $tmpDir = sys_get_temp_dir().'/HelixClaude-cdn-combined-'.$timestamp;
             $branchName = 'update-releases-and-versions-'.$timestamp;
             $versionsTargetPath = $nightly ? 'json/versions-nightly.json' : 'json/versions.json';
 
             // 3. Clone the repository
-            $this->info('Cloning Helix Claude-cdn repository...');
+            $this->info('Cloning HelixClaude-cdn repository...');
             $output = [];
-            exec('gh repo clone coollabsio/Helix Claude-cdn '.escapeshellarg($tmpDir).' 2>&1', $output, $returnCode);
+            exec('gh repo clone coollabsio/HelixClaude-cdn '.escapeshellarg($tmpDir).' 2>&1', $output, $returnCode);
             if ($returnCode !== 0) {
                 $this->error('Failed to clone repository: '.implode("\n", $output));
 
@@ -335,7 +335,7 @@ class SyncBunny extends Command
             $this->info('Creating pull request...');
             $prTitle = "Update releases.json and $envLabel versions.json to $actualVersion - ".date('Y-m-d H:i:s');
             $prBody = "Automated update:\n- releases.json with latest ".count($releases)." releases from GitHub API\n- $envLabel versions.json to version $actualVersion";
-            $prCommand = 'gh pr create --repo coollabsio/Helix Claude-cdn --title '.escapeshellarg($prTitle).' --body '.escapeshellarg($prBody).' --base main --head '.escapeshellarg($branchName).' 2>&1';
+            $prCommand = 'gh pr create --repo coollabsio/HelixClaude-cdn --title '.escapeshellarg($prTitle).' --body '.escapeshellarg($prBody).' --base main --head '.escapeshellarg($branchName).' 2>&1';
             $output = [];
             exec($prCommand, $output, $returnCode);
 
@@ -378,16 +378,16 @@ class SyncBunny extends Command
 
             $file = file_get_contents($versionsLocation);
             $json = json_decode($file, true);
-            $actualVersion = data_get($json, 'Helix Claude.v4.version');
+            $actualVersion = data_get($json, 'HelixClaude.v4.version');
 
             $timestamp = time();
-            $tmpDir = sys_get_temp_dir().'/Helix Claude-cdn-versions-'.$timestamp;
+            $tmpDir = sys_get_temp_dir().'/HelixClaude-cdn-versions-'.$timestamp;
             $branchName = 'update-versions-'.$timestamp;
             $targetPath = $nightly ? 'json/versions-nightly.json' : 'json/versions.json';
 
             // Clone the repository
-            $this->info('Cloning Helix Claude-cdn repository...');
-            exec('gh repo clone coollabsio/Helix Claude-cdn '.escapeshellarg($tmpDir).' 2>&1', $output, $returnCode);
+            $this->info('Cloning HelixClaude-cdn repository...');
+            exec('gh repo clone coollabsio/HelixClaude-cdn '.escapeshellarg($tmpDir).' 2>&1', $output, $returnCode);
             if ($returnCode !== 0) {
                 $this->error('Failed to clone repository: '.implode("\n", $output));
 
@@ -487,7 +487,7 @@ class SyncBunny extends Command
             $prTitle = "Update $envLabel versions.json to $actualVersion - ".date('Y-m-d H:i:s');
             $prBody = "Automated update of $envLabel versions.json to version $actualVersion";
             $output = [];
-            $prCommand = 'gh pr create --repo coollabsio/Helix Claude-cdn --title '.escapeshellarg($prTitle).' --body '.escapeshellarg($prBody).' --base main --head '.escapeshellarg($branchName).' 2>&1';
+            $prCommand = 'gh pr create --repo coollabsio/HelixClaude-cdn --title '.escapeshellarg($prTitle).' --body '.escapeshellarg($prBody).' --base main --head '.escapeshellarg($branchName).' 2>&1';
             exec($prCommand, $output, $returnCode);
 
             // Clean up
@@ -525,7 +525,7 @@ class SyncBunny extends Command
         $only_github_versions = $this->option('github-versions');
         $nightly = $this->option('nightly');
         $bunny_cdn = 'https://cdn.coollabs.io';
-        $bunny_cdn_path = 'Helix Claude';
+        $bunny_cdn_path = 'HelixClaude';
         $bunny_cdn_storage_name = 'coolcdn';
 
         $parent_dir = realpath(dirname(__FILE__).'/../../..');
@@ -571,7 +571,7 @@ class SyncBunny extends Command
         });
         try {
             if ($nightly) {
-                $bunny_cdn_path = 'Helix Claude-nightly';
+                $bunny_cdn_path = 'HelixClaude-nightly';
 
                 $compose_file_location = "$parent_dir/other/nightly/$compose_file";
                 $compose_file_prod_location = "$parent_dir/other/nightly/$compose_file_prod";
@@ -612,7 +612,7 @@ class SyncBunny extends Command
                 }
                 $file = file_get_contents($versions_location);
                 $json = json_decode($file, true);
-                $actual_version = data_get($json, 'Helix Claude.v4.version');
+                $actual_version = data_get($json, 'HelixClaude.v4.version');
 
                 $this->info("Version: {$actual_version}");
                 $this->info('This will:');
@@ -664,7 +664,7 @@ class SyncBunny extends Command
                 $envLabel = $nightly ? 'NIGHTLY' : 'PRODUCTION';
                 $file = file_get_contents($versions_location);
                 $json = json_decode($file, true);
-                $actual_version = data_get($json, 'Helix Claude.v4.version');
+                $actual_version = data_get($json, 'HelixClaude.v4.version');
 
                 $this->info("About to sync $envLabel versions.json ($actual_version) to GitHub repository.");
                 $confirmed = confirm('Are you sure you want to sync versions.json via GitHub PR?');

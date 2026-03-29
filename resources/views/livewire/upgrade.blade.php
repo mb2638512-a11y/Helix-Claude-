@@ -127,7 +127,7 @@
                                     <template x-if="upgradeError">
                                         <div class="flex flex-col items-center gap-4">
                                             <p class="text-sm text-neutral-600 dark:text-neutral-400">
-                                                Check the logs on the server at /data/Helix Claude/source/upgrade*.
+                                                Check the logs on the server at /data/HelixClaude/source/upgrade*.
                                             </p>
                                             <x-forms.button @click="closeErrorModal()" type="button">
                                                 Close
@@ -151,8 +151,8 @@
                                     <p class="text-sm text-neutral-600 dark:text-neutral-400">
                                         If something goes wrong, check the
                                         <a class="font-medium underline dark:text-white hover:text-neutral-800 dark:hover:text-neutral-300"
-                                            href="https://Helix Claude.io/docs/upgrade" target="_blank">upgrade guide</a> or the
-                                        logs on the server at /data/Helix Claude/source/upgrade*.
+                                            href="https://HelixClaude.io/docs/upgrade" target="_blank">upgrade guide</a> or the
+                                        logs on the server at /data/HelixClaude/source/upgrade*.
                                     </p>
                                 </div>
                             </template>
@@ -216,7 +216,7 @@
                 const steps = [
                     { step: 1, status: '[DEV] Preparing upgrade environment...' },
                     { step: 2, status: '[DEV] Pulling helper image...' },
-                    { step: 3, status: '[DEV] Pulling Helix Claude image...' },
+                    { step: 3, status: '[DEV] Pulling HelixClaude image...' },
                     { step: 4, status: '[DEV] Restarting services...' },
                 ];
 
@@ -267,7 +267,7 @@
             mapStepToUI(apiStep) {
                 // Map backend steps (1-6) to UI steps (1-4)
                 // Backend: 1=config, 2=env, 3=pull, 4=stop, 5=start, 6=complete
-                // UI: 1=prepare, 2=pull images, 3=pull Helix Claude, 4=restart
+                // UI: 1=prepare, 2=pull images, 3=pull HelixClaude, 4=restart
                 if (apiStep <= 2) return 1;
                 if (apiStep === 3) return 2;
                 if (apiStep <= 5) return 3;
@@ -276,9 +276,9 @@
 
             getReviveStatusMessage(elapsedMinutes, attempts) {
                 if (elapsedMinutes === 0) {
-                    return `Waiting for Helix Claude to come back online... (attempt ${attempts})`;
+                    return `Waiting for HelixClaude to come back online... (attempt ${attempts})`;
                 } else if (elapsedMinutes < 2) {
-                    return `Waiting for Helix Claude to come back online... (${elapsedMinutes} minute${elapsedMinutes !== 1 ? 's' : ''} elapsed)`;
+                    return `Waiting for HelixClaude to come back online... (${elapsedMinutes} minute${elapsedMinutes !== 1 ? 's' : ''} elapsed)`;
                 } else if (elapsedMinutes < 5) {
                     return `Update in progress, this may take several minutes... (${elapsedMinutes} minutes elapsed)`;
                 } else if (elapsedMinutes < 10) {
@@ -404,7 +404,7 @@
                         if (!this.serviceDown) {
                             this.serviceDown = true;
                             this.currentStep = 4;
-                            this.currentStatus = 'Helix Claude is restarting with the new version...';
+                            this.currentStatus = 'HelixClaude is restarting with the new version...';
                             if (this.checkUpgradeStatusInterval) {
                                 clearInterval(this.checkUpgradeStatusInterval);
                                 this.checkUpgradeStatusInterval = null;

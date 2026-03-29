@@ -24,7 +24,7 @@ class ProxyStatusChangedNotification implements ShouldQueueAfterCommit
         if (is_null($server)) {
             return;
         }
-        $proxyContainerName = 'Helix Claude-proxy';
+        $proxyContainerName = 'HelixClaude-proxy';
         $status = getContainerStatus($server, $proxyContainerName);
         $server->proxy->set('status', $status);
         $server->save();
@@ -61,7 +61,7 @@ class ProxyStatusChangedNotification implements ShouldQueueAfterCommit
 
         if ($status === 'created') {
             instant_remote_process([
-                'docker rm -f Helix Claude-proxy',
+                'docker rm -f HelixClaude-proxy',
             ], $server);
         }
     }

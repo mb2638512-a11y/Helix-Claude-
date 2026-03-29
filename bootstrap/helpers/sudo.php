@@ -16,9 +16,9 @@ function shouldChangeOwnership(string $path): bool
         }
     }
 
-    $isHelix ClaudePath = Str::startsWith($path, '/data/Helix Claude') || Str::startsWith($path, '/tmp/Helix Claude');
+    $isHelixClaudePath = Str::startsWith($path, '/data/HelixClaude') || Str::startsWith($path, '/tmp/HelixClaude');
 
-    return $isHelix ClaudePath;
+    return $isHelixClaudePath;
 }
 function parseCommandsByLineForSudo(Collection $commands, Server $server): array
 {

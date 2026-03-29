@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Settings | Helix Claude
+        Settings | HelixClaude
     </x-slot>
     <x-settings.navbar />
     <form wire:submit='submit' class="flex flex-col">

@@ -13,17 +13,17 @@ class CleanupDocker
 
     public function handle(Server $server, bool $deleteUnusedVolumes = false, bool $deleteUnusedNetworks = false)
     {
-        $realtimeImage = config('constants.Helix Claude.realtime_image');
-        $realtimeImageVersion = config('constants.Helix Claude.realtime_version');
+        $realtimeImage = config('constants.HelixClaude.realtime_image');
+        $realtimeImageVersion = config('constants.HelixClaude.realtime_version');
         $realtimeImageWithVersion = "$realtimeImage:$realtimeImageVersion";
-        $realtimeImageWithoutPrefix = 'coollabsio/Helix Claude-realtime';
-        $realtimeImageWithoutPrefixVersion = "coollabsio/Helix Claude-realtime:$realtimeImageVersion";
+        $realtimeImageWithoutPrefix = 'coollabsio/HelixClaude-realtime';
+        $realtimeImageWithoutPrefixVersion = "coollabsio/HelixClaude-realtime:$realtimeImageVersion";
 
         $helperImageVersion = getHelperVersion();
-        $helperImage = config('constants.Helix Claude.helper_image');
+        $helperImage = config('constants.HelixClaude.helper_image');
         $helperImageWithVersion = "$helperImage:$helperImageVersion";
-        $helperImageWithoutPrefix = 'coollabsio/Helix Claude-helper';
-        $helperImageWithoutPrefixVersion = "coollabsio/Helix Claude-helper:$helperImageVersion";
+        $helperImageWithoutPrefix = 'coollabsio/HelixClaude-helper';
+        $helperImageWithoutPrefixVersion = "coollabsio/HelixClaude-helper:$helperImageVersion";
 
         $cleanupLog = [];
 
@@ -37,8 +37,8 @@ class CleanupDocker
         $applicationCleanupLog = $this->cleanupApplicationImages($server, $applications);
         $cleanupLog = array_merge($cleanupLog, $applicationCleanupLog);
 
-        // Build image prune command that excludes application images and current Helix Claude infrastructure images
-        // This ensures we clean up non-Helix Claude images while preserving rollback images and current helper/realtime images
+        // Build image prune command that excludes application images and current HelixClaude infrastructure images
+        // This ensures we clean up non-HelixClaude images while preserving rollback images and current helper/realtime images
         // Note: Only the current version is protected; old versions will be cleaned up by explicit commands below
         // We pass the version strings so all registry variants are protected (ghcr.io, docker.io, no prefix)
         $imagePruneCmd = $this->buildImagePruneCommand(
@@ -48,7 +48,7 @@ class CleanupDocker
         );
 
         $commands = [
-            'docker container prune -f --filter "label=Helix Claude.managed=true" --filter "label!=Helix Claude.proxy=true"',
+            'docker container prune -f --filter "label=HelixClaude.managed=true" --filter "label!=HelixClaude.proxy=true"',
             $imagePruneCmd,
             'docker builder prune -af',
             "docker images --filter before=$helperImageWithVersion --filter reference=$helperImage | grep $helperImage | awk '{print $3}' | xargs -r docker rmi -f",
@@ -99,20 +99,20 @@ class CleanupDocker
             return preg_replace('/([.\\\\+*?\[\]^$(){}|])/', '\\\\$1', $repo);
         })->implode('|');
 
-        // Build grep pattern to exclude Helix Claude infrastructure images (current version only)
+        // Build grep pattern to exclude HelixClaude infrastructure images (current version only)
         // This pattern matches the image name regardless of registry prefix:
-        // - ghcr.io/coollabsio/Helix Claude-helper:1.0.12
-        // - docker.io/coollabsio/Helix Claude-helper:1.0.12
-        // - coollabsio/Helix Claude-helper:1.0.12
-        // Pattern: (^|/)coollabsio/Helix Claude-(helper|realtime):VERSION$
+        // - ghcr.io/coollabsio/HelixClaude-helper:1.0.12
+        // - docker.io/coollabsio/HelixClaude-helper:1.0.12
+        // - coollabsio/HelixClaude-helper:1.0.12
+        // Pattern: (^|/)coollabsio/HelixClaude-(helper|realtime):VERSION$
         $escapedHelperVersion = preg_replace('/([.\\\\+*?\[\]^$(){}|])/', '\\\\$1', $helperImageVersion);
         $escapedRealtimeVersion = preg_replace('/([.\\\\+*?\[\]^$(){}|])/', '\\\\$1', $realtimeImageVersion);
-        $infraExcludePattern = "(^|/)coollabsio/Helix Claude-helper:{$escapedHelperVersion}$|(^|/)coollabsio/Helix Claude-realtime:{$escapedRealtimeVersion}$";
+        $infraExcludePattern = "(^|/)coollabsio/HelixClaude-helper:{$escapedHelperVersion}$|(^|/)coollabsio/HelixClaude-realtime:{$escapedRealtimeVersion}$";
 
         // Delete unused images that:
         // - Are not application images (don't match app repos)
-        // - Are not current Helix Claude infrastructure images (any registry)
-        // - Don't have Helix Claude.managed=true label
+        // - Are not current HelixClaude infrastructure images (any registry)
+        // - Don't have HelixClaude.managed=true label
         // Images in use by containers will fail silently with docker rmi
         // Pattern matches both uuid:tag and uuid_servicename:tag (Docker Compose with build)
         $grepCommands = "grep -v '<none>'";
@@ -127,7 +127,7 @@ class CleanupDocker
 
         $commands[] = "docker images --format '{{.Repository}}:{{.Tag}}' | ".
             $grepCommands.' | '.
-            "xargs -r -I {} sh -c 'docker inspect --format \"{{{{index .Config.Labels \\\"Helix Claude.managed\\\"}}}}\" \"{}\" 2>/dev/null | grep -q true || docker rmi \"{}\" 2>/dev/null' || true";
+            "xargs -r -I {} sh -c 'docker inspect --format \"{{{{index .Config.Labels \\\"HelixClaude.managed\\\"}}}}\" \"{}\" 2>/dev/null | grep -q true || docker rmi \"{}\" 2>/dev/null' || true";
 
         return implode(' && ', $commands);
     }

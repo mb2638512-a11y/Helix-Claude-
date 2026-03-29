@@ -216,7 +216,7 @@ class ApplicationsController extends Controller
                                     type: 'object',
                                     properties: [
                                         'name' => ['type' => 'string', 'description' => 'The service name as defined in docker-compose.'],
-                                        'domain' => ['type' => 'string', 'description' => 'Comma-separated list of URLs (e.g. "http://app.Helix Claude.io,https://app2.Helix Claude.io")'],
+                                        'domain' => ['type' => 'string', 'description' => 'Comma-separated list of URLs (e.g. "http://app.HelixClaude.io,https://app2.HelixClaude.io")'],
                                     ],
                                 ),
                             ],
@@ -381,7 +381,7 @@ class ApplicationsController extends Controller
                                     type: 'object',
                                     properties: [
                                         'name' => ['type' => 'string', 'description' => 'The service name as defined in docker-compose.'],
-                                        'domain' => ['type' => 'string', 'description' => 'Comma-separated list of URLs (e.g. "http://app.Helix Claude.io,https://app2.Helix Claude.io")'],
+                                        'domain' => ['type' => 'string', 'description' => 'Comma-separated list of URLs (e.g. "http://app.HelixClaude.io,https://app2.HelixClaude.io")'],
                                     ],
                                 ),
                             ],
@@ -546,7 +546,7 @@ class ApplicationsController extends Controller
                                     type: 'object',
                                     properties: [
                                         'name' => ['type' => 'string', 'description' => 'The service name as defined in docker-compose.'],
-                                        'domain' => ['type' => 'string', 'description' => 'Comma-separated list of URLs (e.g. "http://app.Helix Claude.io,https://app2.Helix Claude.io")'],
+                                        'domain' => ['type' => 'string', 'description' => 'Comma-separated list of URLs (e.g. "http://app.HelixClaude.io,https://app2.HelixClaude.io")'],
                                     ],
                                 ),
                             ],
@@ -1273,7 +1273,7 @@ class ApplicationsController extends Controller
                 $application->save();
             }
             if ($application->settings->is_container_label_readonly_enabled) {
-                $application->custom_labels = str(implode('|Helix Claude|', generateLabelsApplication($application)))->replace('|Helix Claude|', "\n");
+                $application->custom_labels = str(implode('|HelixClaude|', generateLabelsApplication($application)))->replace('|HelixClaude|', "\n");
                 $application->save();
             }
             $application->isConfigurationChanged(true);
@@ -1499,7 +1499,7 @@ class ApplicationsController extends Controller
                 $application->settings->save();
             }
             if ($application->settings->is_container_label_readonly_enabled) {
-                $application->custom_labels = str(implode('|Helix Claude|', generateLabelsApplication($application)))->replace('|Helix Claude|', "\n");
+                $application->custom_labels = str(implode('|HelixClaude|', generateLabelsApplication($application)))->replace('|HelixClaude|', "\n");
                 $application->save();
             }
             $application->isConfigurationChanged(true);
@@ -1695,7 +1695,7 @@ class ApplicationsController extends Controller
                 $application->settings->save();
             }
             if ($application->settings->is_container_label_readonly_enabled) {
-                $application->custom_labels = str(implode('|Helix Claude|', generateLabelsApplication($application)))->replace('|Helix Claude|', "\n");
+                $application->custom_labels = str(implode('|HelixClaude|', generateLabelsApplication($application)))->replace('|HelixClaude|', "\n");
                 $application->save();
             }
             $application->isConfigurationChanged(true);
@@ -1780,7 +1780,7 @@ class ApplicationsController extends Controller
             $application->destination_type = $destination->getMorphClass();
             $application->environment_id = $environment->id;
 
-            $application->git_repository = 'coollabsio/Helix Claude';
+            $application->git_repository = 'coollabsio/HelixClaude';
             $application->git_branch = 'main';
             $application->save();
             $application->refresh();
@@ -1806,7 +1806,7 @@ class ApplicationsController extends Controller
                 $application->settings->save();
             }
             if ($application->settings->is_container_label_readonly_enabled) {
-                $application->custom_labels = str(implode('|Helix Claude|', generateLabelsApplication($application)))->replace('|Helix Claude|', "\n");
+                $application->custom_labels = str(implode('|HelixClaude|', generateLabelsApplication($application)))->replace('|HelixClaude|', "\n");
                 $application->save();
             }
             $application->isConfigurationChanged(true);
@@ -1890,7 +1890,7 @@ class ApplicationsController extends Controller
             $application->destination_type = $destination->getMorphClass();
             $application->environment_id = $environment->id;
 
-            $application->git_repository = 'coollabsio/Helix Claude';
+            $application->git_repository = 'coollabsio/HelixClaude';
             $application->git_branch = 'main';
             $application->save();
             $application->refresh();
@@ -1916,7 +1916,7 @@ class ApplicationsController extends Controller
                 $application->settings->save();
             }
             if ($application->settings->is_container_label_readonly_enabled) {
-                $application->custom_labels = str(implode('|Helix Claude|', generateLabelsApplication($application)))->replace('|Helix Claude|', "\n");
+                $application->custom_labels = str(implode('|HelixClaude|', generateLabelsApplication($application)))->replace('|HelixClaude|', "\n");
                 $application->save();
             }
             $application->isConfigurationChanged(true);
@@ -2380,7 +2380,7 @@ class ApplicationsController extends Controller
                                     type: 'object',
                                     properties: [
                                         'name' => ['type' => 'string', 'description' => 'The service name as defined in docker-compose.'],
-                                        'domain' => ['type' => 'string', 'description' => 'Comma-separated list of URLs (e.g. "http://app.Helix Claude.io,https://app2.Helix Claude.io")'],
+                                        'domain' => ['type' => 'string', 'description' => 'Comma-separated list of URLs (e.g. "http://app.HelixClaude.io,https://app2.HelixClaude.io")'],
                                     ],
                                 ),
                             ],
@@ -2566,7 +2566,7 @@ class ApplicationsController extends Controller
             }
         }
         if ($request->has('is_http_basic_auth_enabled') && $application->is_container_label_readonly_enabled === false) {
-            $application->custom_labels = str(implode('|Helix Claude|', generateLabelsApplication($application)))->replace('|Helix Claude|', "\n");
+            $application->custom_labels = str(implode('|HelixClaude|', generateLabelsApplication($application)))->replace('|HelixClaude|', "\n");
             $application->save();
         }
 
@@ -2769,7 +2769,7 @@ class ApplicationsController extends Controller
         }
         $application->fill($data);
         if ($application->settings->is_container_label_readonly_enabled && $requestHasDomains && $server->isProxyShouldRun()) {
-            $application->custom_labels = str(implode('|Helix Claude|', generateLabelsApplication($application)))->replace('|Helix Claude|', "\n");
+            $application->custom_labels = str(implode('|HelixClaude|', generateLabelsApplication($application)))->replace('|HelixClaude|', "\n");
         }
         $application->save();
 

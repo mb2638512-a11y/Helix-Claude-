@@ -24,7 +24,7 @@ class DockerCleanupFailed extends CustomEmailNotification
     public function toMail(): MailMessage
     {
         $mail = new MailMessage;
-        $mail->subject("Helix Claude: [ACTION REQUIRED] Docker cleanup job failed on {$this->server->name}");
+        $mail->subject("HelixClaude: [ACTION REQUIRED] Docker cleanup job failed on {$this->server->name}");
         $mail->view('emails.docker-cleanup-failed', [
             'name' => $this->server->name,
             'text' => $this->message,
@@ -36,7 +36,7 @@ class DockerCleanupFailed extends CustomEmailNotification
     public function toDiscord(): DiscordMessage
     {
         return new DiscordMessage(
-            title: ':cross_mark: Helix Claude: [ACTION REQUIRED] Docker cleanup job failed on '.$this->server->name,
+            title: ':cross_mark: HelixClaude: [ACTION REQUIRED] Docker cleanup job failed on '.$this->server->name,
             description: $this->message,
             color: DiscordMessage::errorColor(),
         );
@@ -45,7 +45,7 @@ class DockerCleanupFailed extends CustomEmailNotification
     public function toTelegram(): array
     {
         return [
-            'message' => "Helix Claude: [ACTION REQUIRED] Docker cleanup job failed on {$this->server->name}!\n\n{$this->message}",
+            'message' => "HelixClaude: [ACTION REQUIRED] Docker cleanup job failed on {$this->server->name}!\n\n{$this->message}",
         ];
     }
 
@@ -61,7 +61,7 @@ class DockerCleanupFailed extends CustomEmailNotification
     public function toSlack(): SlackMessage
     {
         return new SlackMessage(
-            title: 'Helix Claude: [ACTION REQUIRED] Docker cleanup job failed',
+            title: 'HelixClaude: [ACTION REQUIRED] Docker cleanup job failed',
             description: "Docker cleanup job failed on '{$this->server->name}'!\n\n{$this->message}",
             color: SlackMessage::errorColor()
         );

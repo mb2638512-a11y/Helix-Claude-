@@ -14,7 +14,7 @@ class SyncStripeSubscriptions extends Command
     public function handle(): int
     {
         if (! isCloud()) {
-            $this->error('This command can only be run on Helix Claude Cloud.');
+            $this->error('This command can only be run on HelixClaude Cloud.');
 
             return 1;
         }

@@ -186,8 +186,8 @@ class StartKeydb
                 [
                     [
                         'type' => 'bind',
-                        'source' => '/data/Helix Claude/ssl/Helix Claude-ca.crt',
-                        'target' => '/etc/keydb/certs/Helix Claude-ca.crt',
+                        'source' => '/data/HelixClaude/ssl/HelixClaude-ca.crt',
+                        'target' => '/etc/keydb/certs/HelixClaude-ca.crt',
                         'read_only' => true,
                     ],
                 ]
@@ -300,7 +300,7 @@ class StartKeydb
                 '--tls-port 6380',
                 '--tls-cert-file /etc/keydb/certs/server.crt',
                 '--tls-key-file /etc/keydb/certs/server.key',
-                '--tls-ca-cert-file /etc/keydb/certs/Helix Claude-ca.crt',
+                '--tls-ca-cert-file /etc/keydb/certs/HelixClaude-ca.crt',
                 '--tls-auth-clients optional',
             ];
             $command .= ' '.implode(' ', $sslArgs);

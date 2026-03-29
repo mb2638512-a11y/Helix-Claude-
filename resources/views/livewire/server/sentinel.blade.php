@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        {{ data_get_str($server, 'name')->limit(10) }} > Sentinel | Helix Claude
+        {{ data_get_str($server, 'name')->limit(10) }} > Sentinel | HelixClaude
     </x-slot>
     <livewire:server.navbar :server="$server" />
     <div class="flex flex-col h-full gap-8 sm:flex-row">
@@ -20,7 +20,7 @@
                                     <x-slot:title>Sentinel Logs</x-slot:title>
                                     <x-slot:content>
                                         <livewire:project.shared.get-logs :server="$server"
-                                            container="Helix Claude-sentinel" displayName="Sentinel" :collapsible="false"
+                                            container="HelixClaude-sentinel" displayName="Sentinel" :collapsible="false"
                                             lazy />
                                     </x-slot:content>
                                     <x-forms.button @click="slideOverOpen=true">Logs</x-forms.button>
@@ -34,7 +34,7 @@
                                     <x-slot:title>Sentinel Logs</x-slot:title>
                                     <x-slot:content>
                                         <livewire:project.shared.get-logs :server="$server"
-                                            container="Helix Claude-sentinel" displayName="Sentinel" :collapsible="false"
+                                            container="HelixClaude-sentinel" displayName="Sentinel" :collapsible="false"
                                             lazy />
                                     </x-slot:content>
                                     <x-forms.button @click="slideOverOpen=true">Logs</x-forms.button>
@@ -86,8 +86,8 @@
                         </div>
 
                         <x-forms.input canGate="update" :canResource="$server" id="sentinelCustomUrl" required
-                            label="Helix Claude URL"
-                            helper="URL to your Helix Claude instance. If it is empty that means you do not have a FQDN set for your Helix Claude instance." />
+                            label="HelixClaude URL"
+                            helper="URL to your HelixClaude instance. If it is empty that means you do not have a FQDN set for your HelixClaude instance." />
 
                         <div class="flex flex-col gap-2">
                             <div class="flex flex-wrap gap-2 sm:flex-nowrap">

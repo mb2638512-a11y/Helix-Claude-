@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Dashboard | Helix Claude
+        Dashboard | HelixClaude
     </x-slot>
     @if (session('error'))
         <span x-data x-init="$wire.emit('error', '{{ session('error') }}')" />
@@ -115,7 +115,7 @@
                                     &
                                 @endif
                                 @if (!$server->settings->is_usable)
-                                    Not usable by Helix Claude
+                                    Not usable by HelixClaude
                                 @endif
                             </div>
                         </div>

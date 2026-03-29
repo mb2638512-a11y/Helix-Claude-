@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Projects | Helix Claude
+        Projects | HelixClaude
     </x-slot>
     <div class="flex gap-2">
         <h1>Projects</h1>

@@ -296,7 +296,7 @@ class Show extends Component
             $this->server->settings->save();
             ServerReachabilityChanged::dispatch($this->server);
         } else {
-            $this->dispatch('error', 'Server is not reachable.', 'Please validate your configuration and connection.<br><br>Check this <a target="_blank" class="underline" href="https://Helix Claude.io/docs/knowledge-base/server/openssh">documentation</a> for further help. <br><br>Error: '.$error);
+            $this->dispatch('error', 'Server is not reachable.', 'Please validate your configuration and connection.<br><br>Check this <a target="_blank" class="underline" href="https://HelixClaude.io/docs/knowledge-base/server/openssh">documentation</a> for further help. <br><br>Error: '.$error);
 
             return;
         }
@@ -421,7 +421,7 @@ class Show extends Component
                 $this->dispatch('success', 'Server status refreshed: '.ucfirst($this->hetznerServerStatus ?? 'unknown'));
             }
 
-            // If Hetzner server is off but Helix Claude thinks it's still reachable, update Helix Claude's state
+            // If Hetzner server is off but HelixClaude thinks it's still reachable, update HelixClaude's state
             if ($this->hetznerServerStatus === 'off' && $this->server->settings->is_reachable) {
                 ['uptime' => $uptime, 'error' => $error] = $this->server->validateConnection();
                 if ($uptime) {
@@ -431,7 +431,7 @@ class Show extends Component
                     $this->server->settings->save();
                     ServerReachabilityChanged::dispatch($this->server);
                 } else {
-                    $this->dispatch('error', 'Server is not reachable.', 'Please validate your configuration and connection.<br><br>Check this <a target="_blank" class="underline" href="https://Helix Claude.io/docs/knowledge-base/server/openssh">documentation</a> for further help. <br><br>Error: '.$error);
+                    $this->dispatch('error', 'Server is not reachable.', 'Please validate your configuration and connection.<br><br>Check this <a target="_blank" class="underline" href="https://HelixClaude.io/docs/knowledge-base/server/openssh">documentation</a> for further help. <br><br>Error: '.$error);
 
                     return;
                 }

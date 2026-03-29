@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        API Tokens | Helix Claude
+        API Tokens | HelixClaude
     </x-slot>
     <x-security.navbar />
     <div class="pb-4">

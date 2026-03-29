@@ -251,5 +251,5 @@ Route::group([
 });
 
 Route::any('/{any}', function () {
-    return response()->json(['message' => 'Not found.', 'docs' => 'https://Helix Claude.io/docs'], 404);
+    return response()->json(['message' => 'Not found.', 'docs' => 'https://HelixClaude.io/docs'], 404);
 })->where('any', '.*');

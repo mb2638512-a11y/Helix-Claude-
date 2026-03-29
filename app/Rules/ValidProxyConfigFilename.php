@@ -11,8 +11,8 @@ class ValidProxyConfigFilename implements ValidationRule
      * Reserved filenames that cannot be used.
      */
     private const RESERVED_FILENAMES = [
-        'Helix Claude.yaml',
-        'Helix Claude.yml',
+        'HelixClaude.yaml',
+        'HelixClaude.yml',
         'Caddyfile',
     ];
 
@@ -63,7 +63,7 @@ class ValidProxyConfigFilename implements ValidationRule
             return;
         }
 
-        // Check for reserved filenames (case-sensitive for Helix Claude.yaml/yml, case-insensitive check not needed as Caddyfile is exact)
+        // Check for reserved filenames (case-sensitive for HelixClaude.yaml/yml, case-insensitive check not needed as Caddyfile is exact)
         if (in_array($filename, self::RESERVED_FILENAMES, true)) {
             $fail('The :attribute uses a reserved filename.');
 

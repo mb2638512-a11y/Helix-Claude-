@@ -46,9 +46,9 @@ class DiscordMessage
 
     public function toPayload(): array
     {
-        $footerText = 'Helix Claude v'.config('constants.Helix Claude.version');
+        $footerText = 'HelixClaude v'.config('constants.HelixClaude.version');
         if (isCloud()) {
-            $footerText = 'Helix Claude Cloud';
+            $footerText = 'HelixClaude Cloud';
         }
         $payload = [
             'embeds' => [

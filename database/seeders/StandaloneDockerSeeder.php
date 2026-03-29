@@ -17,7 +17,7 @@ class StandaloneDockerSeeder extends Seeder
                 'id' => 0,
                 'uuid' => 'docker',
                 'name' => 'Standalone Docker 1',
-                'network' => 'Helix Claude',
+                'network' => 'HelixClaude',
                 'server_id' => 0,
             ]);
         }

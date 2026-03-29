@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Actions\Helix ClaudeTask;
+namespace App\Actions\HelixClaudeTask;
 
-use App\Data\Helix ClaudeTaskArgs;
-use App\Jobs\Helix ClaudeTask;
+use App\Data\HelixClaudeTaskArgs;
+use App\Jobs\HelixClaudeTask;
 use Spatie\Activitylog\Models\Activity;
 
 /**
- * The initial step to run a `Helix ClaudeTask`: a remote SSH process
+ * The initial step to run a `HelixClaudeTask`: a remote SSH process
  * with monitoring/tracking/trace feature. Such thing is made
  * possible using an Activity model and some attributes.
  */
-class PrepareHelix ClaudeTask
+class PrepareHelixClaudeTask
 {
     protected Activity $activity;
 
-    protected Helix ClaudeTaskArgs $remoteProcessArgs;
+    protected HelixClaudeTaskArgs $remoteProcessArgs;
 
-    public function __construct(Helix ClaudeTaskArgs $remoteProcessArgs)
+    public function __construct(HelixClaudeTaskArgs $remoteProcessArgs)
     {
         $this->remoteProcessArgs = $remoteProcessArgs;
 
@@ -40,7 +40,7 @@ class PrepareHelix ClaudeTask
 
     public function __invoke(): Activity
     {
-        $job = new Helix ClaudeTask(
+        $job = new HelixClaudeTask(
             activity: $this->activity,
             ignore_errors: $this->remoteProcessArgs->ignore_errors,
             call_event_on_finish: $this->remoteProcessArgs->call_event_on_finish,

@@ -1,16 +1,16 @@
 <?php
 
 test('generate_application_name strips owner from git repository', function () {
-    $name = generate_application_name('coollabsio/Helix Claude', 'main', 'test123');
+    $name = generate_application_name('coollabsio/HelixClaude', 'main', 'test123');
 
-    expect($name)->toBe('Helix Claude:main-test123');
+    expect($name)->toBe('HelixClaude:main-test123');
     expect($name)->not->toContain('coollabsio');
 });
 
 test('generate_application_name handles repository without owner', function () {
-    $name = generate_application_name('Helix Claude', 'main', 'test123');
+    $name = generate_application_name('HelixClaude', 'main', 'test123');
 
-    expect($name)->toBe('Helix Claude:main-test123');
+    expect($name)->toBe('HelixClaude:main-test123');
 });
 
 test('generate_application_name handles deeply nested repository path', function () {

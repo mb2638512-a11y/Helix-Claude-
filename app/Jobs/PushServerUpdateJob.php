@@ -176,19 +176,19 @@ class PushServerUpdateJob implements ShouldBeEncrypted, ShouldQueue, Silenced
                 $containerStatus = "$containerStatus:$containerHealth";
             }
             $labels = collect(data_get($container, 'labels'));
-            $Helix Claude_managed = $labels->has('Helix Claude.managed');
+            $HelixClaude_managed = $labels->has('HelixClaude.managed');
 
-            if (! $Helix Claude_managed) {
+            if (! $HelixClaude_managed) {
                 continue;
             }
 
             $name = data_get($container, 'name');
-            if ($name === 'Helix Claude-log-drain' && $this->isRunning($containerStatus)) {
+            if ($name === 'HelixClaude-log-drain' && $this->isRunning($containerStatus)) {
                 $this->foundLogDrainContainer = true;
             }
-            if ($labels->has('Helix Claude.applicationId')) {
-                $applicationId = $labels->get('Helix Claude.applicationId');
-                $pullRequestId = $labels->get('Helix Claude.pullRequestId', '0');
+            if ($labels->has('HelixClaude.applicationId')) {
+                $applicationId = $labels->get('HelixClaude.applicationId');
+                $pullRequestId = $labels->get('HelixClaude.pullRequestId', '0');
                 try {
                     if ($pullRequestId === '0') {
                         if ($this->allApplicationIds->contains($applicationId)) {
@@ -211,10 +211,10 @@ class PushServerUpdateJob implements ShouldBeEncrypted, ShouldQueue, Silenced
                     }
                 } catch (\Exception $e) {
                 }
-            } elseif ($labels->has('Helix Claude.serviceId')) {
-                $serviceId = $labels->get('Helix Claude.serviceId');
-                $subType = $labels->get('Helix Claude.service.subType');
-                $subId = $labels->get('Helix Claude.service.subId');
+            } elseif ($labels->has('HelixClaude.serviceId')) {
+                $serviceId = $labels->get('HelixClaude.serviceId');
+                $subType = $labels->get('HelixClaude.service.subType');
+                $subId = $labels->get('HelixClaude.service.subId');
                 if (empty(trim((string) $subId))) {
                     continue;
                 }
@@ -243,8 +243,8 @@ class PushServerUpdateJob implements ShouldBeEncrypted, ShouldQueue, Silenced
                 }
             } else {
                 $uuid = $labels->get('com.docker.compose.service');
-                $type = $labels->get('Helix Claude.type');
-                if ($name === 'Helix Claude-proxy' && $this->isRunning($containerStatus)) {
+                $type = $labels->get('HelixClaude.type');
+                if ($name === 'HelixClaude-proxy' && $this->isRunning($containerStatus)) {
                     $this->foundProxy = true;
                 } elseif ($type === 'service' && $this->isRunning($containerStatus)) {
                 } else {
@@ -495,7 +495,7 @@ class PushServerUpdateJob implements ShouldBeEncrypted, ShouldQueue, Silenced
                 try {
                     if (CheckProxy::run($this->server)) {
                         StartProxy::run($this->server, async: false);
-                        $this->server->team?->notify(new ContainerRestarted('Helix Claude-proxy', $this->server));
+                        $this->server->team?->notify(new ContainerRestarted('HelixClaude-proxy', $this->server));
                     }
                 } catch (\Throwable $e) {
                 }
