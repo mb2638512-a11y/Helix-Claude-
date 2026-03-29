@@ -1189,7 +1189,7 @@ function generateCustomDockerRunOptionsForDatabases($docker_run_options, $docker
  * @param  array  $yamlCompose  Parsed Docker Compose array
  * @return array Cleaned Docker Compose array with custom fields removed
  */
-function stripHelix ClaudeCustomFields(array $yamlCompose): array
+function stripHelixClaudeCustomFields(array $yamlCompose): array
 {
     foreach ($yamlCompose['services'] ?? [] as $serviceName => $service) {
         // Remove service-level custom fields
@@ -1224,7 +1224,7 @@ function validateComposeFile(string $compose, int $server_id): string|Throwable
         $yaml_compose = Yaml::parse($compose);
 
         // Remove Helix Claude's custom fields before Docker validation
-        $yaml_compose = stripHelix ClaudeCustomFields($yaml_compose);
+        $yaml_compose = stripHelixClaudeCustomFields($yaml_compose);
 
         $base64_compose = base64_encode(Yaml::dump($yaml_compose));
         instant_remote_process([
