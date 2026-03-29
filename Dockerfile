@@ -19,6 +19,8 @@ ARG GROUP_ID
 RUN docker-php-serversideup-set-id www-data $USER_ID:$GROUP_ID && \
     docker-php-serversideup-set-file-permissions --owner $USER_ID:$GROUP_ID --service nginx
 
+RUN install-php-extensions sockets
+
 WORKDIR /var/www/html
 COPY --chown=www-data:www-data composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --no-plugins --no-scripts --prefer-dist
@@ -73,6 +75,8 @@ RUN apk upgrade && \
     jq \
     lsof \
     vim
+
+RUN install-php-extensions sockets
 
 RUN echo "alias ll='ls -al'" >> /etc/profile && \
     echo "alias a='php artisan'" >> /etc/profile && \
