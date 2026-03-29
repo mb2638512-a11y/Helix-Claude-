@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Actions\Server\UpdateCoolify;
+use App\Actions\Server\UpdateHelix Claude;
 use App\Models\InstanceSettings;
 use App\Models\Server;
 use Livewire\Component;
@@ -23,15 +23,15 @@ class Upgrade extends Component
 
     public function mount()
     {
-        $this->currentVersion = config('constants.coolify.version');
+        $this->currentVersion = config('constants.Helix Claude.version');
         $this->devMode = isDev();
     }
 
     public function checkUpdate()
     {
         try {
-            $this->latestVersion = get_latest_version_of_coolify();
-            $this->currentVersion = config('constants.coolify.version');
+            $this->latestVersion = get_latest_version_of_Helix Claude();
+            $this->currentVersion = config('constants.Helix Claude.version');
             $this->isUpgradeAvailable = data_get(InstanceSettings::get(), 'new_version_available', false);
             if (isDev()) {
                 $this->isUpgradeAvailable = true;
@@ -48,7 +48,7 @@ class Upgrade extends Component
                 return;
             }
             $this->updateInProgress = true;
-            UpdateCoolify::run(manual_update: true);
+            UpdateHelix Claude::run(manual_update: true);
         } catch (\Throwable $e) {
             return handleError($e, $this);
         }
@@ -66,7 +66,7 @@ class Upgrade extends Component
             return ['status' => 'none'];
         }
 
-        $statusFile = '/data/coolify/source/.upgrade-status';
+        $statusFile = '/data/Helix Claude/source/.upgrade-status';
 
         try {
             $content = instant_remote_process(

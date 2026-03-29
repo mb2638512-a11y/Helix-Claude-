@@ -69,11 +69,11 @@ class Init extends Command
 
         // Backward compatibility
         $this->replaceSlashInEnvironmentName();
-        $this->restoreCoolifyDbBackup();
+        $this->restoreHelix ClaudeDbBackup();
         $this->updateUserEmails();
         //
         $this->updateTraefikLabels();
-        $this->cleanupUnusedNetworkFromCoolifyProxy();
+        $this->cleanupUnusedNetworkFromHelix ClaudeProxy();
 
         try {
             $this->call('cleanup:redis', ['--restart' => true, '--clear-locks' => true]);
@@ -89,7 +89,7 @@ class Init extends Command
             $this->call('cleanup:stucked-resources');
         } catch (\Throwable $e) {
             echo "Error in cleanup:stucked-resources command: {$e->getMessage()}\n";
-            echo "Continuing with initialization - cleanup errors will not prevent Coolify from starting\n";
+            echo "Continuing with initialization - cleanup errors will not prevent Helix Claude from starting\n";
         }
         try {
             $updatedCount = ApplicationDeploymentQueue::whereIn('status', [
@@ -109,7 +109,7 @@ class Init extends Command
         try {
             $updatedTaskCount = ScheduledTaskExecution::where('status', 'running')->update([
                 'status' => 'failed',
-                'message' => 'Marked as failed during Coolify startup - job was interrupted',
+                'message' => 'Marked as failed during Helix Claude startup - job was interrupted',
                 'finished_at' => Carbon::now(),
             ]);
 
@@ -123,7 +123,7 @@ class Init extends Command
         try {
             $updatedBackupCount = ScheduledDatabaseBackupExecution::where('status', 'running')->update([
                 'status' => 'failed',
-                'message' => 'Marked as failed during Coolify startup - job was interrupted',
+                'message' => 'Marked as failed during Helix Claude startup - job was interrupted',
                 'finished_at' => Carbon::now(),
             ]);
 
@@ -143,8 +143,8 @@ class Init extends Command
             echo "Could not setup dynamic configuration: {$e->getMessage()}\n";
         }
 
-        if (! is_null(config('constants.coolify.autoupdate', null))) {
-            if (config('constants.coolify.autoupdate') == true) {
+        if (! is_null(config('constants.Helix Claude.autoupdate', null))) {
+            if (config('constants.Helix Claude.autoupdate') == true) {
                 echo "Enabling auto-update\n";
                 $this->settings->update(['is_auto_update_enabled' => true]);
             } else {
@@ -198,7 +198,7 @@ class Init extends Command
         }
     }
 
-    private function cleanupUnusedNetworkFromCoolifyProxy()
+    private function cleanupUnusedNetworkFromHelix ClaudeProxy()
     {
         foreach ($this->servers as $server) {
             if (! $server->isFunctional()) {
@@ -214,15 +214,15 @@ class Init extends Command
                 foreach ($removeNetworks as $network) {
                     $out = instant_remote_process(["docker network inspect -f json $network | jq '.[].Containers | if . == {} then null else . end'"], $server, false);
                     if (empty($out)) {
-                        $commands->push("docker network disconnect $network coolify-proxy >/dev/null 2>&1 || true");
+                        $commands->push("docker network disconnect $network Helix Claude-proxy >/dev/null 2>&1 || true");
                         $commands->push("docker network rm $network >/dev/null 2>&1 || true");
                     } else {
                         $data = collect(json_decode($out, true));
                         if ($data->count() === 1) {
-                            // If only coolify-proxy itself is connected to that network (it should not be possible, but who knows)
-                            $isCoolifyProxyItself = data_get($data->first(), 'Name') === 'coolify-proxy';
-                            if ($isCoolifyProxyItself) {
-                                $commands->push("docker network disconnect $network coolify-proxy >/dev/null 2>&1 || true");
+                            // If only Helix Claude-proxy itself is connected to that network (it should not be possible, but who knows)
+                            $isHelix ClaudeProxyItself = data_get($data->first(), 'Name') === 'Helix Claude-proxy';
+                            if ($isHelix ClaudeProxyItself) {
+                                $commands->push("docker network disconnect $network Helix Claude-proxy >/dev/null 2>&1 || true");
                                 $commands->push("docker network rm $network >/dev/null 2>&1 || true");
                             }
                         }
@@ -232,14 +232,14 @@ class Init extends Command
                     remote_process(command: $commands, type: ActivityTypes::INLINE->value, server: $server, ignore_errors: false);
                 }
             } catch (\Throwable $e) {
-                echo "Error in cleaning up unused networks from coolify proxy: {$e->getMessage()}\n";
+                echo "Error in cleaning up unused networks from Helix Claude proxy: {$e->getMessage()}\n";
             }
         }
     }
 
-    private function restoreCoolifyDbBackup()
+    private function restoreHelix ClaudeDbBackup()
     {
-        if (version_compare('4.0.0-beta.179', config('constants.coolify.version'), '<=')) {
+        if (version_compare('4.0.0-beta.179', config('constants.Helix Claude.version'), '<=')) {
             try {
                 $database = StandalonePostgresql::withTrashed()->find(0);
                 if ($database && $database->trashed()) {
@@ -258,7 +258,7 @@ class Init extends Command
                     }
                 }
             } catch (\Throwable $e) {
-                echo "Error in restoring coolify db backup: {$e->getMessage()}\n";
+                echo "Error in restoring Helix Claude db backup: {$e->getMessage()}\n";
             }
         }
     }
@@ -266,9 +266,9 @@ class Init extends Command
     private function sendAliveSignal()
     {
         $id = config('app.id');
-        $version = config('constants.coolify.version');
+        $version = config('constants.Helix Claude.version');
         try {
-            Http::get("https://undead.coolify.io/v4/alive?appId=$id&version=$version");
+            Http::get("https://undead.Helix Claude.io/v4/alive?appId=$id&version=$version");
         } catch (\Throwable $e) {
             echo "Error in sending live signal: {$e->getMessage()}\n";
         }
@@ -276,7 +276,7 @@ class Init extends Command
 
     private function replaceSlashInEnvironmentName()
     {
-        if (version_compare('4.0.0-beta.298', config('constants.coolify.version'), '<=')) {
+        if (version_compare('4.0.0-beta.298', config('constants.Helix Claude.version'), '<=')) {
             $environments = Environment::all();
             foreach ($environments as $environment) {
                 if (str_contains($environment->name, '/')) {

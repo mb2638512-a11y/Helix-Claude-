@@ -1,6 +1,6 @@
 <?php
 
-use App\Actions\Server\UpdateCoolify;
+use App\Actions\Server\UpdateHelix Claude;
 use App\Models\InstanceSettings;
 use App\Models\Server;
 use Illuminate\Support\Facades\Cache;
@@ -21,8 +21,8 @@ afterEach(function () {
     Mockery::close();
 });
 
-it('has UpdateCoolify action class', function () {
-    expect(class_exists(UpdateCoolify::class))->toBeTrue();
+it('has UpdateHelix Claude action class', function () {
+    expect(class_exists(UpdateHelix Claude::class))->toBeTrue();
 });
 
 it('validates cache against running version before fallback', function () {
@@ -41,11 +41,11 @@ it('validates cache against running version before fallback', function () {
 
     // Mock cache returning older version
     Cache::shouldReceive('remember')
-        ->andReturn(['coolify' => ['v4' => ['version' => '4.0.5']]]);
+        ->andReturn(['Helix Claude' => ['v4' => ['version' => '4.0.5']]]);
 
-    config(['constants.coolify.version' => '4.0.10']);
+    config(['constants.Helix Claude.version' => '4.0.10']);
 
-    $action = new UpdateCoolify;
+    $action = new UpdateHelix Claude;
 
     // Should throw exception - cache is older than running
     try {
@@ -74,12 +74,12 @@ it('uses validated cache when CDN fails and cache is newer', function () {
 
     // Cache has newer version than current
     Cache::shouldReceive('remember')
-        ->andReturn(['coolify' => ['v4' => ['version' => '4.0.10']]]);
+        ->andReturn(['Helix Claude' => ['v4' => ['version' => '4.0.10']]]);
 
-    config(['constants.coolify.version' => '4.0.5']);
+    config(['constants.Helix Claude.version' => '4.0.5']);
 
     // Mock the update method to prevent actual update
-    $action = Mockery::mock(UpdateCoolify::class)->makePartial();
+    $action = Mockery::mock(UpdateHelix Claude::class)->makePartial();
     $action->shouldReceive('update')->once();
     $action->server = $this->mockServer;
 
@@ -107,14 +107,14 @@ it('prevents downgrade even with manual update', function () {
     // CDN returns older version
     Http::fake([
         '*' => Http::response([
-            'coolify' => ['v4' => ['version' => '4.0.0']],
+            'Helix Claude' => ['v4' => ['version' => '4.0.0']],
         ], 200),
     ]);
 
     // Current version is newer
-    config(['constants.coolify.version' => '4.0.10']);
+    config(['constants.Helix Claude.version' => '4.0.10']);
 
-    $action = new UpdateCoolify;
+    $action = new UpdateHelix Claude;
 
     \Illuminate\Support\Facades\Log::shouldReceive('error')
         ->once()

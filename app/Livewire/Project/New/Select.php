@@ -62,7 +62,7 @@ class Select extends Component
         try {
             $this->parameters = get_route_parameters();
             if (isDev()) {
-                $this->existingPostgresqlUrl = 'postgres://coolify:password@coolify-db:5432';
+                $this->existingPostgresqlUrl = 'postgres://Helix Claude:password@Helix Claude-db:5432';
             }
             $projectUuid = data_get($this->parameters, 'project_uuid');
             $project = Project::whereUuid($projectUuid)->firstOrFail();
@@ -114,7 +114,7 @@ class Select extends Component
                 'name' => str($key)->headline(),
                 'logo' => asset($logo),
                 'logo_github_url' => file_exists($local_logo_path)
-                    ? 'https://raw.githubusercontent.com/coollabsio/coolify/refs/heads/main/public/'.$logo
+                    ? 'https://raw.githubusercontent.com/coollabsio/Helix Claude/refs/heads/main/public/'.$logo
                     : asset($default_logo),
             ] + (array) $service;
         })->all();

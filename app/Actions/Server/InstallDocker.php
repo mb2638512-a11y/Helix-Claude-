@@ -15,17 +15,17 @@ class InstallDocker
     {
         $supported_os_type = $server->validateOS();
         if (! $supported_os_type) {
-            throw new \Exception('Server OS type is not supported for automated installation. Please install Docker manually before continuing: <a target="_blank" class="underline" href="https://coolify.io/docs/installation#manually">documentation</a>.');
+            throw new \Exception('Server OS type is not supported for automated installation. Please install Docker manually before continuing: <a target="_blank" class="underline" href="https://Helix Claude.io/docs/installation#manually">documentation</a>.');
         }
 
         if (! $server->sslCertificates()->where('is_ca_certificate', true)->exists()) {
             $serverCert = SslHelper::generateSslCertificate(
-                commonName: 'Coolify CA Certificate',
+                commonName: 'Helix Claude CA Certificate',
                 serverId: $server->id,
                 isCaCertificate: true,
                 validityDays: 10 * 365
             );
-            $caCertPath = config('constants.coolify.base_config_path').'/ssl/';
+            $caCertPath = config('constants.Helix Claude.base_config_path').'/ssl/';
 
             $base64Cert = base64_encode($serverCert->ssl_certificate);
 
@@ -33,9 +33,9 @@ class InstallDocker
                 "mkdir -p $caCertPath",
                 "chown -R 9999:root $caCertPath",
                 "chmod -R 700 $caCertPath",
-                "rm -rf $caCertPath/coolify-ca.crt",
-                "echo '{$base64Cert}' | base64 -d | tee $caCertPath/coolify-ca.crt > /dev/null",
-                "chmod 644 $caCertPath/coolify-ca.crt",
+                "rm -rf $caCertPath/Helix Claude-ca.crt",
+                "echo '{$base64Cert}' | base64 -d | tee $caCertPath/Helix Claude-ca.crt > /dev/null",
+                "chmod 644 $caCertPath/Helix Claude-ca.crt",
             ]);
             remote_process($commands, $server);
         }
@@ -50,8 +50,8 @@ class InstallDocker
         $found = StandaloneDocker::where('server_id', $server->id);
         if ($found->count() == 0 && $server->id) {
             StandaloneDocker::create([
-                'name' => 'coolify',
-                'network' => 'coolify',
+                'name' => 'Helix Claude',
+                'network' => 'Helix Claude',
                 'server_id' => $server->id,
             ]);
         }
@@ -87,10 +87,10 @@ class InstallDocker
                 "echo 'Configuring Docker Engine (merging existing configuration with the required)...'",
                 'test -s /etc/docker/daemon.json && cp /etc/docker/daemon.json "/etc/docker/daemon.json.original-$(date +"%Y%m%d-%H%M%S")"',
                 "test ! -s /etc/docker/daemon.json && echo '{$config}' | base64 -d | tee /etc/docker/daemon.json > /dev/null",
-                "echo '{$config}' | base64 -d | tee /etc/docker/daemon.json.coolify > /dev/null",
-                'jq . /etc/docker/daemon.json.coolify | tee /etc/docker/daemon.json.coolify.pretty > /dev/null',
-                'mv /etc/docker/daemon.json.coolify.pretty /etc/docker/daemon.json.coolify',
-                "jq -s '.[0] * .[1]' /etc/docker/daemon.json.coolify /etc/docker/daemon.json | tee /etc/docker/daemon.json.appended > /dev/null",
+                "echo '{$config}' | base64 -d | tee /etc/docker/daemon.json.Helix Claude > /dev/null",
+                'jq . /etc/docker/daemon.json.Helix Claude | tee /etc/docker/daemon.json.Helix Claude.pretty > /dev/null',
+                'mv /etc/docker/daemon.json.Helix Claude.pretty /etc/docker/daemon.json.Helix Claude',
+                "jq -s '.[0] * .[1]' /etc/docker/daemon.json.Helix Claude /etc/docker/daemon.json | tee /etc/docker/daemon.json.appended > /dev/null",
                 'mv /etc/docker/daemon.json.appended /etc/docker/daemon.json',
                 "echo 'Restarting Docker Engine...'",
                 'systemctl enable docker >/dev/null 2>&1 || true',
@@ -98,11 +98,11 @@ class InstallDocker
             ]);
             if ($server->isSwarm()) {
                 $command = $command->merge([
-                    'docker network create --attachable --driver overlay coolify-overlay >/dev/null 2>&1 || true',
+                    'docker network create --attachable --driver overlay Helix Claude-overlay >/dev/null 2>&1 || true',
                 ]);
             } else {
                 $command = $command->merge([
-                    'docker network create --attachable coolify >/dev/null 2>&1 || true',
+                    'docker network create --attachable Helix Claude >/dev/null 2>&1 || true',
                 ]);
                 $command = $command->merge([
                     "echo 'Done!'",

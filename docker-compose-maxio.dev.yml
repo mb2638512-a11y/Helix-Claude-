@@ -1,6 +1,6 @@
 services:
-  coolify:
-    image: coolify:dev
+  Helix Claude:
+    image: Helix Claude:dev
     pull_policy: never
     build:
       context: .
@@ -15,9 +15,9 @@ services:
       PUSHER_HOST: "${PUSHER_HOST}"
       PUSHER_PORT: "${PUSHER_PORT}"
       PUSHER_SCHEME: "${PUSHER_SCHEME:-http}"
-      PUSHER_APP_ID: "${PUSHER_APP_ID:-coolify}"
-      PUSHER_APP_KEY: "${PUSHER_APP_KEY:-coolify}"
-      PUSHER_APP_SECRET: "${PUSHER_APP_SECRET:-coolify}"
+      PUSHER_APP_ID: "${PUSHER_APP_ID:-Helix Claude}"
+      PUSHER_APP_KEY: "${PUSHER_APP_KEY:-Helix Claude}"
+      PUSHER_APP_SECRET: "${PUSHER_APP_SECRET:-Helix Claude}"
     healthcheck:
       test: curl -sf http://127.0.0.1:8080/api/health || exit 1
       interval: 5s
@@ -27,7 +27,7 @@ services:
       - .:/var/www/html/:cached
       - dev_backups_data:/var/www/html/storage/app/backups
     networks:
-      - coolify
+      - Helix Claude
   postgres:
     pull_policy: always
     ports:
@@ -35,9 +35,9 @@ services:
     env_file:
       - .env
     environment:
-      POSTGRES_USER: "${DB_USERNAME:-coolify}"
+      POSTGRES_USER: "${DB_USERNAME:-Helix Claude}"
       POSTGRES_PASSWORD: "${DB_PASSWORD:-password}"
-      POSTGRES_DB: "${DB_DATABASE:-coolify}"
+      POSTGRES_DB: "${DB_DATABASE:-Helix Claude}"
       POSTGRES_HOST_AUTH_METHOD: "trust"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
@@ -60,11 +60,11 @@ services:
     volumes:
       - dev_redis_data:/data
   soketi:
-    image: coolify-realtime:dev
+    image: Helix Claude-realtime:dev
     pull_policy: never
     build:
       context: .
-      dockerfile: ./docker/coolify-realtime/Dockerfile
+      dockerfile: ./docker/Helix Claude-realtime/Dockerfile
     env_file:
       - .env
     ports:
@@ -72,13 +72,13 @@ services:
       - "6002:6002"
     volumes:
       - ./storage:/var/www/html/storage
-      - ./docker/coolify-realtime/terminal-server.js:/terminal/terminal-server.js
-      - ./docker/coolify-realtime/terminal-utils.js:/terminal/terminal-utils.js
+      - ./docker/Helix Claude-realtime/terminal-server.js:/terminal/terminal-server.js
+      - ./docker/Helix Claude-realtime/terminal-utils.js:/terminal/terminal-utils.js
     environment:
       SOKETI_DEBUG: "false"
-      SOKETI_DEFAULT_APP_ID: "${PUSHER_APP_ID:-coolify}"
-      SOKETI_DEFAULT_APP_KEY: "${PUSHER_APP_KEY:-coolify}"
-      SOKETI_DEFAULT_APP_SECRET: "${PUSHER_APP_SECRET:-coolify}"
+      SOKETI_DEFAULT_APP_ID: "${PUSHER_APP_ID:-Helix Claude}"
+      SOKETI_DEFAULT_APP_KEY: "${PUSHER_APP_KEY:-Helix Claude}"
+      SOKETI_DEFAULT_APP_SECRET: "${PUSHER_APP_SECRET:-Helix Claude}"
       SOKETI_HOST: "${SOKETI_HOST:-0.0.0.0}"
     healthcheck:
       test: [ "CMD-SHELL", "curl -fsS http://127.0.0.1:6001/ready && curl -fsS http://127.0.0.1:6002/ready || exit 1" ]
@@ -89,7 +89,7 @@ services:
   vite:
     image: node:24-alpine
     pull_policy: always
-    container_name: coolify-vite
+    container_name: Helix Claude-vite
     working_dir: /var/www/html
     environment:
       VITE_HOST: "${VITE_HOST:-localhost}"
@@ -100,37 +100,37 @@ services:
       - .:/var/www/html/:cached
     command: sh -c "npm install && npm run dev"
     networks:
-      - coolify
+      - Helix Claude
   testing-host:
-    image: coolify-testing-host:dev
+    image: Helix Claude-testing-host:dev
     pull_policy: never
     build:
       context: .
       dockerfile: ./docker/testing-host/Dockerfile
     init: true
-    container_name: coolify-testing-host
+    container_name: Helix Claude-testing-host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - dev_coolify_data:/data/coolify
-      - dev_backups_data:/data/coolify/backups
-      - dev_postgres_data:/data/coolify/_volumes/database
-      - dev_redis_data:/data/coolify/_volumes/redis
-      - dev_minio_data:/data/coolify/_volumes/minio
+      - dev_Helix Claude_data:/data/Helix Claude
+      - dev_backups_data:/data/Helix Claude/backups
+      - dev_postgres_data:/data/Helix Claude/_volumes/database
+      - dev_redis_data:/data/Helix Claude/_volumes/redis
+      - dev_minio_data:/data/Helix Claude/_volumes/minio
     networks:
-      - coolify
+      - Helix Claude
   mailpit:
     image: axllent/mailpit:latest
     pull_policy: always
-    container_name: coolify-mail
+    container_name: Helix Claude-mail
     ports:
       - "${FORWARD_MAILPIT_PORT:-1025}:1025"
       - "${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025"
     networks:
-      - coolify
+      - Helix Claude
   # maxio:
   #   image: ghcr.io/coollabsio/maxio 
   #   pull_policy: always
-  #   container_name: coolify-maxio
+  #   container_name: Helix Claude-maxio
   #   ports:
   #     - "${FORWARD_MAXIO_PORT:-9000}:9000"
   #   environment:
@@ -139,11 +139,11 @@ services:
   #   volumes:
   #     - dev_maxio_data:/data
   #   networks:
-  #     - coolify
+  #     - Helix Claude
   minio:
     image: ghcr.io/coollabsio/minio:RELEASE.2025-10-15T17-29-55Z # Released on 15 October 2025
     pull_policy: always
-    container_name: coolify-minio
+    container_name: Helix Claude-minio
     command: server /data --console-address ":9001"
     ports:
       - "${FORWARD_MINIO_PORT:-9000}:9000"
@@ -155,18 +155,18 @@ services:
       - dev_minio_data:/data
       - dev_maxio_data:/data
     networks:
-      - coolify
+      - Helix Claude
   # maxio-init:
   #   image: minio/mc:latest
   #   pull_policy: always
-  #   container_name: coolify-maxio-init
+  #   container_name: Helix Claude-maxio-init
   #   restart: no
   #   depends_on:
   #     - maxio
   #   entrypoint: >
   #     /bin/sh -c "
   #     echo 'Waiting for MaxIO to be ready...';
-  #     until mc alias set local http://coolify-maxio:9000 maxioadmin maxioadmin 2>/dev/null; do
+  #     until mc alias set local http://Helix Claude-maxio:9000 maxioadmin maxioadmin 2>/dev/null; do
   #       echo 'MaxIO not ready yet, waiting...';
   #       sleep 2;
   #     done;
@@ -175,18 +175,18 @@ services:
   #     echo 'MaxIO initialization complete - bucket local is ready';
   #     "
   #   networks:
-  #     - coolify
+  #     - Helix Claude
   minio-init:
     image: minio/mc:latest
     pull_policy: always
-    container_name: coolify-minio-init
+    container_name: Helix Claude-minio-init
     restart: no
     depends_on:
       - minio
     entrypoint: >
       /bin/sh -c "
       echo 'Waiting for MinIO to be ready...';
-      until mc alias set local http://coolify-minio:9000 minioadmin minioadmin 2>/dev/null; do
+      until mc alias set local http://Helix Claude-minio:9000 minioadmin minioadmin 2>/dev/null; do
         echo 'MinIO not ready yet, waiting...';
         sleep 2;
       done;
@@ -195,17 +195,17 @@ services:
       echo 'MinIO initialization complete - bucket local is ready';
       "
     networks:
-      - coolify
+      - Helix Claude
 
 volumes:
   dev_backups_data:
   dev_postgres_data:
   dev_redis_data:
-  dev_coolify_data:
+  dev_Helix Claude_data:
   dev_minio_data:
   dev_maxio_data:
 
 networks:
-  coolify:
-    name: coolify
+  Helix Claude:
+    name: Helix Claude
     external: false

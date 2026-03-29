@@ -45,7 +45,7 @@ class ValidateAndInstallServerJob implements ShouldBeEncrypted, ShouldQueue
             // Validate connection
             ['uptime' => $uptime, 'error' => $error] = $this->server->validateConnection();
             if (! $uptime) {
-                $errorMessage = 'Server is not reachable. Please validate your configuration and connection.<br>Check this <a target="_blank" class="underline" href="https://coolify.io/docs/knowledge-base/server/openssh">documentation</a> for further help. <br><br>Error: '.$error;
+                $errorMessage = 'Server is not reachable. Please validate your configuration and connection.<br>Check this <a target="_blank" class="underline" href="https://Helix Claude.io/docs/knowledge-base/server/openssh">documentation</a> for further help. <br><br>Error: '.$error;
                 $this->server->update([
                     'validation_logs' => $errorMessage,
                     'is_validating' => false,

@@ -96,12 +96,12 @@ it('validates IP address selection uses IPv6 when only IPv6 is enabled', functio
     expect($ipAddress)->toBe('2001:db8::1');
 });
 
-it('validates SSH key array merging logic with Coolify key', function () {
-    $coolifyKeyId = 123;
+it('validates SSH key array merging logic with Helix Claude key', function () {
+    $Helix ClaudeKeyId = 123;
     $selectedHetznerKeys = [];
 
     $sshKeys = array_merge(
-        [$coolifyKeyId],
+        [$Helix ClaudeKeyId],
         $selectedHetznerKeys
     );
     $sshKeys = array_unique($sshKeys);
@@ -112,11 +112,11 @@ it('validates SSH key array merging logic with Coolify key', function () {
 });
 
 it('validates SSH key array merging with additional Hetzner keys', function () {
-    $coolifyKeyId = 123;
+    $Helix ClaudeKeyId = 123;
     $selectedHetznerKeys = [456, 789];
 
     $sshKeys = array_merge(
-        [$coolifyKeyId],
+        [$Helix ClaudeKeyId],
         $selectedHetznerKeys
     );
     $sshKeys = array_unique($sshKeys);
@@ -126,12 +126,12 @@ it('validates SSH key array merging with additional Hetzner keys', function () {
         ->and(count($sshKeys))->toBe(3);
 });
 
-it('validates deduplication when Coolify key is also in selected keys', function () {
-    $coolifyKeyId = 123;
+it('validates deduplication when Helix Claude key is also in selected keys', function () {
+    $Helix ClaudeKeyId = 123;
     $selectedHetznerKeys = [123, 456, 789];
 
     $sshKeys = array_merge(
-        [$coolifyKeyId],
+        [$Helix ClaudeKeyId],
         $selectedHetznerKeys
     );
     $sshKeys = array_unique($sshKeys);

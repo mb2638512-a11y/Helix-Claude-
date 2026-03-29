@@ -1,7 +1,7 @@
 <?php
 
-use App\Actions\CoolifyTask\PrepareCoolifyTask;
-use App\Data\CoolifyTaskArgs;
+use App\Actions\Helix ClaudeTask\PrepareHelix ClaudeTask;
+use App\Data\Helix ClaudeTaskArgs;
 use App\Enums\ActivityTypes;
 use App\Helpers\SshMultiplexingHelper;
 use App\Models\Application;
@@ -44,8 +44,8 @@ function remote_process(
 
     SshMultiplexingHelper::ensureMultiplexedConnection($server);
 
-    return resolve(PrepareCoolifyTask::class, [
-        'remoteProcessArgs' => new CoolifyTaskArgs(
+    return resolve(PrepareHelix ClaudeTask::class, [
+        'remoteProcessArgs' => new Helix ClaudeTaskArgs(
             server_uuid: $server->uuid,
             command: $command_string,
             type: $type,

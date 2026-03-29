@@ -136,7 +136,7 @@ class Index extends Component
 
             if ($this->settings->is_dns_validation_enabled && $this->fqdn && $this->server) {
                 if (! validateDNSEntry($this->fqdn, $this->server)) {
-                    $this->dispatch('error', "Validating DNS failed.<br><br>Make sure you have added the DNS records correctly.<br><br>{$this->fqdn}->{$this->server->ip}<br><br>Check this <a target='_blank' class='underline dark:text-white' href='https://coolify.io/docs/knowledge-base/dns-configuration'>documentation</a> for further help.");
+                    $this->dispatch('error', "Validating DNS failed.<br><br>Make sure you have added the DNS records correctly.<br><br>{$this->fqdn}->{$this->server->ip}<br><br>Check this <a target='_blank' class='underline dark:text-white' href='https://Helix Claude.io/docs/knowledge-base/dns-configuration'>documentation</a> for further help.");
                     $error_show = true;
                 }
             }
@@ -184,14 +184,14 @@ class Index extends Component
                 return;
             }
 
-            $version = $this->dev_helper_version ?: config('constants.coolify.helper_version');
+            $version = $this->dev_helper_version ?: config('constants.Helix Claude.helper_version');
             if (empty($version)) {
                 $this->dispatch('error', 'Please specify a version to build.');
 
                 return;
             }
 
-            $buildCommand = "docker build -t ghcr.io/coollabsio/coolify-helper:{$version} -f docker/coolify-helper/Dockerfile .";
+            $buildCommand = "docker build -t ghcr.io/coollabsio/Helix Claude-helper:{$version} -f docker/Helix Claude-helper/Dockerfile .";
 
             $activity = remote_process(
                 command: [$buildCommand],
@@ -202,7 +202,7 @@ class Index extends Component
             $this->buildActivityId = $activity->id;
             $this->dispatch('activityMonitor', $activity->id);
 
-            $this->dispatch('success', "Building coolify-helper:{$version}...");
+            $this->dispatch('success', "Building Helix Claude-helper:{$version}...");
         } catch (\Exception $e) {
             return handleError($e, $this);
         }

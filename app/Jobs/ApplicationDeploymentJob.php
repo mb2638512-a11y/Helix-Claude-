@@ -165,7 +165,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
 
     private ?string $branch = null;
 
-    private ?string $coolify_variables = null;
+    private ?string $Helix Claude_variables = null;
 
     private bool $preserveRepository = false;
 
@@ -297,7 +297,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                     $allContainers = collect($allContainers)->sort()->values();
                     foreach ($allContainers as $container) {
                         $containerName = data_get($container, 'Name');
-                        if ($containerName === 'coolify-proxy') {
+                        if ($containerName === 'Helix Claude-proxy') {
                             continue;
                         }
                         if (preg_match('/-(\d{12})/', $containerName)) {
@@ -411,7 +411,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                 return;
             }
 
-            // Check buildx availability (always installed by Coolify on Docker 24.0+)
+            // Check buildx availability (always installed by Helix Claude on Docker 24.0+)
             $buildxAvailable = instant_remote_process(
                 ["docker buildx version >/dev/null 2>&1 && echo 'available' || echo 'not-available'"],
                 $serverToCheck
@@ -720,7 +720,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                 throw $e;
             }
         } else {
-            $command = "{$this->coolify_variables} docker compose";
+            $command = "{$this->Helix Claude_variables} docker compose";
             // Prepend DOCKER_BUILDKIT=1 if BuildKit is supported
             if ($this->dockerBuildkitSupported) {
                 $command = "DOCKER_BUILDKIT=1 {$command}";
@@ -762,7 +762,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                 'hidden' => true,
                 'ignore_errors' => true,
             ], [
-                "docker network connect {$networkId} coolify-proxy >/dev/null 2>&1 || true",
+                "docker network connect {$networkId} Helix Claude-proxy >/dev/null 2>&1 || true",
                 'hidden' => true,
                 'ignore_errors' => true,
             ]);
@@ -796,7 +796,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                 $this->write_deployment_configurations();
                 $this->docker_compose_location = '/docker-compose.yaml';
 
-                $command = "{$this->coolify_variables} docker compose";
+                $command = "{$this->Helix Claude_variables} docker compose";
                 // Always use .env file
                 $command .= " --env-file {$server_workdir}/.env";
                 $command .= " --project-directory {$server_workdir} -f {$server_workdir}{$this->docker_compose_location} up -d";
@@ -826,7 +826,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                     );
                 }
             } else {
-                $command = "{$this->coolify_variables} docker compose";
+                $command = "{$this->Helix Claude_variables} docker compose";
                 if ($this->preserveRepository) {
                     // Always use .env file
                     $command .= " --env-file {$server_workdir}/.env";
@@ -1215,8 +1215,8 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
             });
         }
         $ports = $this->application->main_port();
-        $coolify_envs = $this->generate_coolify_env_variables();
-        $coolify_envs->each(function ($item, $key) use ($envs) {
+        $Helix Claude_envs = $this->generate_Helix Claude_env_variables();
+        $Helix Claude_envs->each(function ($item, $key) use ($envs) {
             $envs->push($key.'='.$item);
         });
         if ($this->pull_request_id === 0) {
@@ -1229,12 +1229,12 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                     $parsedDomain = data_get($domain, 'domain');
                     if (filled($parsedDomain)) {
                         $parsedDomain = str($parsedDomain)->explode(',')->first();
-                        $coolifyUrl = Url::fromString($parsedDomain);
-                        $coolifyScheme = $coolifyUrl->getScheme();
-                        $coolifyFqdn = $coolifyUrl->getHost();
-                        $coolifyUrl = $coolifyUrl->withScheme($coolifyScheme)->withHost($coolifyFqdn)->withPort(null);
-                        $envs->push('SERVICE_URL_'.str($forServiceName)->upper().'='.$coolifyUrl->__toString());
-                        $envs->push('SERVICE_FQDN_'.str($forServiceName)->upper().'='.$coolifyFqdn);
+                        $Helix ClaudeUrl = Url::fromString($parsedDomain);
+                        $Helix ClaudeScheme = $Helix ClaudeUrl->getScheme();
+                        $Helix ClaudeFqdn = $Helix ClaudeUrl->getHost();
+                        $Helix ClaudeUrl = $Helix ClaudeUrl->withScheme($Helix ClaudeScheme)->withHost($Helix ClaudeFqdn)->withPort(null);
+                        $envs->push('SERVICE_URL_'.str($forServiceName)->upper().'='.$Helix ClaudeUrl->__toString());
+                        $envs->push('SERVICE_FQDN_'.str($forServiceName)->upper().'='.$Helix ClaudeFqdn);
                     }
                 }
 
@@ -1299,12 +1299,12 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                     $parsedDomain = data_get($domain, 'domain');
                     if (filled($parsedDomain)) {
                         $parsedDomain = str($parsedDomain)->explode(',')->first();
-                        $coolifyUrl = Url::fromString($parsedDomain);
-                        $coolifyScheme = $coolifyUrl->getScheme();
-                        $coolifyFqdn = $coolifyUrl->getHost();
-                        $coolifyUrl = $coolifyUrl->withScheme($coolifyScheme)->withHost($coolifyFqdn)->withPort(null);
-                        $envs->push('SERVICE_URL_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper().'='.$coolifyUrl->__toString());
-                        $envs->push('SERVICE_FQDN_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper().'='.$coolifyFqdn);
+                        $Helix ClaudeUrl = Url::fromString($parsedDomain);
+                        $Helix ClaudeScheme = $Helix ClaudeUrl->getScheme();
+                        $Helix ClaudeFqdn = $Helix ClaudeUrl->getHost();
+                        $Helix ClaudeUrl = $Helix ClaudeUrl->withScheme($Helix ClaudeScheme)->withHost($Helix ClaudeFqdn)->withPort(null);
+                        $envs->push('SERVICE_URL_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper().'='.$Helix ClaudeUrl->__toString());
+                        $envs->push('SERVICE_FQDN_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper().'='.$Helix ClaudeFqdn);
                     }
                 }
 
@@ -1482,8 +1482,8 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                 }
 
                 foreach ($planVariables as $key => $value) {
-                    // Skip COOLIFY_* and SERVICE_* - they'll be added later with higher priority
-                    if (str_starts_with($key, 'COOLIFY_') || str_starts_with($key, 'SERVICE_')) {
+                    // Skip Helix Claude_* and SERVICE_* - they'll be added later with higher priority
+                    if (str_starts_with($key, 'Helix Claude_') || str_starts_with($key, 'SERVICE_')) {
                         continue;
                     }
 
@@ -1497,9 +1497,9 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
             }
         }
 
-        // 2. Add COOLIFY variables (can override nixpacks, but shouldn't happen in practice)
-        $coolify_envs = $this->generate_coolify_env_variables(forBuildTime: true);
-        foreach ($coolify_envs as $key => $item) {
+        // 2. Add Helix Claude variables (can override nixpacks, but shouldn't happen in practice)
+        $Helix Claude_envs = $this->generate_Helix Claude_env_variables(forBuildTime: true);
+        foreach ($Helix Claude_envs as $key => $item) {
             $envs_dict[$key] = escapeBashEnvValue($item);
         }
 
@@ -1523,12 +1523,12 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                     $parsedDomain = data_get($domain, 'domain');
                     if (filled($parsedDomain)) {
                         $parsedDomain = str($parsedDomain)->explode(',')->first();
-                        $coolifyUrl = Url::fromString($parsedDomain);
-                        $coolifyScheme = $coolifyUrl->getScheme();
-                        $coolifyFqdn = $coolifyUrl->getHost();
-                        $coolifyUrl = $coolifyUrl->withScheme($coolifyScheme)->withHost($coolifyFqdn)->withPort(null);
-                        $envs_dict['SERVICE_URL_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper()] = escapeBashEnvValue($coolifyUrl->__toString());
-                        $envs_dict['SERVICE_FQDN_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper()] = escapeBashEnvValue($coolifyFqdn);
+                        $Helix ClaudeUrl = Url::fromString($parsedDomain);
+                        $Helix ClaudeScheme = $Helix ClaudeUrl->getScheme();
+                        $Helix ClaudeFqdn = $Helix ClaudeUrl->getHost();
+                        $Helix ClaudeUrl = $Helix ClaudeUrl->withScheme($Helix ClaudeScheme)->withHost($Helix ClaudeFqdn)->withPort(null);
+                        $envs_dict['SERVICE_URL_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper()] = escapeBashEnvValue($Helix ClaudeUrl->__toString());
+                        $envs_dict['SERVICE_FQDN_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper()] = escapeBashEnvValue($Helix ClaudeFqdn);
                     }
                 }
             } else {
@@ -1545,12 +1545,12 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                     $parsedDomain = data_get($domain, 'domain');
                     if (filled($parsedDomain)) {
                         $parsedDomain = str($parsedDomain)->explode(',')->first();
-                        $coolifyUrl = Url::fromString($parsedDomain);
-                        $coolifyScheme = $coolifyUrl->getScheme();
-                        $coolifyFqdn = $coolifyUrl->getHost();
-                        $coolifyUrl = $coolifyUrl->withScheme($coolifyScheme)->withHost($coolifyFqdn)->withPort(null);
-                        $envs_dict['SERVICE_URL_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper()] = escapeBashEnvValue($coolifyUrl->__toString());
-                        $envs_dict['SERVICE_FQDN_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper()] = escapeBashEnvValue($coolifyFqdn);
+                        $Helix ClaudeUrl = Url::fromString($parsedDomain);
+                        $Helix ClaudeScheme = $Helix ClaudeUrl->getScheme();
+                        $Helix ClaudeFqdn = $Helix ClaudeUrl->getHost();
+                        $Helix ClaudeUrl = $Helix ClaudeUrl->withScheme($Helix ClaudeScheme)->withHost($Helix ClaudeFqdn)->withPort(null);
+                        $envs_dict['SERVICE_URL_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper()] = escapeBashEnvValue($Helix ClaudeUrl->__toString());
+                        $envs_dict['SERVICE_FQDN_'.str($forServiceName)->replace('-', '_')->replace('.', '_')->upper()] = escapeBashEnvValue($Helix ClaudeFqdn);
                     }
                 }
             }
@@ -1984,7 +1984,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
     private function prepare_builder_image(bool $firstTry = true)
     {
         $this->checkForCancellation();
-        $helperImage = config('constants.coolify.helper_image');
+        $helperImage = config('constants.Helix Claude.helper_image');
         $helperImage = "{$helperImage}:".getHelperVersion();
         // Get user home directory
         $this->serverUserHomeDir = instant_remote_process(['echo $HOME'], $this->server);
@@ -2079,13 +2079,13 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
         }
     }
 
-    private function set_coolify_variables()
+    private function set_Helix Claude_variables()
     {
-        $this->coolify_variables = '';
+        $this->Helix Claude_variables = '';
 
         // Only include SOURCE_COMMIT in build context if enabled in settings
         if ($this->application->settings->include_source_commit_in_build) {
-            $this->coolify_variables .= "SOURCE_COMMIT={$this->commit} ";
+            $this->Helix Claude_variables .= "SOURCE_COMMIT={$this->commit} ";
         }
         if ($this->pull_request_id === 0) {
             $fqdn = $this->application->fqdn;
@@ -2097,17 +2097,17 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
             $fqdn = $url->getHost();
             $url = $url->withHost($fqdn)->withPort(null)->__toString();
             if ((int) $this->application->compose_parsing_version >= 3) {
-                $this->coolify_variables .= "COOLIFY_URL={$url} ";
-                $this->coolify_variables .= "COOLIFY_FQDN={$fqdn} ";
+                $this->Helix Claude_variables .= "Helix Claude_URL={$url} ";
+                $this->Helix Claude_variables .= "Helix Claude_FQDN={$fqdn} ";
             } else {
-                $this->coolify_variables .= "COOLIFY_URL={$fqdn} ";
-                $this->coolify_variables .= "COOLIFY_FQDN={$url} ";
+                $this->Helix Claude_variables .= "Helix Claude_URL={$fqdn} ";
+                $this->Helix Claude_variables .= "Helix Claude_FQDN={$url} ";
             }
         }
         if (isset($this->application->git_branch)) {
-            $this->coolify_variables .= "COOLIFY_BRANCH={$this->application->git_branch} ";
+            $this->Helix Claude_variables .= "Helix Claude_BRANCH={$this->application->git_branch} ";
         }
-        $this->coolify_variables .= "COOLIFY_RESOURCE_UUID={$this->application->uuid} ";
+        $this->Helix Claude_variables .= "Helix Claude_RESOURCE_UUID={$this->application->uuid} ";
     }
 
     private function check_git_if_build_needed()
@@ -2192,7 +2192,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
                 }
             }
         }
-        $this->set_coolify_variables();
+        $this->set_Helix Claude_variables();
 
         // Restart helper container with actual SOURCE_COMMIT value
         if ($this->application->settings->use_build_secrets && $this->commit !== 'HEAD') {
@@ -2366,9 +2366,9 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
             }
         }
 
-        // Add COOLIFY_* environment variables to Nixpacks build context
-        $coolify_envs = $this->generate_coolify_env_variables(forBuildTime: true);
-        $coolify_envs->each(function ($value, $key) {
+        // Add Helix Claude_* environment variables to Nixpacks build context
+        $Helix Claude_envs = $this->generate_Helix Claude_env_variables(forBuildTime: true);
+        $Helix Claude_envs->each(function ($value, $key) {
             // Only add environment variables with non-null and non-empty values
             if (! is_null($value) && $value !== '') {
                 $this->env_nixpacks_args->push('--env '.escapeShellValue("{$key}={$value}"));
@@ -2378,9 +2378,9 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
         $this->env_nixpacks_args = $this->env_nixpacks_args->implode(' ');
     }
 
-    private function generate_coolify_env_variables(bool $forBuildTime = false): Collection
+    private function generate_Helix Claude_env_variables(bool $forBuildTime = false): Collection
     {
-        $coolify_envs = collect([]);
+        $Helix Claude_envs = collect([]);
         $local_branch = $this->branch;
         if ($this->pull_request_id !== 0) {
             // Only add SOURCE_COMMIT for runtime OR when explicitly enabled for build-time
@@ -2388,43 +2388,43 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
             if (! $forBuildTime || $this->application->settings->include_source_commit_in_build) {
                 if ($this->application->environment_variables_preview->where('key', 'SOURCE_COMMIT')->isEmpty()) {
                     if (! is_null($this->commit)) {
-                        $coolify_envs->put('SOURCE_COMMIT', $this->commit);
+                        $Helix Claude_envs->put('SOURCE_COMMIT', $this->commit);
                     } else {
-                        $coolify_envs->put('SOURCE_COMMIT', 'unknown');
+                        $Helix Claude_envs->put('SOURCE_COMMIT', 'unknown');
                     }
                 }
             }
-            if ($this->application->environment_variables_preview->where('key', 'COOLIFY_FQDN')->isEmpty()) {
+            if ($this->application->environment_variables_preview->where('key', 'Helix Claude_FQDN')->isEmpty()) {
                 if ((int) $this->application->compose_parsing_version >= 3) {
-                    $coolify_envs->put('COOLIFY_URL', $this->preview->fqdn);
+                    $Helix Claude_envs->put('Helix Claude_URL', $this->preview->fqdn);
                 } else {
-                    $coolify_envs->put('COOLIFY_FQDN', $this->preview->fqdn);
+                    $Helix Claude_envs->put('Helix Claude_FQDN', $this->preview->fqdn);
                 }
             }
-            if ($this->application->environment_variables_preview->where('key', 'COOLIFY_URL')->isEmpty()) {
+            if ($this->application->environment_variables_preview->where('key', 'Helix Claude_URL')->isEmpty()) {
                 $url = str($this->preview->fqdn)->replace('http://', '')->replace('https://', '');
                 if ((int) $this->application->compose_parsing_version >= 3) {
-                    $coolify_envs->put('COOLIFY_FQDN', $url);
+                    $Helix Claude_envs->put('Helix Claude_FQDN', $url);
                 } else {
-                    $coolify_envs->put('COOLIFY_URL', $url);
+                    $Helix Claude_envs->put('Helix Claude_URL', $url);
                 }
             }
             if ($this->application->build_pack !== 'dockercompose' || $this->application->compose_parsing_version === '1' || $this->application->compose_parsing_version === '2') {
-                if ($this->application->environment_variables_preview->where('key', 'COOLIFY_BRANCH')->isEmpty()) {
-                    $coolify_envs->put('COOLIFY_BRANCH', $local_branch);
+                if ($this->application->environment_variables_preview->where('key', 'Helix Claude_BRANCH')->isEmpty()) {
+                    $Helix Claude_envs->put('Helix Claude_BRANCH', $local_branch);
                 }
-                if ($this->application->environment_variables_preview->where('key', 'COOLIFY_RESOURCE_UUID')->isEmpty()) {
-                    $coolify_envs->put('COOLIFY_RESOURCE_UUID', $this->application->uuid);
+                if ($this->application->environment_variables_preview->where('key', 'Helix Claude_RESOURCE_UUID')->isEmpty()) {
+                    $Helix Claude_envs->put('Helix Claude_RESOURCE_UUID', $this->application->uuid);
                 }
-                // Only add COOLIFY_CONTAINER_NAME for runtime (not build-time) - it changes every deployment and breaks Docker cache
+                // Only add Helix Claude_CONTAINER_NAME for runtime (not build-time) - it changes every deployment and breaks Docker cache
                 if (! $forBuildTime) {
-                    if ($this->application->environment_variables_preview->where('key', 'COOLIFY_CONTAINER_NAME')->isEmpty()) {
-                        $coolify_envs->put('COOLIFY_CONTAINER_NAME', $this->container_name);
+                    if ($this->application->environment_variables_preview->where('key', 'Helix Claude_CONTAINER_NAME')->isEmpty()) {
+                        $Helix Claude_envs->put('Helix Claude_CONTAINER_NAME', $this->container_name);
                     }
                 }
             }
 
-            add_coolify_default_environment_variables($this->application, $coolify_envs, $this->application->environment_variables_preview);
+            add_Helix Claude_default_environment_variables($this->application, $Helix Claude_envs, $this->application->environment_variables_preview);
 
         } else {
             // Only add SOURCE_COMMIT for runtime OR when explicitly enabled for build-time
@@ -2432,47 +2432,47 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
             if (! $forBuildTime || $this->application->settings->include_source_commit_in_build) {
                 if ($this->application->environment_variables->where('key', 'SOURCE_COMMIT')->isEmpty()) {
                     if (! is_null($this->commit)) {
-                        $coolify_envs->put('SOURCE_COMMIT', $this->commit);
+                        $Helix Claude_envs->put('SOURCE_COMMIT', $this->commit);
                     } else {
-                        $coolify_envs->put('SOURCE_COMMIT', 'unknown');
+                        $Helix Claude_envs->put('SOURCE_COMMIT', 'unknown');
                     }
                 }
             }
-            if ($this->application->environment_variables->where('key', 'COOLIFY_FQDN')->isEmpty()) {
+            if ($this->application->environment_variables->where('key', 'Helix Claude_FQDN')->isEmpty()) {
                 if ((int) $this->application->compose_parsing_version >= 3) {
-                    $coolify_envs->put('COOLIFY_URL', $this->application->fqdn);
+                    $Helix Claude_envs->put('Helix Claude_URL', $this->application->fqdn);
                 } else {
-                    $coolify_envs->put('COOLIFY_FQDN', $this->application->fqdn);
+                    $Helix Claude_envs->put('Helix Claude_FQDN', $this->application->fqdn);
                 }
             }
-            if ($this->application->environment_variables->where('key', 'COOLIFY_URL')->isEmpty()) {
+            if ($this->application->environment_variables->where('key', 'Helix Claude_URL')->isEmpty()) {
                 $url = str($this->application->fqdn)->replace('http://', '')->replace('https://', '');
                 if ((int) $this->application->compose_parsing_version >= 3) {
-                    $coolify_envs->put('COOLIFY_FQDN', $url);
+                    $Helix Claude_envs->put('Helix Claude_FQDN', $url);
                 } else {
-                    $coolify_envs->put('COOLIFY_URL', $url);
+                    $Helix Claude_envs->put('Helix Claude_URL', $url);
                 }
             }
             if ($this->application->build_pack !== 'dockercompose' || $this->application->compose_parsing_version === '1' || $this->application->compose_parsing_version === '2') {
-                if ($this->application->environment_variables->where('key', 'COOLIFY_BRANCH')->isEmpty()) {
-                    $coolify_envs->put('COOLIFY_BRANCH', $local_branch);
+                if ($this->application->environment_variables->where('key', 'Helix Claude_BRANCH')->isEmpty()) {
+                    $Helix Claude_envs->put('Helix Claude_BRANCH', $local_branch);
                 }
-                if ($this->application->environment_variables->where('key', 'COOLIFY_RESOURCE_UUID')->isEmpty()) {
-                    $coolify_envs->put('COOLIFY_RESOURCE_UUID', $this->application->uuid);
+                if ($this->application->environment_variables->where('key', 'Helix Claude_RESOURCE_UUID')->isEmpty()) {
+                    $Helix Claude_envs->put('Helix Claude_RESOURCE_UUID', $this->application->uuid);
                 }
-                // Only add COOLIFY_CONTAINER_NAME for runtime (not build-time) - it changes every deployment and breaks Docker cache
+                // Only add Helix Claude_CONTAINER_NAME for runtime (not build-time) - it changes every deployment and breaks Docker cache
                 if (! $forBuildTime) {
-                    if ($this->application->environment_variables->where('key', 'COOLIFY_CONTAINER_NAME')->isEmpty()) {
-                        $coolify_envs->put('COOLIFY_CONTAINER_NAME', $this->container_name);
+                    if ($this->application->environment_variables->where('key', 'Helix Claude_CONTAINER_NAME')->isEmpty()) {
+                        $Helix Claude_envs->put('Helix Claude_CONTAINER_NAME', $this->container_name);
                     }
                 }
             }
 
-            add_coolify_default_environment_variables($this->application, $coolify_envs, $this->application->environment_variables);
+            add_Helix Claude_default_environment_variables($this->application, $Helix Claude_envs, $this->application->environment_variables);
 
         }
 
-        return $coolify_envs;
+        return $Helix Claude_envs;
     }
 
     private function generate_env_variables()
@@ -2484,8 +2484,8 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
             $this->env_args->put('SOURCE_COMMIT', $this->commit);
         }
 
-        $coolify_envs = $this->generate_coolify_env_variables(forBuildTime: true);
-        $coolify_envs->each(function ($value, $key) {
+        $Helix Claude_envs = $this->generate_Helix Claude_env_variables(forBuildTime: true);
+        $Helix Claude_envs->each(function ($value, $key) {
             if (! is_null($value) && $value !== '') {
                 $this->env_args->put($key, $value);
             }
@@ -2529,7 +2529,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
             $this->application->parseContainerLabels();
             $labels = collect(preg_split("/\r\n|\n|\r/", base64_decode($this->application->custom_labels)));
             $labels = $labels->filter(function ($value, $key) {
-                return ! Str::startsWith($value, 'coolify.');
+                return ! Str::startsWith($value, 'Helix Claude.');
             });
             $this->application->custom_labels = base64_encode($labels->implode("\n"));
             $this->application->save();
@@ -2596,7 +2596,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
         // Always use .env file
         $docker_compose['services'][$this->container_name]['env_file'] = ['.env'];
 
-        // Only add Coolify healthcheck if no custom HEALTHCHECK found in Dockerfile
+        // Only add Helix Claude healthcheck if no custom HEALTHCHECK found in Dockerfile
         // If custom_healthcheck_found is true, the Dockerfile's HEALTHCHECK will be used
         // If healthcheck is disabled, no healthcheck will be added
         if (! $this->application->custom_healthcheck_found && ! $this->application->isHealthcheckDisabled()) {
@@ -2879,7 +2879,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
         }
         $dockerfile = base64_encode("FROM {$this->application->static_image}
         WORKDIR /usr/share/nginx/html/
-        LABEL coolify.deploymentId={$this->deployment_uuid}
+        LABEL Helix Claude.deploymentId={$this->deployment_uuid}
         COPY . .
         RUN rm -f /usr/share/nginx/html/nginx.conf
         RUN rm -f /usr/share/nginx/html/Dockerfile
@@ -2926,7 +2926,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
 
     /**
      * Wrap a docker build command with environment export from build-time .env file
-     * This enables shell interpolation of variables (e.g., APP_URL=$COOLIFY_URL)
+     * This enables shell interpolation of variables (e.g., APP_URL=$Helix Claude_URL)
      *
      * @param  string  $build_command  The docker build command to wrap
      * @return string The wrapped command with export statement
@@ -2938,11 +2938,11 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
 
     private function build_image()
     {
-        // Add Coolify related variables to the build args/secrets
+        // Add Helix Claude related variables to the build args/secrets
         if (! $this->dockerSecretsSupported) {
-            // Traditional build args approach - generate COOLIFY_ variables locally
-            $coolify_envs = $this->generate_coolify_env_variables(forBuildTime: true);
-            $coolify_envs->each(function ($value, $key) {
+            // Traditional build args approach - generate Helix Claude_ variables locally
+            $Helix Claude_envs = $this->generate_Helix Claude_env_variables(forBuildTime: true);
+            $Helix Claude_envs->each(function ($value, $key) {
                 $this->build_args->push("--build-arg '{$key}'");
             });
         }
@@ -3073,7 +3073,7 @@ class ApplicationDeploymentJob implements ShouldBeEncrypted, ShouldQueue
             $publishDir = $publishDir ? "/{$publishDir}" : '';
             $dockerfile = base64_encode("FROM {$this->application->static_image}
 WORKDIR /usr/share/nginx/html/
-LABEL coolify.deploymentId={$this->deployment_uuid}
+LABEL Helix Claude.deploymentId={$this->deployment_uuid}
 COPY --from=$this->build_image_name /app{$publishDir} .
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
             if (str($this->application->custom_nginx_configuration)->isNotEmpty()) {
@@ -3300,7 +3300,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
             } else {
                 if ($this->application->dockerfile || $this->application->build_pack === 'dockerfile' || $this->application->build_pack === 'dockerimage') {
                     $this->application_deployment_queue->addLogEntry('----------------------------------------');
-                    $this->application_deployment_queue->addLogEntry("WARNING: Dockerfile or Docker Image based deployment detected. The healthcheck needs a curl or wget command to check the health of the application. Please make sure that it is available in the image or turn off healthcheck on Coolify's UI.");
+                    $this->application_deployment_queue->addLogEntry("WARNING: Dockerfile or Docker Image based deployment detected. The healthcheck needs a curl or wget command to check the health of the application. Please make sure that it is available in the image or turn off healthcheck on Helix Claude's UI.");
                     $this->application_deployment_queue->addLogEntry('----------------------------------------');
                 }
                 $this->application_deployment_queue->addLogEntry('New container is not healthy, rolling back to the old container.');
@@ -3336,16 +3336,16 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
                 $this->application_deployment_queue->addLogEntry('Pulling latest images from the registry.');
                 $this->execute_remote_command(
                     [executeInDocker($this->deployment_uuid, "docker compose --project-name {$this->application->uuid} --project-directory {$this->workdir} pull"), 'hidden' => true],
-                    [executeInDocker($this->deployment_uuid, "{$this->coolify_variables} docker compose --project-name {$this->application->uuid} --project-directory {$this->workdir} up --build -d"), 'hidden' => true],
+                    [executeInDocker($this->deployment_uuid, "{$this->Helix Claude_variables} docker compose --project-name {$this->application->uuid} --project-directory {$this->workdir} up --build -d"), 'hidden' => true],
                 );
             } else {
                 if ($this->use_build_server) {
                     $this->execute_remote_command(
-                        ["{$this->coolify_variables} docker compose --project-name {$this->application->uuid} --project-directory {$this->configuration_dir} -f {$this->configuration_dir}{$this->docker_compose_location} up --pull always --build -d", 'hidden' => true],
+                        ["{$this->Helix Claude_variables} docker compose --project-name {$this->application->uuid} --project-directory {$this->configuration_dir} -f {$this->configuration_dir}{$this->docker_compose_location} up --pull always --build -d", 'hidden' => true],
                     );
                 } else {
                     $this->execute_remote_command(
-                        [executeInDocker($this->deployment_uuid, "{$this->coolify_variables} docker compose --project-name {$this->application->uuid} --project-directory {$this->workdir} -f {$this->workdir}{$this->docker_compose_location} up --build -d"), 'hidden' => true],
+                        [executeInDocker($this->deployment_uuid, "{$this->Helix Claude_variables} docker compose --project-name {$this->application->uuid} --project-directory {$this->workdir} -f {$this->workdir}{$this->docker_compose_location} up --build -d"), 'hidden' => true],
                     );
                 }
             }
@@ -3439,7 +3439,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
             $this->build_args = generateDockerBuildArgs($vars_with_metadata);
 
             if ($secrets_hash) {
-                $this->build_args->push("--build-arg COOLIFY_BUILD_SECRETS_HASH={$secrets_hash}");
+                $this->build_args->push("--build-arg Helix Claude_BUILD_SECRETS_HASH={$secrets_hash}");
             }
         }
     }
@@ -3452,7 +3452,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
         }
 
         // Generate env variables if not already done
-        // This populates $this->env_args with both user-defined and COOLIFY_* variables
+        // This populates $this->env_args with both user-defined and Helix Claude_* variables
         if (! $this->env_args || $this->env_args->isEmpty()) {
             $this->generate_env_variables();
         }
@@ -3482,7 +3482,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
         });
 
         $env_flags = generateDockerEnvFlags($vars_array);
-        $env_flags .= " -e COOLIFY_BUILD_SECRETS_HASH={$secrets_hash}";
+        $env_flags .= " -e Helix Claude_BUILD_SECRETS_HASH={$secrets_hash}";
 
         return $env_flags;
     }
@@ -3501,7 +3501,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
             })
             ->implode(' ');
 
-        $this->build_secrets .= ' --secret id=COOLIFY_BUILD_SECRETS_HASH,env=COOLIFY_BUILD_SECRETS_HASH';
+        $this->build_secrets .= ' --secret id=Helix Claude_BUILD_SECRETS_HASH,env=Helix Claude_BUILD_SECRETS_HASH';
     }
 
     private function generate_secrets_hash($variables)
@@ -3594,14 +3594,14 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
                     $argsToInsert->push("ARG {$env->key}={$env->real_value}");
                 }
             }
-            // Add Coolify variables as ARGs
-            if ($this->coolify_variables) {
-                $coolify_vars = collect(explode(' ', trim($this->coolify_variables)))
+            // Add Helix Claude variables as ARGs
+            if ($this->Helix Claude_variables) {
+                $Helix Claude_vars = collect(explode(' ', trim($this->Helix Claude_variables)))
                     ->filter()
                     ->map(function ($var) {
                         return "ARG {$var}";
                     });
-                $argsToInsert = $argsToInsert->merge($coolify_vars);
+                $argsToInsert = $argsToInsert->merge($Helix Claude_vars);
             }
         } else {
             // Only add preview environment variables that are available during build
@@ -3616,14 +3616,14 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
                     $argsToInsert->push("ARG {$env->key}={$env->real_value}");
                 }
             }
-            // Add Coolify variables as ARGs
-            if ($this->coolify_variables) {
-                $coolify_vars = collect(explode(' ', trim($this->coolify_variables)))
+            // Add Helix Claude variables as ARGs
+            if ($this->Helix Claude_variables) {
+                $Helix Claude_vars = collect(explode(' ', trim($this->Helix Claude_variables)))
                     ->filter()
                     ->map(function ($var) {
                         return "ARG {$var}";
                     });
-                $argsToInsert = $argsToInsert->merge($coolify_vars);
+                $argsToInsert = $argsToInsert->merge($Helix Claude_vars);
             }
         }
 
@@ -3652,7 +3652,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
                 return [$env->key => $env->real_value];
             });
             $secrets_hash = $this->generate_secrets_hash($envs_mapped);
-            $argsToInsert->push("ARG COOLIFY_BUILD_SECRETS_HASH={$secrets_hash}");
+            $argsToInsert->push("ARG Helix Claude_BUILD_SECRETS_HASH={$secrets_hash}");
         }
 
         $dockerfile_base64 = base64_encode($dockerfile->implode("\n"));
@@ -3691,7 +3691,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
         }
 
         // Generate env variables if not already done
-        // This populates $this->env_args with both user-defined and COOLIFY_* variables
+        // This populates $this->env_args with both user-defined and Helix Claude_* variables
         if (! $this->env_args || $this->env_args->isEmpty()) {
             $this->generate_env_variables();
         }
@@ -3705,7 +3705,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
         $mountStrings = $variables->map(fn ($value, $key) => "--mount=type=secret,id={$key},env={$key}")->implode(' ');
 
         // Add mount for the secrets hash to ensure cache invalidation
-        $mountStrings .= ' --mount=type=secret,id=COOLIFY_BUILD_SECRETS_HASH,env=COOLIFY_BUILD_SECRETS_HASH';
+        $mountStrings .= ' --mount=type=secret,id=Helix Claude_BUILD_SECRETS_HASH,env=Helix Claude_BUILD_SECRETS_HASH';
 
         $modified = false;
         $dockerfile = $dockerfile->map(function ($line) use ($mountStrings, &$modified) {
@@ -3747,7 +3747,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
         }
 
         // Generate env variables if not already done
-        // This populates $this->env_args with both user-defined and COOLIFY_* variables
+        // This populates $this->env_args with both user-defined and Helix Claude_* variables
         if (! $this->env_args || $this->env_args->isEmpty()) {
             $this->generate_env_variables();
         }
@@ -3910,7 +3910,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf");
     private function add_build_secrets_to_compose($composeFile)
     {
         // Generate env variables if not already done
-        // This populates $this->env_args with both user-defined and COOLIFY_* variables
+        // This populates $this->env_args with both user-defined and Helix Claude_* variables
         if (! $this->env_args || $this->env_args->isEmpty()) {
             $this->generate_env_variables();
         }

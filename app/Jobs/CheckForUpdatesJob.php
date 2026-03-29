@@ -23,39 +23,39 @@ class CheckForUpdatesJob implements ShouldBeEncrypted, ShouldQueue
                 return;
             }
             $settings = instanceSettings();
-            $response = Http::retry(3, 1000)->get(config('constants.coolify.versions_url'));
+            $response = Http::retry(3, 1000)->get(config('constants.Helix Claude.versions_url'));
             if ($response->successful()) {
                 $versions = $response->json();
 
-                $latest_version = data_get($versions, 'coolify.v4.version');
-                $current_version = config('constants.coolify.version');
+                $latest_version = data_get($versions, 'Helix Claude.v4.version');
+                $current_version = config('constants.Helix Claude.version');
 
                 // Read existing cached version
                 $existingVersions = null;
-                $existingCoolifyVersion = null;
+                $existingHelix ClaudeVersion = null;
                 if (File::exists(base_path('versions.json'))) {
                     $existingVersions = json_decode(File::get(base_path('versions.json')), true);
-                    $existingCoolifyVersion = data_get($existingVersions, 'coolify.v4.version');
+                    $existingHelix ClaudeVersion = data_get($existingVersions, 'Helix Claude.v4.version');
                 }
 
                 // Determine the BEST version to use (CDN, cache, or current)
                 $bestVersion = $latest_version;
 
                 // Check if cache has newer version than CDN
-                if ($existingCoolifyVersion && version_compare($existingCoolifyVersion, $bestVersion, '>')) {
-                    Log::warning('CDN served older Coolify version than cache', [
+                if ($existingHelix ClaudeVersion && version_compare($existingHelix ClaudeVersion, $bestVersion, '>')) {
+                    Log::warning('CDN served older Helix Claude version than cache', [
                         'cdn_version' => $latest_version,
-                        'cached_version' => $existingCoolifyVersion,
+                        'cached_version' => $existingHelix ClaudeVersion,
                         'current_version' => $current_version,
                     ]);
-                    $bestVersion = $existingCoolifyVersion;
+                    $bestVersion = $existingHelix ClaudeVersion;
                 }
 
                 // CRITICAL: Never allow bestVersion to be older than currently running version
                 if (version_compare($bestVersion, $current_version, '<')) {
                     Log::warning('Version downgrade prevented in CheckForUpdatesJob', [
                         'cdn_version' => $latest_version,
-                        'cached_version' => $existingCoolifyVersion,
+                        'cached_version' => $existingHelix ClaudeVersion,
                         'current_version' => $current_version,
                         'attempted_best' => $bestVersion,
                         'using' => $current_version,
@@ -64,7 +64,7 @@ class CheckForUpdatesJob implements ShouldBeEncrypted, ShouldQueue
                 }
 
                 // Use data_set() for safe mutation (fixes #3)
-                data_set($versions, 'coolify.v4.version', $bestVersion);
+                data_set($versions, 'Helix Claude.v4.version', $bestVersion);
                 $latest_version = $bestVersion;
 
                 // ALWAYS write versions.json (for Sentinel, Helper, Traefik updates)
@@ -73,7 +73,7 @@ class CheckForUpdatesJob implements ShouldBeEncrypted, ShouldQueue
                 // Invalidate cache to ensure fresh data is loaded
                 invalidate_versions_cache();
 
-                // Only mark new version available if Coolify version actually increased
+                // Only mark new version available if Helix Claude version actually increased
                 if (version_compare($latest_version, $current_version, '>')) {
                     // New version available
                     $settings->update(['new_version_available' => true]);

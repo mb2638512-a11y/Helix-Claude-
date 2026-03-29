@@ -1,0 +1,20 @@
+# Firebase Emulator Suite
+# Reference: https://firebase.google.com/docs/emulator-suite
+services:
+  firebase-emulator:
+    image: andreysenov/firebase-emulator:latest
+    container_name: firebase-emulator
+    ports:
+      - "4000:4000" # UI
+      - "5001:5001" # Functions
+      - "8080:8080" # Firestore
+      - "9000:9000" # Database
+      - "9199:9199" # Storage
+      - "9099:9099" # Auth
+    environment:
+      - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID:-demo-project}
+    networks:
+      - helix-claude
+networks:
+  helix-claude:
+    external: true

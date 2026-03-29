@@ -69,7 +69,7 @@ class EnvironmentVariable extends BaseModel
         'resourceable_id' => 'integer',
     ];
 
-    protected $appends = ['real_value', 'is_shared', 'is_really_required', 'is_nixpacks', 'is_coolify'];
+    protected $appends = ['real_value', 'is_shared', 'is_really_required', 'is_nixpacks', 'is_Helix Claude'];
 
     protected static function booted()
     {
@@ -100,7 +100,7 @@ class EnvironmentVariable extends BaseModel
                 }
             }
             $environment_variable->update([
-                'version' => config('constants.coolify.version'),
+                'version' => config('constants.Helix Claude.version'),
             ]);
         });
 
@@ -185,7 +185,7 @@ class EnvironmentVariable extends BaseModel
         );
     }
 
-    protected function isCoolify(): Attribute
+    protected function isHelix Claude(): Attribute
     {
         return Attribute::make(
             get: function () {

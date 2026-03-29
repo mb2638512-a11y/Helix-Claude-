@@ -289,11 +289,11 @@ class DatabaseBackupJob implements ShouldBeEncrypted, ShouldQueue
                 }
             }
             $this->backup_dir = backup_dir().'/databases/'.str($this->team->name)->slug().'-'.$this->team->id.'/'.$this->directory_name;
-            if ($this->database->name === 'coolify-db') {
-                $databasesToBackup = ['coolify'];
-                $this->directory_name = $this->container_name = 'coolify-db';
+            if ($this->database->name === 'Helix Claude-db') {
+                $databasesToBackup = ['Helix Claude'];
+                $this->directory_name = $this->container_name = 'Helix Claude-db';
                 $ip = Str::slug($this->server->ip);
-                $this->backup_dir = backup_dir().'/coolify'."/coolify-db-$ip";
+                $this->backup_dir = backup_dir().'/Helix Claude'."/Helix Claude-db-$ip";
             }
             foreach ($databasesToBackup as $database) {
                 // Generate unique UUID for each database backup execution
@@ -655,11 +655,11 @@ class DatabaseBackupJob implements ShouldBeEncrypted, ShouldQueue
             }
 
             if (isDev()) {
-                if ($this->database->name === 'coolify-db') {
-                    $backup_location_from = '/var/lib/docker/volumes/coolify_dev_backups_data/_data/coolify/coolify-db-'.$this->server->ip.$this->backup_file;
+                if ($this->database->name === 'Helix Claude-db') {
+                    $backup_location_from = '/var/lib/docker/volumes/Helix Claude_dev_backups_data/_data/Helix Claude/Helix Claude-db-'.$this->server->ip.$this->backup_file;
                     $commands[] = "docker run -d --network {$network} --name backup-of-{$this->backup_log_uuid} --rm -v $backup_location_from:$this->backup_location:ro {$fullImageName}";
                 } else {
-                    $backup_location_from = '/var/lib/docker/volumes/coolify_dev_backups_data/_data/databases/'.str($this->team->name)->slug().'-'.$this->team->id.'/'.$this->directory_name.$this->backup_file;
+                    $backup_location_from = '/var/lib/docker/volumes/Helix Claude_dev_backups_data/_data/databases/'.str($this->team->name)->slug().'-'.$this->team->id.'/'.$this->directory_name.$this->backup_file;
                     $commands[] = "docker run -d --network {$network} --name backup-of-{$this->backup_log_uuid} --rm -v $backup_location_from:$this->backup_location:ro {$fullImageName}";
                 }
             } else {
@@ -688,7 +688,7 @@ class DatabaseBackupJob implements ShouldBeEncrypted, ShouldQueue
 
     private function getFullImageName(): string
     {
-        $helperImage = config('constants.coolify.helper_image');
+        $helperImage = config('constants.Helix Claude.helper_image');
         $latestVersion = getHelperVersion();
 
         return "{$helperImage}:{$latestVersion}";

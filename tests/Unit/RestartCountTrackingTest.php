@@ -28,7 +28,7 @@ it('extracts restart count from container data', function () {
         ],
         'Config' => [
             'Labels' => [
-                'coolify.applicationId' => '1',
+                'Helix Claude.applicationId' => '1',
                 'com.docker.compose.service' => 'web',
             ],
         ],

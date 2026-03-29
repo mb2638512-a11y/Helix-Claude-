@@ -162,12 +162,12 @@ it('identifies host as predefined network', function () {
     expect(isDockerPredefinedNetwork('host'))->toBeTrue();
 });
 
-it('identifies coolify as not predefined network', function () {
-    expect(isDockerPredefinedNetwork('coolify'))->toBeFalse();
+it('identifies Helix Claude as not predefined network', function () {
+    expect(isDockerPredefinedNetwork('Helix Claude'))->toBeFalse();
 });
 
-it('identifies coolify-overlay as not predefined network', function () {
-    expect(isDockerPredefinedNetwork('coolify-overlay'))->toBeFalse();
+it('identifies Helix Claude-overlay as not predefined network', function () {
+    expect(isDockerPredefinedNetwork('Helix Claude-overlay'))->toBeFalse();
 });
 
 it('identifies custom networks as not predefined', function () {

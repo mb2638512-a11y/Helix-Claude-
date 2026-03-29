@@ -85,7 +85,7 @@ describe('validateGitRef', function () {
     });
 
     test('rejects the exact PoC payload from advisory', function () {
-        expect(fn () => validateGitRef("HEAD'; whoami >/tmp/coolify_poc_git; #"))
+        expect(fn () => validateGitRef("HEAD'; whoami >/tmp/Helix Claude_poc_git; #"))
             ->toThrow(Exception::class);
     });
 });

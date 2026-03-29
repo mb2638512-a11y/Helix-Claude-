@@ -1,6 +1,6 @@
 <div>
     <x-slot:title>
-        Proxy Configuration | Coolify
+        Proxy Configuration | Helix Claude
     </x-slot>
     <livewire:server.navbar :server="$server" />
     @if ($server->isFunctional())

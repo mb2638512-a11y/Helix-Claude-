@@ -22,7 +22,7 @@ class GithubAppSeeder extends Seeder
             'team_id' => 0,
         ]);
         GithubApp::create([
-            'name' => 'coolify-laravel-dev-public',
+            'name' => 'Helix Claude-laravel-dev-public',
             'uuid' => 'github-app',
             'organization' => 'coollabsio',
             'api_url' => 'https://api.github.com',

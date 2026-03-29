@@ -186,8 +186,8 @@ class StartKeydb
                 [
                     [
                         'type' => 'bind',
-                        'source' => '/data/coolify/ssl/coolify-ca.crt',
-                        'target' => '/etc/keydb/certs/coolify-ca.crt',
+                        'source' => '/data/Helix Claude/ssl/Helix Claude-ca.crt',
+                        'target' => '/etc/keydb/certs/Helix Claude-ca.crt',
                         'read_only' => true,
                     ],
                 ]
@@ -261,7 +261,7 @@ class StartKeydb
             $environment_variables->push("REDIS_PASSWORD={$this->database->keydb_password}");
         }
 
-        add_coolify_default_environment_variables($this->database, $environment_variables, $environment_variables);
+        add_Helix Claude_default_environment_variables($this->database, $environment_variables, $environment_variables);
 
         return $environment_variables->all();
     }
@@ -300,7 +300,7 @@ class StartKeydb
                 '--tls-port 6380',
                 '--tls-cert-file /etc/keydb/certs/server.crt',
                 '--tls-key-file /etc/keydb/certs/server.key',
-                '--tls-ca-cert-file /etc/keydb/certs/coolify-ca.crt',
+                '--tls-ca-cert-file /etc/keydb/certs/Helix Claude-ca.crt',
                 '--tls-auth-clients optional',
             ];
             $command .= ' '.implode(' ', $sslArgs);

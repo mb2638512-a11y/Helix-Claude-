@@ -36,7 +36,7 @@ beforeEach(function () {
         'uuid' => 'localhost',
         'name' => 'localhost',
         'description' => 'This is a test docker container in development mode',
-        'ip' => 'coolify-testing-host',
+        'ip' => 'Helix Claude-testing-host',
         'team_id' => 0,
         'private_key_id' => 1,
         'proxy' => [
@@ -115,7 +115,7 @@ it('shows onboarding after first login', function () {
     $page->fill('email', 'test@example.com')
         ->fill('password', 'password')
         ->click('Login')
-        ->assertSee('Welcome to Coolify')
+        ->assertSee('Welcome to Helix Claude')
         ->assertSee("Let's go!")
         ->assertSee('Skip Setup')
         ->screenshot();

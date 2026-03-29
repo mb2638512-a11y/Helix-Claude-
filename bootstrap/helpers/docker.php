@@ -15,17 +15,17 @@ function getCurrentApplicationContainerStatus(Server $server, int $id, ?int $pul
 {
     $containers = collect([]);
     if (! $server->isSwarm()) {
-        $containers = instant_remote_process(["docker ps -a --filter='label=coolify.applicationId={$id}' --format '{{json .}}' "], $server);
+        $containers = instant_remote_process(["docker ps -a --filter='label=Helix Claude.applicationId={$id}' --format '{{json .}}' "], $server);
         $containers = format_docker_command_output_to_json($containers);
 
         $containers = $containers->map(function ($container) use ($pullRequestId, $includePullrequests) {
             $labels = data_get($container, 'Labels');
             $containerName = data_get($container, 'Names');
-            $hasPrLabel = str($labels)->contains('coolify.pullRequestId=');
+            $hasPrLabel = str($labels)->contains('Helix Claude.pullRequestId=');
             $prLabelValue = null;
 
             if ($hasPrLabel) {
-                preg_match('/coolify\.pullRequestId=(\d+)/', $labels, $matches);
+                preg_match('/Helix Claude\.pullRequestId=(\d+)/', $labels, $matches);
                 $prLabelValue = $matches[1] ?? null;
             }
 
@@ -45,7 +45,7 @@ function getCurrentApplicationContainerStatus(Server $server, int $id, ?int $pul
             if ($includePullrequests) {
                 return $container;
             }
-            if ($pullRequestId !== null && $pullRequestId !== 0 && str($labels)->contains("coolify.pullRequestId={$pullRequestId}")) {
+            if ($pullRequestId !== null && $pullRequestId !== 0 && str($labels)->contains("Helix Claude.pullRequestId={$pullRequestId}")) {
                 return $container;
             }
 
@@ -64,7 +64,7 @@ function getCurrentServiceContainerStatus(Server $server, int $id): Collection
 {
     $containers = collect([]);
     if (! $server->isSwarm()) {
-        $containers = instant_remote_process(["docker ps -a --filter='label=coolify.serviceId={$id}' --format '{{json .}}' "], $server);
+        $containers = instant_remote_process(["docker ps -a --filter='label=Helix Claude.serviceId={$id}' --format '{{json .}}' "], $server);
         $containers = format_docker_command_output_to_json($containers);
 
         return $containers->filter();
@@ -218,14 +218,14 @@ function get_port_from_dockerfile($dockerfile): ?int
 function defaultDatabaseLabels($database)
 {
     $labels = collect([]);
-    $labels->push('coolify.managed=true');
-    $labels->push('coolify.type=database');
-    $labels->push('coolify.databaseId='.$database->id);
-    $labels->push('coolify.resourceName='.Str::slug($database->name));
-    $labels->push('coolify.serviceName='.Str::slug($database->name));
-    $labels->push('coolify.projectName='.Str::slug($database->project()->name));
-    $labels->push('coolify.environmentName='.Str::slug($database->environment->name));
-    $labels->push('coolify.database.subType='.$database->type());
+    $labels->push('Helix Claude.managed=true');
+    $labels->push('Helix Claude.type=database');
+    $labels->push('Helix Claude.databaseId='.$database->id);
+    $labels->push('Helix Claude.resourceName='.Str::slug($database->name));
+    $labels->push('Helix Claude.serviceName='.Str::slug($database->name));
+    $labels->push('Helix Claude.projectName='.Str::slug($database->project()->name));
+    $labels->push('Helix Claude.environmentName='.Str::slug($database->environment->name));
+    $labels->push('Helix Claude.database.subType='.$database->type());
 
     return $labels;
 }
@@ -233,21 +233,21 @@ function defaultDatabaseLabels($database)
 function defaultLabels($id, $name, string $projectName, string $resourceName, string $environment, $pull_request_id = 0, string $type = 'application', $subType = null, $subId = null, $subName = null)
 {
     $labels = collect([]);
-    $labels->push('coolify.managed=true');
-    $labels->push('coolify.version='.config('constants.coolify.version'));
-    $labels->push('coolify.'.$type.'Id='.$id);
-    $labels->push("coolify.type=$type");
-    $labels->push('coolify.name='.Str::slug($name));
-    $labels->push('coolify.resourceName='.Str::slug($resourceName));
-    $labels->push('coolify.projectName='.Str::slug($projectName));
-    $labels->push('coolify.serviceName='.Str::slug($subName ?? $resourceName));
-    $labels->push('coolify.environmentName='.Str::slug($environment));
+    $labels->push('Helix Claude.managed=true');
+    $labels->push('Helix Claude.version='.config('constants.Helix Claude.version'));
+    $labels->push('Helix Claude.'.$type.'Id='.$id);
+    $labels->push("Helix Claude.type=$type");
+    $labels->push('Helix Claude.name='.Str::slug($name));
+    $labels->push('Helix Claude.resourceName='.Str::slug($resourceName));
+    $labels->push('Helix Claude.projectName='.Str::slug($projectName));
+    $labels->push('Helix Claude.serviceName='.Str::slug($subName ?? $resourceName));
+    $labels->push('Helix Claude.environmentName='.Str::slug($environment));
 
-    $labels->push('coolify.pullRequestId='.$pull_request_id);
+    $labels->push('Helix Claude.pullRequestId='.$pull_request_id);
     if ($type === 'service') {
-        $subId && $labels->push('coolify.service.subId='.$subId);
-        $subType && $labels->push('coolify.service.subType='.$subType);
-        $subName && $labels->push('coolify.service.subName='.Str::slug($subName));
+        $subId && $labels->push('Helix Claude.service.subId='.$subId);
+        $subType && $labels->push('Helix Claude.service.subType='.$subType);
+        $subName && $labels->push('Helix Claude.service.subName='.Str::slug($subName));
     }
 
     return $labels;
@@ -447,7 +447,7 @@ function fqdnLabelsForTraefik(string $uuid, Collection $domains, bool $is_force_
             if (preg_match('/traefik\.http\.middlewares\.(.*?)(\.|$)/', $item, $matches)) {
                 return $matches[1];
             }
-            if (preg_match('/coolify\.traefik\.middlewares=(.*)/', $item, $matches)) {
+            if (preg_match('/Helix Claude\.traefik\.middlewares=(.*)/', $item, $matches)) {
                 return explode(',', $matches[1]);
             }
 
@@ -1176,9 +1176,9 @@ function generateCustomDockerRunOptionsForDatabases($docker_run_options, $docker
 }
 
 /**
- * Remove Coolify's custom Docker Compose fields from parsed YAML array
+ * Remove Helix Claude's custom Docker Compose fields from parsed YAML array
  *
- * Coolify extends Docker Compose with custom fields that are processed during
+ * Helix Claude extends Docker Compose with custom fields that are processed during
  * parsing and deployment but must be removed before sending to Docker.
  *
  * Custom fields:
@@ -1189,7 +1189,7 @@ function generateCustomDockerRunOptionsForDatabases($docker_run_options, $docker
  * @param  array  $yamlCompose  Parsed Docker Compose array
  * @return array Cleaned Docker Compose array with custom fields removed
  */
-function stripCoolifyCustomFields(array $yamlCompose): array
+function stripHelix ClaudeCustomFields(array $yamlCompose): array
 {
     foreach ($yamlCompose['services'] ?? [] as $serviceName => $service) {
         // Remove service-level custom fields
@@ -1223,8 +1223,8 @@ function validateComposeFile(string $compose, int $server_id): string|Throwable
         }
         $yaml_compose = Yaml::parse($compose);
 
-        // Remove Coolify's custom fields before Docker validation
-        $yaml_compose = stripCoolifyCustomFields($yaml_compose);
+        // Remove Helix Claude's custom fields before Docker validation
+        $yaml_compose = stripHelix ClaudeCustomFields($yaml_compose);
 
         $base64_compose = base64_encode(Yaml::dump($yaml_compose));
         instant_remote_process([

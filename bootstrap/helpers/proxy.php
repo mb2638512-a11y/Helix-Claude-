@@ -30,7 +30,7 @@ function collectProxyDockerNetworksByServer(Server $server)
     if (is_null($proxyType) || $proxyType === 'NONE') {
         return collect();
     }
-    $networks = instant_remote_process(['docker inspect --format="{{json .NetworkSettings.Networks }}" coolify-proxy'], $server, false);
+    $networks = instant_remote_process(['docker inspect --format="{{json .NetworkSettings.Networks }}" Helix Claude-proxy'], $server, false);
 
     return collect($networks)->map(function ($network) {
         return collect(json_decode($network))->keys();
@@ -89,13 +89,13 @@ function collectDockerNetworksByServer(Server $server)
     });
     if ($server->isSwarm()) {
         if ($networks->count() === 0) {
-            $networks = collect(['coolify-overlay']);
-            $allNetworks = collect(['coolify-overlay']);
+            $networks = collect(['Helix Claude-overlay']);
+            $allNetworks = collect(['Helix Claude-overlay']);
         }
     } else {
         if ($networks->count() === 0) {
-            $networks = collect(['coolify']);
-            $allNetworks = collect(['coolify']);
+            $networks = collect(['Helix Claude']);
+            $allNetworks = collect(['Helix Claude']);
         }
     }
 
@@ -111,16 +111,16 @@ function connectProxyToNetworks(Server $server)
         $commands = $networks->map(function ($network) {
             return [
                 "docker network ls --format '{{.Name}}' | grep '^$network$' >/dev/null || docker network create --driver overlay --attachable $network >/dev/null",
-                "docker network connect $network coolify-proxy >/dev/null 2>&1 || true",
-                "echo 'Successfully connected coolify-proxy to $network network.'",
+                "docker network connect $network Helix Claude-proxy >/dev/null 2>&1 || true",
+                "echo 'Successfully connected Helix Claude-proxy to $network network.'",
             ];
         });
     } else {
         $commands = $networks->map(function ($network) {
             return [
                 "docker network ls --format '{{.Name}}' | grep '^$network$' >/dev/null || docker network create --attachable $network >/dev/null",
-                "docker network connect $network coolify-proxy >/dev/null 2>&1 || true",
-                "echo 'Successfully connected coolify-proxy to $network network.'",
+                "docker network connect $network Helix Claude-proxy >/dev/null 2>&1 || true",
+                "echo 'Successfully connected Helix Claude-proxy to $network network.'",
             ];
         });
     }
@@ -175,7 +175,7 @@ function extractCustomProxyCommands(Server $server, string $existing_config): ar
             return $custom_commands;
         }
 
-        // Define default commands that Coolify generates
+        // Define default commands that Helix Claude generates
         $default_command_prefixes = [
             '--ping=',
             '--api.',
@@ -231,14 +231,14 @@ function generateDefaultProxyConfiguration(Server $server, array $custom_command
             return $docker['network'];
         })->unique();
         if ($networks->count() === 0) {
-            $networks = collect(['coolify-overlay']);
+            $networks = collect(['Helix Claude-overlay']);
         }
     } else {
         $networks = collect($server->standaloneDockers)->map(function ($docker) {
             return $docker['network'];
         })->unique();
         if ($networks->count() === 0) {
-            $networks = collect(['coolify']);
+            $networks = collect(['Helix Claude']);
         }
     }
 
@@ -260,15 +260,15 @@ function generateDefaultProxyConfiguration(Server $server, array $custom_command
             'traefik.http.routers.traefik.entrypoints=http',
             'traefik.http.routers.traefik.service=api@internal',
             'traefik.http.services.traefik.loadbalancer.server.port=8080',
-            'coolify.managed=true',
-            'coolify.proxy=true',
+            'Helix Claude.managed=true',
+            'Helix Claude.proxy=true',
         ];
         $config = [
-            'name' => 'coolify-proxy',
+            'name' => 'Helix Claude-proxy',
             'networks' => $array_of_networks->toArray(),
             'services' => [
                 'traefik' => [
-                    'container_name' => 'coolify-proxy',
+                    'container_name' => 'Helix Claude-proxy',
                     'image' => 'traefik:v3.6',
                     'restart' => RESTART_MODE,
                     'extra_hosts' => [
@@ -317,7 +317,7 @@ function generateDefaultProxyConfiguration(Server $server, array $custom_command
             $config['services']['traefik']['command'][] = '--log.level=debug';
             $config['services']['traefik']['command'][] = '--accesslog.filepath=/traefik/access.log';
             $config['services']['traefik']['command'][] = '--accesslog.bufferingsize=100';
-            $config['services']['traefik']['volumes'][] = '/var/lib/docker/volumes/coolify_dev_coolify_data/_data/proxy/:/traefik';
+            $config['services']['traefik']['volumes'][] = '/var/lib/docker/volumes/Helix Claude_dev_Helix Claude_data/_data/proxy/:/traefik';
         } else {
             $config['services']['traefik']['command'][] = '--api.insecure=false';
             $config['services']['traefik']['volumes'][] = "{$proxy_path}:/traefik";
@@ -353,7 +353,7 @@ function generateDefaultProxyConfiguration(Server $server, array $custom_command
             'networks' => $array_of_networks->toArray(),
             'services' => [
                 'caddy' => [
-                    'container_name' => 'coolify-proxy',
+                    'container_name' => 'Helix Claude-proxy',
                     'image' => 'lucaslorentz/caddy-docker-proxy:2.8-alpine',
                     'restart' => RESTART_MODE,
                     'extra_hosts' => [
@@ -370,8 +370,8 @@ function generateDefaultProxyConfiguration(Server $server, array $custom_command
                         '443:443/udp',
                     ],
                     'labels' => [
-                        'coolify.managed=true',
-                        'coolify.proxy=true',
+                        'Helix Claude.managed=true',
+                        'Helix Claude.proxy=true',
                     ],
                     'volumes' => [
                         '/var/run/docker.sock:/var/run/docker.sock:ro',
@@ -398,7 +398,7 @@ function getExactTraefikVersionFromContainer(Server $server): ?string
         Log::debug("getExactTraefikVersionFromContainer: Server '{$server->name}' (ID: {$server->id}) - Checking for exact version");
 
         // Method A: Execute traefik version command (most reliable)
-        $versionCommand = "docker exec coolify-proxy traefik version 2>/dev/null | grep -oP 'Version:\s+\K\d+\.\d+\.\d+'";
+        $versionCommand = "docker exec Helix Claude-proxy traefik version 2>/dev/null | grep -oP 'Version:\s+\K\d+\.\d+\.\d+'";
         Log::debug("getExactTraefikVersionFromContainer: Server '{$server->name}' (ID: {$server->id}) - Running: {$versionCommand}");
 
         $output = instant_remote_process([$versionCommand], $server, false);
@@ -411,7 +411,7 @@ function getExactTraefikVersionFromContainer(Server $server): ?string
         }
 
         // Method B: Try OCI label as fallback
-        $labelCommand = "docker inspect coolify-proxy --format '{{index .Config.Labels \"org.opencontainers.image.version\"}}' 2>/dev/null";
+        $labelCommand = "docker inspect Helix Claude-proxy --format '{{index .Config.Labels \"org.opencontainers.image.version\"}}' 2>/dev/null";
         Log::debug("getExactTraefikVersionFromContainer: Server '{$server->name}' (ID: {$server->id}) - Trying OCI label");
 
         $label = instant_remote_process([$labelCommand], $server, false);
@@ -451,7 +451,7 @@ function getTraefikVersionFromDockerCompose(Server $server): ?string
         // Fallback: Check image tag (current method)
         Log::debug("getTraefikVersionFromDockerCompose: Server '{$server->name}' (ID: {$server->id}) - Falling back to image tag detection");
 
-        $containerName = 'coolify-proxy';
+        $containerName = 'Helix Claude-proxy';
         $inspectCommand = "docker inspect {$containerName} --format '{{.Config.Image}}' 2>/dev/null";
 
         $image = instant_remote_process([$inspectCommand], $server, false);

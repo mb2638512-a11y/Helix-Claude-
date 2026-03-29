@@ -1,37 +1,37 @@
 services:
-    coolify:
-        container_name: coolify
+    Helix Claude:
+        container_name: Helix Claude
         restart: always
         working_dir: /var/www/html
         extra_hosts:
             - host.docker.internal:host-gateway
         networks:
-            - coolify
+            - Helix Claude
         depends_on:
             - postgres
             - redis
             - soketi
     postgres:
         image: postgres:15-alpine
-        container_name: coolify-db
+        container_name: Helix Claude-db
         restart: always
         networks:
-            - coolify
+            - Helix Claude
     redis:
         image: redis:7-alpine
-        container_name: coolify-redis
+        container_name: Helix Claude-redis
         restart: always
         networks:
-            - coolify
+            - Helix Claude
     soketi:
-        container_name: coolify-realtime
+        container_name: Helix Claude-realtime
         extra_hosts:
             - host.docker.internal:host-gateway
         restart: always
         networks:
-            - coolify
+            - Helix Claude
 networks:
-    coolify:
-        name: coolify
+    Helix Claude:
+        name: Helix Claude
         driver: bridge
         external: false

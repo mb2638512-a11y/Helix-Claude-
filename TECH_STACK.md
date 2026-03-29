@@ -1,4 +1,4 @@
-# Coolify Technology Stack
+# Helix Claude Technology Stack
 
 ## Frontend
 

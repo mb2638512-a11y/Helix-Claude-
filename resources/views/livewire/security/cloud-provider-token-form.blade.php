@@ -25,10 +25,10 @@
                     Project → Security → API Tokens.
                     @if ($provider === 'hetzner')
                         <br><br>
-                        Don't have a Hetzner account? <a href='https://coolify.io/hetzner' target='_blank'
+                        Don't have a Hetzner account? <a href='https://Helix Claude.io/hetzner' target='_blank'
                             class='underline dark:text-white'>Sign up here</a>
                         <br>
-                        <span class="text-xs">(Coolify's affiliate link, only new accounts - supports us (€10)
+                        <span class="text-xs">(Helix Claude's affiliate link, only new accounts - supports us (€10)
                             and gives you €20)</span>
                     @endif
                 </div>
@@ -58,10 +58,10 @@
                             class='underline dark:text-white'>Hetzner Console</a> → choose Project → Security → API
                         Tokens.
                         <br><br>
-                        Don't have a Hetzner account? <a href='https://coolify.io/hetzner' target='_blank'
+                        Don't have a Hetzner account? <a href='https://Helix Claude.io/hetzner' target='_blank'
                             class='underline dark:text-white'>Sign up here</a>
                         <br>
-                        <span class="text-xs">(Coolify's affiliate link, only new accounts - supports us (€10)
+                        <span class="text-xs">(Helix Claude's affiliate link, only new accounts - supports us (€10)
                             and gives you €20)</span>
                     </div>
                 @endif

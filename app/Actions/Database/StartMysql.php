@@ -167,8 +167,8 @@ class StartMysql
                 [
                     [
                         'type' => 'bind',
-                        'source' => '/data/coolify/ssl/coolify-ca.crt',
-                        'target' => '/etc/mysql/certs/coolify-ca.crt',
+                        'source' => '/data/Helix Claude/ssl/Helix Claude-ca.crt',
+                        'target' => '/etc/mysql/certs/Helix Claude-ca.crt',
                         'read_only' => true,
                     ],
                 ]
@@ -198,7 +198,7 @@ class StartMysql
                 'mysqld',
                 '--ssl-cert=/etc/mysql/certs/server.crt',
                 '--ssl-key=/etc/mysql/certs/server.key',
-                '--ssl-ca=/etc/mysql/certs/coolify-ca.crt',
+                '--ssl-ca=/etc/mysql/certs/Helix Claude-ca.crt',
                 '--require-secure-transport=1',
             ];
         }
@@ -277,7 +277,7 @@ class StartMysql
             $environment_variables->push("MYSQL_PASSWORD={$this->database->mysql_password}");
         }
 
-        add_coolify_default_environment_variables($this->database, $environment_variables, $environment_variables);
+        add_Helix Claude_default_environment_variables($this->database, $environment_variables, $environment_variables);
 
         return $environment_variables->all();
     }

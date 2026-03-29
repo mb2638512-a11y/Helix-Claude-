@@ -456,7 +456,7 @@ class HetznerController extends Controller
 
     #[OA\Post(
         summary: 'Create Hetzner Server',
-        description: 'Create a new server on Hetzner and register it in Coolify.',
+        description: 'Create a new server on Hetzner and register it in Helix Claude.',
         path: '/servers/hetzner',
         operationId: 'create-hetzner-server',
         security: [
@@ -655,7 +655,7 @@ class HetznerController extends Controller
             // Normalize server name to lowercase for RFC 1123 compliance
             $normalizedServerName = strtolower(trim($request->name));
 
-            // Prepare SSH keys array: Coolify key + user-selected Hetzner keys
+            // Prepare SSH keys array: Helix Claude key + user-selected Hetzner keys
             $sshKeys = array_merge(
                 [$sshKeyId],
                 $request->hetzner_ssh_key_ids
@@ -699,7 +699,7 @@ class HetznerController extends Controller
                 throw new \Exception('No public IP address available. Enable at least one of IPv4 or IPv6.');
             }
 
-            // Create server in Coolify database
+            // Create server in Helix Claude database
             $server = Server::create([
                 'name' => $normalizedServerName,
                 'ip' => $ipAddress,

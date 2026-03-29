@@ -4,7 +4,7 @@
             <h1>Destination</h1>
             <x-forms.button canGate="update" :canResource="$destination" wire:click.prevent='submit'
                 type="submit">Save</x-forms.button>
-            @if ($network !== 'coolify')
+            @if ($network !== 'Helix Claude')
                 <x-modal-confirmation title="Confirm Destination Deletion?" buttonTitle="Delete Destination" isErrorButton
                     submitAction="delete" :actions="['This will delete the selected destination/network.']" confirmationText="{{ $destination->name }}"
                     confirmationLabel="Please confirm the execution of the actions by entering the Destination Name below"

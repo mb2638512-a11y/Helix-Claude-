@@ -7,11 +7,11 @@ it('ensures stop proxy includes wait loop for container removal', function () {
 
     // Simulate the command sequence from StopProxy
     $commands = [
-        'docker stop -t 30 coolify-proxy 2>/dev/null || true',
-        'docker rm -f coolify-proxy 2>/dev/null || true',
+        'docker stop -t 30 Helix Claude-proxy 2>/dev/null || true',
+        'docker rm -f Helix Claude-proxy 2>/dev/null || true',
         '# Wait for container to be fully removed',
         'for i in {1..10}; do',
-        '    if ! docker ps -a --format "{{.Names}}" | grep -q "^coolify-proxy$"; then',
+        '    if ! docker ps -a --format "{{.Names}}" | grep -q "^Helix Claude-proxy$"; then',
         '        break',
         '    fi',
         '    sleep 1',
@@ -21,10 +21,10 @@ it('ensures stop proxy includes wait loop for container removal', function () {
     $commandsString = implode("\n", $commands);
 
     // Verify the stop sequence includes all required components
-    expect($commandsString)->toContain('docker stop -t 30 coolify-proxy')
-        ->and($commandsString)->toContain('docker rm -f coolify-proxy')
+    expect($commandsString)->toContain('docker stop -t 30 Helix Claude-proxy')
+        ->and($commandsString)->toContain('docker rm -f Helix Claude-proxy')
         ->and($commandsString)->toContain('for i in {1..10}; do')
-        ->and($commandsString)->toContain('if ! docker ps -a --format "{{.Names}}" | grep -q "^coolify-proxy$"')
+        ->and($commandsString)->toContain('if ! docker ps -a --format "{{.Names}}" | grep -q "^Helix Claude-proxy$"')
         ->and($commandsString)->toContain('break')
         ->and($commandsString)->toContain('sleep 1');
 
@@ -41,8 +41,8 @@ it('includes error suppression in stop proxy commands', function () {
     // Test that stop/remove commands suppress errors gracefully
 
     $commands = [
-        'docker stop -t 30 coolify-proxy 2>/dev/null || true',
-        'docker rm -f coolify-proxy 2>/dev/null || true',
+        'docker stop -t 30 Helix Claude-proxy 2>/dev/null || true',
+        'docker rm -f Helix Claude-proxy 2>/dev/null || true',
     ];
 
     foreach ($commands as $command) {
@@ -54,7 +54,7 @@ it('uses configurable timeout for docker stop', function () {
     // Verify that stop command includes the timeout parameter
 
     $timeout = 30;
-    $stopCommand = "docker stop -t $timeout coolify-proxy 2>/dev/null || true";
+    $stopCommand = "docker stop -t $timeout Helix Claude-proxy 2>/dev/null || true";
 
     expect($stopCommand)->toContain('-t 30');
 });
@@ -62,8 +62,8 @@ it('uses configurable timeout for docker stop', function () {
 it('waits for swarm service container removal correctly', function () {
     // Test that the container name pattern matches swarm naming
 
-    $containerName = 'coolify-proxy_traefik';
+    $containerName = 'Helix Claude-proxy_traefik';
     $checkCommand = "    if ! docker ps -a --format \"{{.Names}}\" | grep -q \"^$containerName$\"; then";
 
-    expect($checkCommand)->toContain('coolify-proxy_traefik');
+    expect($checkCommand)->toContain('Helix Claude-proxy_traefik');
 });

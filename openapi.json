@@ -1,13 +1,13 @@
 {
     "openapi": "3.1.0",
     "info": {
-        "title": "Coolify",
+        "title": "Helix Claude",
         "version": "0.1"
     },
     "servers": [
         {
-            "url": "https:\/\/app.coolify.io\/api\/v1",
-            "description": "Coolify Cloud API. Change the host to your own instance if you are self-hosting."
+            "url": "https:\/\/app.Helix Claude.io\/api\/v1",
+            "description": "Helix Claude Cloud API. Change the host to your own instance if you are self-hosting."
         }
     ],
     "paths": {
@@ -361,7 +361,7 @@
                                                 },
                                                 "domain": {
                                                     "type": "string",
-                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.coolify.io,https:\/\/app2.coolify.io\")"
+                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.Helix Claude.io,https:\/\/app2.Helix Claude.io\")"
                                                 }
                                             },
                                             "type": "object"
@@ -806,7 +806,7 @@
                                                 },
                                                 "domain": {
                                                     "type": "string",
-                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.coolify.io,https:\/\/app2.coolify.io\")"
+                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.Helix Claude.io,https:\/\/app2.Helix Claude.io\")"
                                                 }
                                             },
                                             "type": "object"
@@ -1251,7 +1251,7 @@
                                                 },
                                                 "domain": {
                                                     "type": "string",
-                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.coolify.io,https:\/\/app2.coolify.io\")"
+                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.Helix Claude.io,https:\/\/app2.Helix Claude.io\")"
                                                 }
                                             },
                                             "type": "object"
@@ -2677,7 +2677,7 @@
                                                 },
                                                 "domain": {
                                                     "type": "string",
-                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.coolify.io,https:\/\/app2.coolify.io\")"
+                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.Helix Claude.io,https:\/\/app2.Helix Claude.io\")"
                                                 }
                                             },
                                             "type": "object"
@@ -8238,7 +8238,7 @@
                     "Hetzner"
                 ],
                 "summary": "Create Hetzner Server",
-                "description": "Create a new server on Hetzner and register it in Coolify.",
+                "description": "Create a new server on Hetzner and register it in Helix Claude.",
                 "operationId": "create-hetzner-server",
                 "requestBody": {
                     "description": "Hetzner server creation parameters",
@@ -8373,7 +8373,7 @@
         "\/version": {
             "get": {
                 "summary": "Version",
-                "description": "Get Coolify version.",
+                "description": "Get Helix Claude version.",
                 "operationId": "version",
                 "responses": {
                     "200": {
@@ -10710,7 +10710,7 @@
                                                 },
                                                 "url": {
                                                     "type": "string",
-                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.coolify.io,https:\/\/app2.coolify.io\")."
+                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.Helix Claude.io,https:\/\/app2.Helix Claude.io\")."
                                                 }
                                             },
                                             "type": "object"
@@ -11041,7 +11041,7 @@
                                                 },
                                                 "url": {
                                                     "type": "string",
-                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.coolify.io,https:\/\/app2.coolify.io\")."
+                                                    "description": "Comma-separated list of URLs (e.g. \"http:\/\/app.Helix Claude.io,https:\/\/app2.Helix Claude.io\")."
                                                 }
                                             },
                                             "type": "object"
@@ -12640,7 +12640,7 @@
                     },
                     "compose_parsing_version": {
                         "type": "string",
-                        "description": "How Coolify parse the compose file."
+                        "description": "How Helix Claude parse the compose file."
                     },
                     "custom_nginx_configuration": {
                         "type": "string",
@@ -13217,7 +13217,7 @@
                     },
                     "docker_compose": {
                         "type": "string",
-                        "description": "The docker-compose.yml file that is parsed and modified by Coolify."
+                        "description": "The docker-compose.yml file that is parsed and modified by Helix Claude."
                     },
                     "destination_type": {
                         "type": "string",

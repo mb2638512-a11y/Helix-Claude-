@@ -1,11 +1,11 @@
 openapi: 3.1.0
 info:
-  title: Coolify
+  title: Helix Claude
   version: '0.1'
 servers:
   -
-    url: 'https://app.coolify.io/api/v1'
-    description: 'Coolify Cloud API. Change the host to your own instance if you are self-hosting.'
+    url: 'https://app.Helix Claude.io/api/v1'
+    description: 'Helix Claude Cloud API. Change the host to your own instance if you are self-hosting.'
 paths:
   /applications:
     get:
@@ -258,7 +258,7 @@ paths:
                 docker_compose_domains:
                   type: array
                   description: 'Array of URLs to be applied to containers of a dockercompose application.'
-                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, domain: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.coolify.io,https://app2.coolify.io")' } }, type: object }
+                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, domain: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.Helix Claude.io,https://app2.Helix Claude.io")' } }, type: object }
                 watch_paths:
                   type: string
                   description: 'The watch paths.'
@@ -542,7 +542,7 @@ paths:
                 docker_compose_domains:
                   type: array
                   description: 'Array of URLs to be applied to containers of a dockercompose application.'
-                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, domain: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.coolify.io,https://app2.coolify.io")' } }, type: object }
+                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, domain: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.Helix Claude.io,https://app2.Helix Claude.io")' } }, type: object }
                 watch_paths:
                   type: string
                   description: 'The watch paths.'
@@ -826,7 +826,7 @@ paths:
                 docker_compose_domains:
                   type: array
                   description: 'Array of URLs to be applied to containers of a dockercompose application.'
-                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, domain: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.coolify.io,https://app2.coolify.io")' } }, type: object }
+                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, domain: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.Helix Claude.io,https://app2.Helix Claude.io")' } }, type: object }
                 watch_paths:
                   type: string
                   description: 'The watch paths.'
@@ -1723,7 +1723,7 @@ paths:
                 docker_compose_domains:
                   type: array
                   description: 'Array of URLs to be applied to containers of a dockercompose application.'
-                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, domain: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.coolify.io,https://app2.coolify.io")' } }, type: object }
+                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, domain: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.Helix Claude.io,https://app2.Helix Claude.io")' } }, type: object }
                 watch_paths:
                   type: string
                   description: 'The watch paths.'
@@ -5215,7 +5215,7 @@ paths:
       tags:
         - Hetzner
       summary: 'Create Hetzner Server'
-      description: 'Create a new server on Hetzner and register it in Coolify.'
+      description: 'Create a new server on Hetzner and register it in Helix Claude.'
       operationId: create-hetzner-server
       requestBody:
         description: 'Hetzner server creation parameters'
@@ -5305,7 +5305,7 @@ paths:
   /version:
     get:
       summary: Version
-      description: 'Get Coolify version.'
+      description: 'Get Helix Claude version.'
       operationId: version
       responses:
         '200':
@@ -6809,7 +6809,7 @@ paths:
                 urls:
                   type: array
                   description: 'Array of URLs to be applied to containers of a service.'
-                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, url: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.coolify.io,https://app2.coolify.io").' } }, type: object }
+                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, url: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.Helix Claude.io,https://app2.Helix Claude.io").' } }, type: object }
                 force_domain_override:
                   type: boolean
                   default: false
@@ -6998,7 +6998,7 @@ paths:
                 urls:
                   type: array
                   description: 'Array of URLs to be applied to containers of a service.'
-                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, url: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.coolify.io,https://app2.coolify.io").' } }, type: object }
+                  items: { properties: { name: { type: string, description: 'The service name as defined in docker-compose.' }, url: { type: string, description: 'Comma-separated list of URLs (e.g. "http://app.Helix Claude.io,https://app2.Helix Claude.io").' } }, type: object }
                 force_domain_override:
                   type: boolean
                   default: false
@@ -8035,7 +8035,7 @@ components:
           description: 'The date and time when the application was deleted.'
         compose_parsing_version:
           type: string
-          description: 'How Coolify parse the compose file.'
+          description: 'How Helix Claude parse the compose file.'
         custom_nginx_configuration:
           type: string
           nullable: true
@@ -8443,7 +8443,7 @@ components:
           description: 'The raw docker-compose.yml file of the service.'
         docker_compose:
           type: string
-          description: 'The docker-compose.yml file that is parsed and modified by Coolify.'
+          description: 'The docker-compose.yml file that is parsed and modified by Helix Claude.'
         destination_type:
           type: string
           description: 'Destination type.'

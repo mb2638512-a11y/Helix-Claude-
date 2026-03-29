@@ -106,7 +106,7 @@ class PrivateKeyStorageTest extends TestCase
             );
 
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('SSH keys storage directory is not writable. Run on the host: sudo chown -R 9999 /data/coolify/ssh && sudo chmod -R 700 /data/coolify/ssh && docker restart coolify');
+        $this->expectExceptionMessage('SSH keys storage directory is not writable. Run on the host: sudo chown -R 9999 /data/Helix Claude/ssh && sudo chmod -R 700 /data/Helix Claude/ssh && docker restart Helix Claude');
 
         PrivateKey::createAndStore([
             'name' => 'Test Key',

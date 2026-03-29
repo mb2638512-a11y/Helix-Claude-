@@ -1,4 +1,4 @@
-@php use App\Actions\CoolifyTask\RunRemoteProcess; @endphp
+@php use App\Actions\Helix ClaudeTask\RunRemoteProcess; @endphp
 <div @class([
     'h-full flex flex-col overflow-hidden' => $fullHeight,
     'h-full overflow-hidden' => !$fullHeight,

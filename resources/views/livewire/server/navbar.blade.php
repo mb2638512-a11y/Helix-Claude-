@@ -4,7 +4,7 @@
         <x-slot:content>
             @if ($server->id === 0)
                 <div class="mb-4 p-3 text-sm bg-warning/10 border border-warning/30 rounded-lg text-warning">
-                    <span class="font-semibold">Note:</span> This is the localhost server where Coolify runs.
+                    <span class="font-semibold">Note:</span> This is the localhost server where Helix Claude runs.
                     During proxy restart, the connection may be temporarily lost.
                     If logs stop updating, please refresh the browser after a few minutes.
                 </div>
@@ -121,7 +121,7 @@
                                 <x-modal-confirmation title="Confirm Proxy Restart?" buttonTitle="Restart Proxy"
                                     submitAction="restart" :actions="[
                             'This proxy will be stopped and started again.',
-                            'All resources hosted on coolify will be unavailable during the restart.',
+                            'All resources hosted on Helix Claude will be unavailable during the restart.',
                         ]" :confirmWithText="false" :confirmWithPassword="false" step2ButtonText="Restart Proxy"
                                     :dispatchEvent="true" dispatchEventType="restartEvent">
                                     <x-slot:button-title>
@@ -138,8 +138,8 @@
                                 </x-modal-confirmation>
                                 <x-modal-confirmation title="Confirm Proxy Stopping?" buttonTitle="Stop Proxy"
                                     submitAction="stop(true)" :actions="[
-                            'The coolify proxy will be stopped.',
-                            'All resources hosted on coolify will be unavailable.',
+                            'The Helix Claude proxy will be stopped.',
+                            'All resources hosted on Helix Claude will be unavailable.',
                         ]" :confirmWithText="false"
                                     :confirmWithPassword="false" step2ButtonText="Stop Proxy" :dispatchEvent="true"
                                     dispatchEventType="stopEvent">

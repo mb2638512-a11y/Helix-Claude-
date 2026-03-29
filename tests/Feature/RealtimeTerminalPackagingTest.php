@@ -1,15 +1,15 @@
 <?php
 
 it('copies the realtime terminal utilities into the container image', function () {
-    $dockerfile = file_get_contents(base_path('docker/coolify-realtime/Dockerfile'));
+    $dockerfile = file_get_contents(base_path('docker/Helix Claude-realtime/Dockerfile'));
 
-    expect($dockerfile)->toContain('COPY docker/coolify-realtime/terminal-utils.js /terminal/terminal-utils.js');
+    expect($dockerfile)->toContain('COPY docker/Helix Claude-realtime/terminal-utils.js /terminal/terminal-utils.js');
 });
 
 it('mounts the realtime terminal utilities in local development compose files', function (string $composeFile) {
     $composeContents = file_get_contents(base_path($composeFile));
 
-    expect($composeContents)->toContain('./docker/coolify-realtime/terminal-utils.js:/terminal/terminal-utils.js');
+    expect($composeContents)->toContain('./docker/Helix Claude-realtime/terminal-utils.js:/terminal/terminal-utils.js');
 })->with([
     'default dev compose' => 'docker-compose.dev.yml',
     'maxio dev compose' => 'docker-compose-maxio.dev.yml',
@@ -25,10 +25,10 @@ it('keeps terminal browser logging restricted to Vite development mode', functio
 });
 
 it('keeps realtime terminal server logging restricted to development environments', function () {
-    $terminalServer = file_get_contents(base_path('docker/coolify-realtime/terminal-server.js'));
+    $terminalServer = file_get_contents(base_path('docker/Helix Claude-realtime/terminal-server.js'));
 
     expect($terminalServer)
         ->toContain("const terminalDebugEnabled = ['local', 'development'].includes(")
         ->toContain('if (!terminalDebugEnabled) {')
-        ->not->toContain("console.log('Coolify realtime terminal server listening on port 6002. Let the hacking begin!');");
+        ->not->toContain("console.log('Helix Claude realtime terminal server listening on port 6002. Let the hacking begin!');");
 });

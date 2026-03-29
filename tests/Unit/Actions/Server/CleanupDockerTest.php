@@ -255,32 +255,32 @@ it('correctly excludes Docker Compose images from general prune', function () {
     }
 });
 
-it('excludes current version of Coolify infrastructure images from any registry', function () {
+it('excludes current version of Helix Claude infrastructure images from any registry', function () {
     // Test the regex pattern used to protect the current version of infrastructure images
     // regardless of which registry they come from (ghcr.io, docker.io, or no prefix)
     $helperVersion = '1.0.12';
     $realtimeVersion = '1.0.10';
 
     // Build the exclusion pattern the same way CleanupDocker does
-    // Pattern: (^|/)coollabsio/coolify-helper:VERSION$|(^|/)coollabsio/coolify-realtime:VERSION$
+    // Pattern: (^|/)coollabsio/Helix Claude-helper:VERSION$|(^|/)coollabsio/Helix Claude-realtime:VERSION$
     $escapedHelperVersion = preg_replace('/([.\\\\+*?\[\]^$(){}|])/', '\\\\$1', $helperVersion);
     $escapedRealtimeVersion = preg_replace('/([.\\\\+*?\[\]^$(){}|])/', '\\\\$1', $realtimeVersion);
 
     // For PHP preg_match, escape forward slashes
-    $infraPattern = "(^|\\/)coollabsio\\/coolify-helper:{$escapedHelperVersion}$|(^|\\/)coollabsio\\/coolify-realtime:{$escapedRealtimeVersion}$";
+    $infraPattern = "(^|\\/)coollabsio\\/Helix Claude-helper:{$escapedHelperVersion}$|(^|\\/)coollabsio\\/Helix Claude-realtime:{$escapedRealtimeVersion}$";
     $pattern = "/{$infraPattern}/";
 
     // Current versioned infrastructure images from ANY registry should be PROTECTED
     $protectedImages = [
         // ghcr.io registry
-        "ghcr.io/coollabsio/coolify-helper:{$helperVersion}",
-        "ghcr.io/coollabsio/coolify-realtime:{$realtimeVersion}",
+        "ghcr.io/coollabsio/Helix Claude-helper:{$helperVersion}",
+        "ghcr.io/coollabsio/Helix Claude-realtime:{$realtimeVersion}",
         // docker.io registry (explicit)
-        "docker.io/coollabsio/coolify-helper:{$helperVersion}",
-        "docker.io/coollabsio/coolify-realtime:{$realtimeVersion}",
+        "docker.io/coollabsio/Helix Claude-helper:{$helperVersion}",
+        "docker.io/coollabsio/Helix Claude-realtime:{$realtimeVersion}",
         // No registry prefix (Docker Hub implicit)
-        "coollabsio/coolify-helper:{$helperVersion}",
-        "coollabsio/coolify-realtime:{$realtimeVersion}",
+        "coollabsio/Helix Claude-helper:{$helperVersion}",
+        "coollabsio/Helix Claude-realtime:{$realtimeVersion}",
     ];
 
     // Verify current infrastructure images ARE protected from any registry
@@ -290,12 +290,12 @@ it('excludes current version of Coolify infrastructure images from any registry'
 
     // Verify OLD versions of infrastructure images are NOT protected (can be deleted)
     $oldVersionImages = [
-        'ghcr.io/coollabsio/coolify-helper:1.0.11',
-        'docker.io/coollabsio/coolify-helper:1.0.10',
-        'coollabsio/coolify-helper:1.0.9',
-        'ghcr.io/coollabsio/coolify-realtime:1.0.9',
-        'ghcr.io/coollabsio/coolify-helper:latest',
-        'coollabsio/coolify-realtime:latest',
+        'ghcr.io/coollabsio/Helix Claude-helper:1.0.11',
+        'docker.io/coollabsio/Helix Claude-helper:1.0.10',
+        'coollabsio/Helix Claude-helper:1.0.9',
+        'ghcr.io/coollabsio/Helix Claude-realtime:1.0.9',
+        'ghcr.io/coollabsio/Helix Claude-helper:latest',
+        'coollabsio/Helix Claude-realtime:latest',
     ];
 
     foreach ($oldVersionImages as $image) {
@@ -327,18 +327,18 @@ it('protects current infrastructure images from any registry even when no applic
     $escapedRealtimeVersion = preg_replace('/([.\\\\+*?\[\]^$(){}|])/', '\\\\$1', $realtimeVersion);
 
     // For PHP preg_match, escape forward slashes
-    $infraPattern = "(^|\\/)coollabsio\\/coolify-helper:{$escapedHelperVersion}$|(^|\\/)coollabsio\\/coolify-realtime:{$escapedRealtimeVersion}$";
+    $infraPattern = "(^|\\/)coollabsio\\/Helix Claude-helper:{$escapedHelperVersion}$|(^|\\/)coollabsio\\/Helix Claude-realtime:{$escapedRealtimeVersion}$";
     $pattern = "/{$infraPattern}/";
 
     // Verify current infrastructure images from any registry are protected
-    expect(preg_match($pattern, "ghcr.io/coollabsio/coolify-helper:{$helperVersion}"))->toBe(1);
-    expect(preg_match($pattern, "docker.io/coollabsio/coolify-helper:{$helperVersion}"))->toBe(1);
-    expect(preg_match($pattern, "coollabsio/coolify-helper:{$helperVersion}"))->toBe(1);
-    expect(preg_match($pattern, "ghcr.io/coollabsio/coolify-realtime:{$realtimeVersion}"))->toBe(1);
+    expect(preg_match($pattern, "ghcr.io/coollabsio/Helix Claude-helper:{$helperVersion}"))->toBe(1);
+    expect(preg_match($pattern, "docker.io/coollabsio/Helix Claude-helper:{$helperVersion}"))->toBe(1);
+    expect(preg_match($pattern, "coollabsio/Helix Claude-helper:{$helperVersion}"))->toBe(1);
+    expect(preg_match($pattern, "ghcr.io/coollabsio/Helix Claude-realtime:{$realtimeVersion}"))->toBe(1);
 
     // Old versions should NOT be protected
-    expect(preg_match($pattern, 'ghcr.io/coollabsio/coolify-helper:1.0.11'))->toBe(0);
-    expect(preg_match($pattern, 'docker.io/coollabsio/coolify-helper:1.0.11'))->toBe(0);
+    expect(preg_match($pattern, 'ghcr.io/coollabsio/Helix Claude-helper:1.0.11'))->toBe(0);
+    expect(preg_match($pattern, 'docker.io/coollabsio/Helix Claude-helper:1.0.11'))->toBe(0);
 
     // Other images should not be protected
     expect(preg_match($pattern, 'nginx:alpine'))->toBe(0);

@@ -46,9 +46,9 @@ class DiscordMessage
 
     public function toPayload(): array
     {
-        $footerText = 'Coolify v'.config('constants.coolify.version');
+        $footerText = 'Helix Claude v'.config('constants.Helix Claude.version');
         if (isCloud()) {
-            $footerText = 'Coolify Cloud';
+            $footerText = 'Helix Claude Cloud';
         }
         $payload = [
             'embeds' => [

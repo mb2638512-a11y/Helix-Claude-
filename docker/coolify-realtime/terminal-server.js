@@ -74,7 +74,7 @@ const verifyClient = async (info, callback) => {
 
     try {
         // Authenticate with Laravel backend
-        const response = await axios.post(`http://coolify:8080/terminal/auth`, null, {
+        const response = await axios.post(`http://Helix Claude:8080/terminal/auth`, null, {
             headers: {
                 'Cookie': `${sessionCookieName}=${laravelSession}`,
                 'X-XSRF-TOKEN': xsrfToken
@@ -125,7 +125,7 @@ wss.on('connection', async (ws, req) => {
     }
 
     try {
-        const response = await axios.post(`http://coolify:8080/terminal/auth/ips`, null, {
+        const response = await axios.post(`http://Helix Claude:8080/terminal/auth/ips`, null, {
             headers: {
                 'Cookie': `${sessionCookieName}=${laravelSession}`,
                 'X-XSRF-TOKEN': xsrfToken
@@ -290,7 +290,7 @@ async function handleCommand(ws, command, userId) {
     };
 
     // NOTE: - Initiates a process within the Terminal container
-    //         Establishes an SSH connection to root@coolify with RequestTTY enabled
+    //         Establishes an SSH connection to root@Helix Claude with RequestTTY enabled
     //         Executes the 'docker exec' command to connect to a specific container
     logTerminal('log', 'Spawning PTY process for terminal session.', {
         userId,

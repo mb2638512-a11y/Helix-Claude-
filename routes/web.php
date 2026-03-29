@@ -177,7 +177,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             if (isDev()) {
                 $ipAddresses = $ipAddresses->merge([
-                    'coolify-testing-host',
+                    'Helix Claude-testing-host',
                     'host.docker.internal',
                     'localhost',
                     '127.0.0.1',

@@ -17,7 +17,7 @@ class DeleteServer
     {
         $server = Server::withTrashed()->find($serverId);
 
-        // Delete from Hetzner even if server is already gone from Coolify
+        // Delete from Hetzner even if server is already gone from Helix Claude
         if ($deleteFromHetzner && ($hetznerServerId || ($server && $server->hetzner_server_id))) {
             $this->deleteFromHetznerById(
                 $hetznerServerId ?? $server->hetzner_server_id,
@@ -26,23 +26,23 @@ class DeleteServer
             );
         }
 
-        ray($server ? 'Deleting server from Coolify' : 'Server already deleted from Coolify, skipping Coolify deletion');
+        ray($server ? 'Deleting server from Helix Claude' : 'Server already deleted from Helix Claude, skipping Helix Claude deletion');
 
-        // If server is already deleted from Coolify, skip this part
+        // If server is already deleted from Helix Claude, skip this part
         if (! $server) {
-            return; // Server already force deleted from Coolify
+            return; // Server already force deleted from Helix Claude
         }
 
-        ray('force deleting server from Coolify', ['server_id' => $server->id]);
+        ray('force deleting server from Helix Claude', ['server_id' => $server->id]);
 
         try {
             $server->forceDelete();
         } catch (\Throwable $e) {
-            ray('Failed to force delete server from Coolify', [
+            ray('Failed to force delete server from Helix Claude', [
                 'error' => $e->getMessage(),
                 'server_id' => $server->id,
             ]);
-            logger()->error('Failed to force delete server from Coolify', [
+            logger()->error('Failed to force delete server from Helix Claude', [
                 'error' => $e->getMessage(),
                 'server_id' => $server->id,
             ]);
@@ -88,7 +88,7 @@ class DeleteServer
                 'team_id' => $teamId,
             ]);
 
-            // Log the error but don't prevent the server from being deleted from Coolify
+            // Log the error but don't prevent the server from being deleted from Helix Claude
             logger()->error('Failed to delete server from Hetzner', [
                 'error' => $e->getMessage(),
                 'hetzner_server_id' => $hetznerServerId,

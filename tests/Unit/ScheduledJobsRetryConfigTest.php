@@ -1,11 +1,11 @@
 <?php
 
-use App\Jobs\CoolifyTask;
+use App\Jobs\Helix ClaudeTask;
 use App\Jobs\DatabaseBackupJob;
 use App\Jobs\ScheduledTaskJob;
 
-it('CoolifyTask has correct retry properties defined', function () {
-    $reflection = new ReflectionClass(CoolifyTask::class);
+it('Helix ClaudeTask has correct retry properties defined', function () {
+    $reflection = new ReflectionClass(Helix ClaudeTask::class);
 
     // Check public properties exist
     expect($reflection->hasProperty('tries'))->toBeTrue()

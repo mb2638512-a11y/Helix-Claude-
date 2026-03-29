@@ -639,15 +639,15 @@ EOD;
             }
 
             // Get helper image
-            $helperImage = config('constants.coolify.helper_image');
+            $helperImage = config('constants.Helix Claude.helper_image');
             $latestVersion = getHelperVersion();
             $fullImageName = "{$helperImage}:{$latestVersion}";
 
             // Get the database destination network
             if ($this->resource->getMorphClass() === \App\Models\ServiceDatabase::class) {
-                $destinationNetwork = $this->resource->service->destination->network ?? 'coolify';
+                $destinationNetwork = $this->resource->service->destination->network ?? 'Helix Claude';
             } else {
-                $destinationNetwork = $this->resource->destination->network ?? 'coolify';
+                $destinationNetwork = $this->resource->destination->network ?? 'Helix Claude';
             }
 
             // Generate unique names for this operation

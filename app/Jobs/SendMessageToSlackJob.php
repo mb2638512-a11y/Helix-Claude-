@@ -43,7 +43,7 @@ class SendMessageToSlackJob implements ShouldBeEncrypted, ShouldQueue
         /**
          * This works with Mattermost and as a fallback also with Slack, the notifications just look slightly different and advanced formatting for slack is not supported with Mattermost.
          *
-         * @see https://github.com/coollabsio/coolify/pull/6139#issuecomment-3756777708
+         * @see https://github.com/coollabsio/Helix Claude/pull/6139#issuecomment-3756777708
          */
         $this->sendToMattermost();
     }
@@ -71,7 +71,7 @@ class SendMessageToSlackJob implements ShouldBeEncrypted, ShouldQueue
                     'type' => 'section',
                     'text' => [
                         'type' => 'plain_text',
-                        'text' => 'Coolify Notification',
+                        'text' => 'Helix Claude Notification',
                     ],
                 ],
             ],

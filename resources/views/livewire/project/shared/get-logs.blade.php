@@ -7,8 +7,8 @@
         alwaysScroll: false,
         rafId: null,
         scrollDebounce: null,
-        colorLogs: localStorage.getItem('coolify-color-logs') === 'true',
-        logFilters: JSON.parse(localStorage.getItem('coolify-log-filters')) || {error: true, warning: true, debug: true, info: true},
+        colorLogs: localStorage.getItem('Helix Claude-color-logs') === 'true',
+        logFilters: JSON.parse(localStorage.getItem('Helix Claude-log-filters')) || {error: true, warning: true, debug: true, info: true},
         searchQuery: '',
         matchCount: 0,
         containerName: '{{ $container ?? "logs" }}',
@@ -79,12 +79,12 @@
         },
         toggleLogFilter(level) {
             this.logFilters[level] = !this.logFilters[level];
-            localStorage.setItem('coolify-log-filters', JSON.stringify(this.logFilters));
+            localStorage.setItem('Helix Claude-log-filters', JSON.stringify(this.logFilters));
             this.applySearch();
         },
         toggleColorLogs() {
             this.colorLogs = !this.colorLogs;
-            localStorage.setItem('coolify-color-logs', this.colorLogs);
+            localStorage.setItem('Helix Claude-color-logs', this.colorLogs);
             this.applyColorLogs();
         },
         applyColorLogs() {

@@ -1,16 +1,16 @@
 services:
-  coolify:
-    image: "${REGISTRY_URL:-ghcr.io}/coollabsio/coolify:${LATEST_IMAGE:-latest}"
+  Helix Claude:
+    image: "${REGISTRY_URL:-ghcr.io}/coollabsio/Helix Claude:${LATEST_IMAGE:-latest}"
     volumes:
       - type: bind
-        source: /data/coolify/source/.env
+        source: /data/Helix Claude/source/.env
         target: /var/www/html/.env
         read_only: true
-      - /data/coolify/ssh:/var/www/html/storage/app/ssh
-      - /data/coolify/applications:/var/www/html/storage/app/applications
-      - /data/coolify/databases:/var/www/html/storage/app/databases
-      - /data/coolify/services:/var/www/html/storage/app/services
-      - /data/coolify/backups:/var/www/html/storage/app/backups
+      - /data/Helix Claude/ssh:/var/www/html/storage/app/ssh
+      - /data/Helix Claude/applications:/var/www/html/storage/app/applications
+      - /data/Helix Claude/databases:/var/www/html/storage/app/databases
+      - /data/Helix Claude/services:/var/www/html/storage/app/services
+      - /data/Helix Claude/backups:/var/www/html/storage/app/backups
     environment:
       - APP_ENV=${APP_ENV:-production}
       - PHP_MEMORY_LIMIT=${PHP_MEMORY_LIMIT:-256M}
@@ -19,7 +19,7 @@ services:
       - PHP_FPM_PM_MIN_SPARE_SERVERS=${PHP_FPM_PM_MIN_SPARE_SERVERS:-1}
       - PHP_FPM_PM_MAX_SPARE_SERVERS=${PHP_FPM_PM_MAX_SPARE_SERVERS:-10}
     env_file:
-      - /data/coolify/source/.env
+      - /data/Helix Claude/source/.env
     ports:
       - "${APP_PORT:-8000}:8080"
     expose:
@@ -38,13 +38,13 @@ services:
         condition: service_healthy
   postgres:
     volumes:
-      - coolify-db:/var/lib/postgresql/data
+      - Helix Claude-db:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: "${DB_USERNAME}"
       POSTGRES_PASSWORD: "${DB_PASSWORD}"
-      POSTGRES_DB: "${DB_DATABASE:-coolify}"
+      POSTGRES_DB: "${DB_DATABASE:-Helix Claude}"
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME}", "-d", "${DB_DATABASE:-coolify}" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME}", "-d", "${DB_DATABASE:-Helix Claude}" ]
       interval: 5s
       retries: 10
       timeout: 2s
@@ -53,21 +53,21 @@ services:
     environment:
       REDIS_PASSWORD: "${REDIS_PASSWORD}"
     volumes:
-      - coolify-redis:/data
+      - Helix Claude-redis:/data
     healthcheck:
       test: redis-cli ping
       interval: 5s
       retries: 10
       timeout: 2s
   soketi:
-    image: '${REGISTRY_URL:-ghcr.io}/coollabsio/coolify-realtime:1.0.11'
+    image: '${REGISTRY_URL:-ghcr.io}/coollabsio/Helix Claude-realtime:1.0.11'
     ports:
       - "${SOKETI_PORT:-6001}:6001"
       - "6002:6002"
     volumes:
-      - /data/coolify/ssh:/var/www/html/storage/app/ssh
+      - /data/Helix Claude/ssh:/var/www/html/storage/app/ssh
     environment:
-      APP_NAME: "${APP_NAME:-Coolify}"
+      APP_NAME: "${APP_NAME:-Helix Claude}"
       SOKETI_DEBUG: "${SOKETI_DEBUG:-false}"
       SOKETI_DEFAULT_APP_ID: "${PUSHER_APP_ID}"
       SOKETI_DEFAULT_APP_KEY: "${PUSHER_APP_KEY}"
@@ -80,11 +80,11 @@ services:
       timeout: 2s
 
 volumes:
-  coolify-db:
-    name: coolify-db
-  coolify-redis:
-    name: coolify-redis
+  Helix Claude-db:
+    name: Helix Claude-db
+  Helix Claude-redis:
+    name: Helix Claude-redis
 
 networks:
-  coolify:
+  Helix Claude:
     external: true

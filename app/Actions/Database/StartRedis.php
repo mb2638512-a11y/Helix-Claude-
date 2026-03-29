@@ -173,8 +173,8 @@ class StartRedis
                 [
                     [
                         'type' => 'bind',
-                        'source' => '/data/coolify/ssl/coolify-ca.crt',
-                        'target' => '/etc/redis/certs/coolify-ca.crt',
+                        'source' => '/data/Helix Claude/ssl/Helix Claude-ca.crt',
+                        'target' => '/etc/redis/certs/Helix Claude-ca.crt',
                         'read_only' => true,
                     ],
                 ]
@@ -272,7 +272,7 @@ class StartRedis
             }
         }
 
-        add_coolify_default_environment_variables($this->database, $environment_variables, $environment_variables);
+        add_Helix Claude_default_environment_variables($this->database, $environment_variables, $environment_variables);
 
         return $environment_variables->all();
     }
@@ -300,7 +300,7 @@ class StartRedis
                 '--tls-port 6380',
                 '--tls-cert-file /etc/redis/certs/server.crt',
                 '--tls-key-file /etc/redis/certs/server.key',
-                '--tls-ca-cert-file /etc/redis/certs/coolify-ca.crt',
+                '--tls-ca-cert-file /etc/redis/certs/Helix Claude-ca.crt',
                 '--tls-auth-clients optional',
             ];
         }
